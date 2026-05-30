@@ -1,0 +1,180 @@
+DIGEST 244d6cf6bc7509b31cdbfc614a09e87c
+FTheoremPhasewise
+R27:30 Stdlib.Lists.List <> <> lib
+R32:36 Stdlib.Arith.Arith <> <> lib
+R38:40 Stdlib.micromega.Lia <> <> lib
+R50:62 Stdlib.Lists.List ListNotations <> mod
+sec 74:87 <> PhasewiseBound
+def 102:106 <> state
+R115:117 Corelib.Init.Datatypes <> ::type_scope:x_'*'_x not
+R112:114 Corelib.Init.Datatypes <> nat ind
+R118:120 Corelib.Init.Datatypes <> nat ind
+def 141:153 <> bounded_state
+R160:162 Corelib.Init.Datatypes <> nat ind
+binder 156:156 <> m:1
+R170:174 TheoremPhasewise <> state def
+binder 166:166 <> s:2
+R198:201 Corelib.Init.Logic <> ::type_scope:x_'/\'_x not
+R194:196 Corelib.Init.Peano <> ::nat_scope:x_'<'_x not
+R189:191 Corelib.Init.Datatypes <> fst def
+R193:193 TheoremPhasewise <> s:2 var
+R197:197 TheoremPhasewise <> m:1 var
+R207:209 Corelib.Init.Peano <> ::nat_scope:x_'<'_x not
+R202:204 Corelib.Init.Datatypes <> snd def
+R206:206 TheoremPhasewise <> s:2 var
+R210:210 TheoremPhasewise <> m:1 var
+def 225:235 <> phase_space
+R242:244 Corelib.Init.Datatypes <> nat ind
+binder 238:238 <> m:3
+R249:252 Corelib.Init.Datatypes <> list ind
+R254:258 TheoremPhasewise <> state def
+R265:273 Stdlib.Lists.List <> list_prod def
+R286:288 Corelib.Lists.ListDef <> seq def
+R292:292 TheoremPhasewise <> m:3 var
+R276:278 Corelib.Lists.ListDef <> seq def
+R282:282 TheoremPhasewise <> m:3 var
+prf 303:324 <> bounded_in_phase_space
+binder 337:337 <> m:4
+binder 339:339 <> i:5
+binder 341:341 <> j:6
+R353:360 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R349:351 Corelib.Init.Peano <> ::nat_scope:x_'<'_x not
+R348:348 TheoremPhasewise <> i:5 var
+R352:352 TheoremPhasewise <> m:4 var
+R366:373 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R362:364 Corelib.Init.Peano <> ::nat_scope:x_'<'_x not
+R361:361 TheoremPhasewise <> j:6 var
+R365:365 TheoremPhasewise <> m:4 var
+R374:375 Stdlib.Lists.List <> In def
+R385:395 TheoremPhasewise <> phase_space def
+R397:397 TheoremPhasewise <> m:4 var
+R377:377 Corelib.Init.Datatypes <> ::core_scope:'('_x_','_x_','_'..'_','_x_')' not
+R379:380 Corelib.Init.Datatypes <> ::core_scope:'('_x_','_x_','_'..'_','_x_')' not
+R382:382 Corelib.Init.Datatypes <> ::core_scope:'('_x_','_x_','_'..'_','_x_')' not
+R378:378 TheoremPhasewise <> i:5 var
+R381:381 TheoremPhasewise <> j:6 var
+R439:449 TheoremPhasewise <> phase_space def
+R460:466 Stdlib.Lists.List <> in_prod thm
+R460:466 Stdlib.Lists.List <> in_prod thm
+R479:484 Stdlib.Lists.List <> in_seq thm
+R479:484 Stdlib.Lists.List <> in_seq thm
+R502:507 Stdlib.Lists.List <> in_seq thm
+R502:507 Stdlib.Lists.List <> in_seq thm
+prf 527:553 <> bounded_list_in_phase_space
+binder 566:566 <> m:7
+binder 568:573 <> states:8
+R611:618 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R580:585 Corelib.Lists.ListDef <> Forall ind
+R605:610 TheoremPhasewise <> states:8 var
+R588:600 TheoremPhasewise <> bounded_state def
+R602:602 TheoremPhasewise <> m:7 var
+R619:622 Stdlib.Lists.List <> incl def
+R632:642 TheoremPhasewise <> phase_space def
+R644:644 TheoremPhasewise <> m:7 var
+R624:629 TheoremPhasewise <> states:8 var
+R697:709 Stdlib.Lists.List <> Forall_forall thm
+R697:709 Stdlib.Lists.List <> Forall_forall thm
+R832:853 TheoremPhasewise <> bounded_in_phase_space thm
+R832:853 TheoremPhasewise <> bounded_in_phase_space thm
+prf 880:897 <> phase_space_length
+binder 910:910 <> m:9
+R939:941 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R917:922 Corelib.Init.Datatypes <> length def
+R925:935 TheoremPhasewise <> phase_space def
+R937:937 TheoremPhasewise <> m:9 var
+R943:945 Corelib.Init.Peano <> ::nat_scope:x_'*'_x not
+R942:942 TheoremPhasewise <> m:9 var
+R946:946 TheoremPhasewise <> m:9 var
+R976:986 TheoremPhasewise <> phase_space def
+R1037:1039 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R999:1004 Corelib.Init.Datatypes <> length def
+R1007:1015 Stdlib.Lists.List <> list_prod def
+R1028:1030 Corelib.Lists.ListDef <> seq def
+R1018:1020 Corelib.Lists.ListDef <> seq def
+R1041:1043 Corelib.Init.Peano <> ::nat_scope:x_'*'_x not
+R1037:1039 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R999:1004 Corelib.Init.Datatypes <> length def
+R1007:1015 Stdlib.Lists.List <> list_prod def
+R1028:1030 Corelib.Lists.ListDef <> seq def
+R1018:1020 Corelib.Lists.ListDef <> seq def
+R1041:1043 Corelib.Init.Peano <> ::nat_scope:x_'*'_x not
+R1058:1068 Stdlib.Lists.List <> length_prod thm
+R1058:1068 Stdlib.Lists.List <> length_prod thm
+R1058:1068 Stdlib.Lists.List <> length_prod thm
+R1082:1091 Stdlib.Lists.List <> length_seq thm
+R1082:1091 Stdlib.Lists.List <> length_seq thm
+R1082:1091 Stdlib.Lists.List <> length_seq thm
+R1082:1091 Stdlib.Lists.List <> length_seq thm
+prf 1115:1137 <> theorem_phasewise_bound
+binder 1150:1150 <> m:10
+binder 1152:1158 <> visited:11
+binder 1160:1168 <> forbidden:12
+R1188:1195 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R1175:1179 Stdlib.Lists.List <> NoDup ind
+R1181:1187 TheoremPhasewise <> visited:11 var
+R1211:1218 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R1196:1200 Stdlib.Lists.List <> NoDup ind
+R1202:1210 TheoremPhasewise <> forbidden:12 var
+R1219:1219 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R1262:1270 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+binder 1227:1227 <> s:13
+R1242:1245 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R1230:1231 Stdlib.Lists.List <> In def
+R1235:1241 TheoremPhasewise <> visited:11 var
+R1233:1233 TheoremPhasewise <> s:13 var
+R1246:1247 Corelib.Init.Logic <> ::type_scope:'~'_x not
+R1248:1249 Stdlib.Lists.List <> In def
+R1253:1261 TheoremPhasewise <> forbidden:12 var
+R1251:1251 TheoremPhasewise <> s:13 var
+R1303:1310 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R1271:1276 Corelib.Lists.ListDef <> Forall ind
+R1296:1302 TheoremPhasewise <> visited:11 var
+R1279:1291 TheoremPhasewise <> bounded_state def
+R1293:1293 TheoremPhasewise <> m:10 var
+R1345:1352 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R1311:1316 Corelib.Lists.ListDef <> Forall ind
+R1336:1344 TheoremPhasewise <> forbidden:12 var
+R1319:1331 TheoremPhasewise <> bounded_state def
+R1333:1333 TheoremPhasewise <> m:10 var
+R1377:1384 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R1369:1371 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R1353:1358 Corelib.Init.Datatypes <> length def
+R1360:1368 TheoremPhasewise <> forbidden:12 var
+R1373:1375 Corelib.Init.Peano <> ::nat_scope:x_'-'_x not
+R1372:1372 TheoremPhasewise <> m:10 var
+R1399:1402 Corelib.Init.Peano <> ::nat_scope:x_'<='_x not
+R1385:1390 Corelib.Init.Datatypes <> length def
+R1392:1398 TheoremPhasewise <> visited:11 var
+R1412:1414 Corelib.Init.Peano <> ::nat_scope:x_'+'_x not
+R1408:1410 Corelib.Init.Peano <> ::nat_scope:x_'-'_x not
+R1404:1406 Corelib.Init.Peano <> ::nat_scope:x_'*'_x not
+R1403:1403 TheoremPhasewise <> m:10 var
+R1407:1407 TheoremPhasewise <> m:10 var
+R1411:1411 TheoremPhasewise <> m:10 var
+R1524:1528 Stdlib.Lists.List <> NoDup ind
+R1538:1541 Corelib.Init.Datatypes <> ::list_scope:x_'++'_x not
+R1524:1528 Stdlib.Lists.List <> NoDup ind
+R1538:1541 Corelib.Init.Datatypes <> ::list_scope:x_'++'_x not
+R1569:1577 Stdlib.Lists.List <> NoDup_app thm
+R1569:1577 Stdlib.Lists.List <> NoDup_app thm
+R1703:1706 Stdlib.Lists.List <> incl def
+R1732:1742 TheoremPhasewise <> phase_space def
+R1716:1719 Corelib.Init.Datatypes <> ::list_scope:x_'++'_x not
+R1703:1706 Stdlib.Lists.List <> incl def
+R1732:1742 TheoremPhasewise <> phase_space def
+R1716:1719 Corelib.Init.Datatypes <> ::list_scope:x_'++'_x not
+R1781:1789 Stdlib.Lists.List <> in_app_or thm
+R1781:1789 Stdlib.Lists.List <> in_app_or thm
+R1847:1873 TheoremPhasewise <> bounded_list_in_phase_space thm
+R1847:1873 TheoremPhasewise <> bounded_list_in_phase_space thm
+R1916:1942 TheoremPhasewise <> bounded_list_in_phase_space thm
+R1916:1942 TheoremPhasewise <> bounded_list_in_phase_space thm
+R1990:2006 Stdlib.Lists.List <> NoDup_incl_length thm
+R1990:2006 Stdlib.Lists.List <> NoDup_incl_length thm
+R2045:2054 Stdlib.Lists.List <> length_app thm
+R2045:2054 Stdlib.Lists.List <> length_app thm
+R2045:2054 Stdlib.Lists.List <> length_app thm
+R2077:2094 TheoremPhasewise <> phase_space_length thm
+R2077:2094 TheoremPhasewise <> phase_space_length thm
+R2077:2094 TheoremPhasewise <> phase_space_length thm
+R2151:2164 TheoremPhasewise PhasewiseBound <> sec

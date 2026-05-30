@@ -1,0 +1,440 @@
+DIGEST 8cd2d25b0f599fdf87dcb4b5b8838a10
+FLemma5
+R27:30 Stdlib.Lists.List <> <> lib
+R32:36 Stdlib.Arith.Arith <> <> lib
+R38:40 Stdlib.micromega.Lia <> <> lib
+R42:57 Stdlib.Program.Equality <> <> lib
+R75:80 Lemma1 <> <> lib
+R98:103 Lemma2 <> <> lib
+R113:125 Stdlib.Lists.List ListNotations <> mod
+sec 137:152 <> NoRepeatedStates
+var  165:165 NoRepeatedStates A
+var  167:167 NoRepeatedStates B
+abbrev 188:193 <> playAB
+R200:203 Lemma2 <> play ind
+R205:205 Lemma5 <> NoRepeatedStates.A var
+R207:207 Lemma5 <> NoRepeatedStates.B var
+abbrev 220:225 <> stepAB
+R232:235 Lemma1 <> step ind
+R237:237 Lemma5 <> NoRepeatedStates.A var
+R239:239 Lemma5 <> NoRepeatedStates.B var
+abbrev 252:257 <> runsAB
+R264:267 Lemma1 <> runs ind
+R269:269 Lemma5 <> NoRepeatedStates.A var
+R271:271 Lemma5 <> NoRepeatedStates.B var
+def 287:300 <> trace_outcomes
+R308:311 Corelib.Init.Datatypes <> list ind
+R315:318 Lemma2 <> duel def
+R320:320 Lemma5 <> NoRepeatedStates.A var
+R322:322 Lemma5 <> NoRepeatedStates.B var
+binder 303:304 <> tr:3
+R328:331 Corelib.Init.Datatypes <> list ind
+R333:339 Lemma1 <> outcome ind
+R346:348 Corelib.Lists.ListDef <> map def
+R386:387 Lemma5 <> tr:3 var
+binder 355:355 <> d:4
+R378:378 Lemma5 <> d:4 var
+R365:365 Corelib.Init.Datatypes <> ::core_scope:'('_x_','_x_','_'..'_','_x_')' not
+R367:368 Corelib.Init.Datatypes <> ::core_scope:'('_x_','_x_','_'..'_','_x_')' not
+R370:371 Corelib.Init.Datatypes <> ::core_scope:'('_x_','_x_','_'..'_','_x_')' not
+R373:373 Corelib.Init.Datatypes <> ::core_scope:'('_x_','_x_','_'..'_','_x_')' not
+prf 397:407 <> play_concat
+binder 420:422 <> phi:6
+binder 424:425 <> c1:7
+binder 427:429 <> tr1:8
+binder 431:432 <> c2:9
+binder 434:436 <> tr2:10
+binder 438:439 <> c3:11
+R466:473 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R446:451 Lemma5 <> playAB abbrev
+R453:455 Lemma5 <> phi:6 var
+R457:458 Lemma5 <> c1:7 var
+R460:462 Lemma5 <> tr1:8 var
+R464:465 Lemma5 <> c2:9 var
+R494:501 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R474:479 Lemma5 <> playAB abbrev
+R481:483 Lemma5 <> phi:6 var
+R485:486 Lemma5 <> c2:9 var
+R488:490 Lemma5 <> tr2:10 var
+R492:493 Lemma5 <> c3:11 var
+R502:507 Lemma5 <> playAB abbrev
+R509:511 Lemma5 <> phi:6 var
+R513:514 Lemma5 <> c1:7 var
+R520:523 Corelib.Init.Datatypes <> ::list_scope:x_'++'_x not
+R517:519 Lemma5 <> tr1:8 var
+R524:526 Lemma5 <> tr2:10 var
+R529:530 Lemma5 <> c3:11 var
+R780:785 Lemma2 <> PlayWA constr
+R780:785 Lemma2 <> PlayWA constr
+R836:841 Lemma2 <> PlayWB constr
+R836:841 Lemma2 <> PlayWB constr
+R892:897 Lemma2 <> PlayTT constr
+R892:897 Lemma2 <> PlayTT constr
+R948:953 Lemma2 <> PlayNN constr
+R948:953 Lemma2 <> PlayNN constr
+prf 999:1016 <> step_deterministic
+binder 1029:1031 <> phi:12
+binder 1033:1033 <> c:13
+binder 1035:1036 <> o1:14
+binder 1038:1039 <> c1:15
+binder 1041:1042 <> o2:16
+binder 1044:1045 <> c2:17
+R1070:1077 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R1052:1057 Lemma5 <> stepAB abbrev
+R1059:1061 Lemma5 <> phi:12 var
+R1063:1063 Lemma5 <> c:13 var
+R1065:1066 Lemma5 <> o1:14 var
+R1068:1069 Lemma5 <> c1:15 var
+R1096:1103 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R1078:1083 Lemma5 <> stepAB abbrev
+R1085:1087 Lemma5 <> phi:12 var
+R1089:1089 Lemma5 <> c:13 var
+R1091:1092 Lemma5 <> o2:16 var
+R1094:1095 Lemma5 <> c2:17 var
+R1111:1114 Corelib.Init.Logic <> ::type_scope:x_'/\'_x not
+R1106:1108 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R1104:1105 Lemma5 <> o1:14 var
+R1109:1110 Lemma5 <> o2:16 var
+R1117:1119 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R1115:1116 Lemma5 <> c1:15 var
+R1120:1121 Lemma5 <> c2:17 var
+R1278:1280 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R1305:1313 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R1338:1340 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R1281:1286 Lemma1 <> deck_A proj
+R1281:1286 Lemma1 <> deck_A proj
+R1281:1286 Lemma1 <> deck_A proj
+R1294:1299 Lemma1 <> deck_B proj
+R1294:1299 Lemma1 <> deck_B proj
+R1314:1319 Lemma1 <> deck_A proj
+R1314:1319 Lemma1 <> deck_A proj
+R1314:1319 Lemma1 <> deck_A proj
+R1327:1332 Lemma1 <> deck_B proj
+R1327:1332 Lemma1 <> deck_B proj
+R1278:1280 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R1305:1313 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R1338:1340 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R1281:1286 Lemma1 <> deck_A proj
+R1281:1286 Lemma1 <> deck_A proj
+R1281:1286 Lemma1 <> deck_A proj
+R1294:1299 Lemma1 <> deck_B proj
+R1294:1299 Lemma1 <> deck_B proj
+R1314:1319 Lemma1 <> deck_A proj
+R1314:1319 Lemma1 <> deck_A proj
+R1314:1319 Lemma1 <> deck_A proj
+R1327:1332 Lemma1 <> deck_B proj
+R1327:1332 Lemma1 <> deck_B proj
+prf 1445:1462 <> no_step_from_empty
+binder 1475:1477 <> phi:18
+binder 1479:1479 <> o:19
+binder 1481:1482 <> c2:20
+R1489:1490 Corelib.Init.Logic <> ::type_scope:'~'_x not
+R1491:1496 Lemma5 <> stepAB abbrev
+R1498:1500 Lemma5 <> phi:18 var
+R1505:1510 Lemma1 <> deck_A proj
+R1505:1510 Lemma1 <> deck_A proj
+R1505:1510 Lemma1 <> deck_A proj
+R1519:1524 Lemma1 <> deck_B proj
+R1519:1524 Lemma1 <> deck_B proj
+R1515:1516 Stdlib.Lists.List ListNotations ::list_scope:'['_']' not
+R1529:1530 Stdlib.Lists.List ListNotations ::list_scope:'['_']' not
+R1535:1535 Lemma5 <> o:19 var
+R1537:1538 Lemma5 <> c2:20 var
+prf 1604:1614 <> runs_concat
+binder 1627:1629 <> phi:21
+binder 1631:1632 <> c1:22
+binder 1634:1636 <> os1:23
+binder 1638:1639 <> c2:24
+binder 1641:1643 <> os2:25
+binder 1645:1646 <> c3:26
+R1673:1680 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R1653:1658 Lemma5 <> runsAB abbrev
+R1660:1662 Lemma5 <> phi:21 var
+R1664:1665 Lemma5 <> c1:22 var
+R1667:1669 Lemma5 <> os1:23 var
+R1671:1672 Lemma5 <> c2:24 var
+R1701:1708 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R1681:1686 Lemma5 <> runsAB abbrev
+R1688:1690 Lemma5 <> phi:21 var
+R1692:1693 Lemma5 <> c2:24 var
+R1695:1697 Lemma5 <> os2:25 var
+R1699:1700 Lemma5 <> c3:26 var
+R1709:1714 Lemma5 <> runsAB abbrev
+R1716:1718 Lemma5 <> phi:21 var
+R1720:1721 Lemma5 <> c1:22 var
+R1727:1730 Corelib.Init.Datatypes <> ::list_scope:x_'++'_x not
+R1724:1726 Lemma5 <> os1:23 var
+R1731:1733 Lemma5 <> os2:25 var
+R1736:1737 Lemma5 <> c3:26 var
+R1889:1896 Lemma1 <> RunsCons constr
+R1889:1896 Lemma1 <> RunsCons constr
+prf 1963:1989 <> terminal_runs_deterministic
+binder 2002:2004 <> phi:27
+binder 2006:2006 <> c:28
+binder 2008:2010 <> os1:29
+binder 2012:2014 <> os2:30
+R2070:2077 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R2021:2026 Lemma5 <> runsAB abbrev
+R2028:2030 Lemma5 <> phi:27 var
+R2032:2032 Lemma5 <> c:28 var
+R2034:2036 Lemma5 <> os1:29 var
+R2041:2046 Lemma1 <> deck_A proj
+R2041:2046 Lemma1 <> deck_A proj
+R2041:2046 Lemma1 <> deck_A proj
+R2055:2060 Lemma1 <> deck_B proj
+R2055:2060 Lemma1 <> deck_B proj
+R2051:2052 Stdlib.Lists.List ListNotations ::list_scope:'['_']' not
+R2065:2066 Stdlib.Lists.List ListNotations ::list_scope:'['_']' not
+R2127:2134 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R2078:2083 Lemma5 <> runsAB abbrev
+R2085:2087 Lemma5 <> phi:27 var
+R2089:2089 Lemma5 <> c:28 var
+R2091:2093 Lemma5 <> os2:30 var
+R2098:2103 Lemma1 <> deck_A proj
+R2098:2103 Lemma1 <> deck_A proj
+R2098:2103 Lemma1 <> deck_A proj
+R2112:2117 Lemma1 <> deck_B proj
+R2112:2117 Lemma1 <> deck_B proj
+R2108:2109 Stdlib.Lists.List ListNotations ::list_scope:'['_']' not
+R2122:2123 Stdlib.Lists.List ListNotations ::list_scope:'['_']' not
+R2138:2140 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R2135:2137 Lemma5 <> os1:29 var
+R2141:2143 Lemma5 <> os2:30 var
+R2289:2294 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R2321:2323 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R2295:2300 Lemma1 <> deck_A proj
+R2295:2300 Lemma1 <> deck_A proj
+R2295:2300 Lemma1 <> deck_A proj
+R2309:2314 Lemma1 <> deck_B proj
+R2309:2314 Lemma1 <> deck_B proj
+R2305:2306 Stdlib.Lists.List ListNotations ::list_scope:'['_']' not
+R2319:2320 Stdlib.Lists.List ListNotations ::list_scope:'['_']' not
+R2289:2294 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R2321:2323 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R2295:2300 Lemma1 <> deck_A proj
+R2295:2300 Lemma1 <> deck_A proj
+R2295:2300 Lemma1 <> deck_A proj
+R2309:2314 Lemma1 <> deck_B proj
+R2309:2314 Lemma1 <> deck_B proj
+R2305:2306 Stdlib.Lists.List ListNotations ::list_scope:'['_']' not
+R2319:2320 Stdlib.Lists.List ListNotations ::list_scope:'['_']' not
+R2474:2491 Lemma5 <> no_step_from_empty thm
+R2474:2491 Lemma5 <> no_step_from_empty thm
+R2616:2621 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R2648:2650 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R2622:2627 Lemma1 <> deck_A proj
+R2622:2627 Lemma1 <> deck_A proj
+R2622:2627 Lemma1 <> deck_A proj
+R2636:2641 Lemma1 <> deck_B proj
+R2636:2641 Lemma1 <> deck_B proj
+R2632:2633 Stdlib.Lists.List ListNotations ::list_scope:'['_']' not
+R2646:2647 Stdlib.Lists.List ListNotations ::list_scope:'['_']' not
+R2616:2621 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R2648:2650 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R2622:2627 Lemma1 <> deck_A proj
+R2622:2627 Lemma1 <> deck_A proj
+R2622:2627 Lemma1 <> deck_A proj
+R2636:2641 Lemma1 <> deck_B proj
+R2636:2641 Lemma1 <> deck_B proj
+R2632:2633 Stdlib.Lists.List ListNotations ::list_scope:'['_']' not
+R2646:2647 Stdlib.Lists.List ListNotations ::list_scope:'['_']' not
+R2779:2796 Lemma5 <> no_step_from_empty thm
+R2779:2796 Lemma5 <> no_step_from_empty thm
+R2896:2913 Lemma5 <> step_deterministic thm
+R2896:2913 Lemma5 <> step_deterministic thm
+prf 3057:3068 <> play_to_runs
+binder 3081:3083 <> phi:31
+binder 3085:3086 <> c1:32
+binder 3088:3089 <> tr:33
+binder 3091:3092 <> c2:34
+R3118:3125 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R3099:3104 Lemma5 <> playAB abbrev
+R3106:3108 Lemma5 <> phi:31 var
+R3110:3111 Lemma5 <> c1:32 var
+R3113:3114 Lemma5 <> tr:33 var
+R3116:3117 Lemma5 <> c2:34 var
+R3126:3131 Lemma5 <> runsAB abbrev
+R3133:3135 Lemma5 <> phi:31 var
+R3137:3138 Lemma5 <> c1:32 var
+R3141:3154 Lemma5 <> trace_outcomes def
+R3156:3157 Lemma5 <> tr:33 var
+R3160:3161 Lemma5 <> c2:34 var
+R3391:3397 Lemma1 <> RunsNil constr
+R3391:3397 Lemma1 <> RunsNil constr
+R3434:3439 Lemma1 <> deck_A proj
+R3434:3439 Lemma1 <> deck_A proj
+R3434:3439 Lemma1 <> deck_A proj
+R3454:3459 Lemma1 <> deck_B proj
+R3454:3459 Lemma1 <> deck_B proj
+R3445:3448 Corelib.Init.Datatypes <> ::list_scope:x_'::'_x not
+R3466:3469 Corelib.Init.Datatypes <> ::list_scope:x_'++'_x not
+R3470:3470 Stdlib.Lists.List ListNotations ::list_scope:'['_x_']' not
+R3472:3472 Stdlib.Lists.List ListNotations ::list_scope:'['_x_']' not
+R3417:3424 Lemma1 <> RunsCons constr
+R3434:3439 Lemma1 <> deck_A proj
+R3434:3439 Lemma1 <> deck_A proj
+R3434:3439 Lemma1 <> deck_A proj
+R3454:3459 Lemma1 <> deck_B proj
+R3454:3459 Lemma1 <> deck_B proj
+R3445:3448 Corelib.Init.Datatypes <> ::list_scope:x_'::'_x not
+R3466:3469 Corelib.Init.Datatypes <> ::list_scope:x_'++'_x not
+R3470:3470 Stdlib.Lists.List ListNotations ::list_scope:'['_x_']' not
+R3472:3472 Stdlib.Lists.List ListNotations ::list_scope:'['_x_']' not
+R3417:3424 Lemma1 <> RunsCons constr
+R3490:3495 Lemma1 <> StepWA constr
+R3490:3495 Lemma1 <> StepWA constr
+R3560:3565 Lemma1 <> deck_A proj
+R3560:3565 Lemma1 <> deck_A proj
+R3560:3565 Lemma1 <> deck_A proj
+R3582:3587 Lemma1 <> deck_B proj
+R3582:3587 Lemma1 <> deck_B proj
+R3573:3576 Corelib.Init.Datatypes <> ::list_scope:x_'++'_x not
+R3577:3577 Stdlib.Lists.List ListNotations ::list_scope:'['_x_']' not
+R3579:3579 Stdlib.Lists.List ListNotations ::list_scope:'['_x_']' not
+R3593:3596 Corelib.Init.Datatypes <> ::list_scope:x_'::'_x not
+R3543:3550 Lemma1 <> RunsCons constr
+R3560:3565 Lemma1 <> deck_A proj
+R3560:3565 Lemma1 <> deck_A proj
+R3560:3565 Lemma1 <> deck_A proj
+R3582:3587 Lemma1 <> deck_B proj
+R3582:3587 Lemma1 <> deck_B proj
+R3573:3576 Corelib.Init.Datatypes <> ::list_scope:x_'++'_x not
+R3577:3577 Stdlib.Lists.List ListNotations ::list_scope:'['_x_']' not
+R3579:3579 Stdlib.Lists.List ListNotations ::list_scope:'['_x_']' not
+R3593:3596 Corelib.Init.Datatypes <> ::list_scope:x_'::'_x not
+R3543:3550 Lemma1 <> RunsCons constr
+R3616:3621 Lemma1 <> StepWB constr
+R3616:3621 Lemma1 <> StepWB constr
+R3686:3691 Lemma1 <> deck_A proj
+R3686:3691 Lemma1 <> deck_A proj
+R3686:3691 Lemma1 <> deck_A proj
+R3701:3706 Lemma1 <> deck_B proj
+R3701:3706 Lemma1 <> deck_B proj
+R3669:3676 Lemma1 <> RunsCons constr
+R3686:3691 Lemma1 <> deck_A proj
+R3686:3691 Lemma1 <> deck_A proj
+R3686:3691 Lemma1 <> deck_A proj
+R3701:3706 Lemma1 <> deck_B proj
+R3701:3706 Lemma1 <> deck_B proj
+R3669:3676 Lemma1 <> RunsCons constr
+R3730:3735 Lemma1 <> StepTT constr
+R3730:3735 Lemma1 <> StepTT constr
+R3800:3805 Lemma1 <> deck_A proj
+R3800:3805 Lemma1 <> deck_A proj
+R3800:3805 Lemma1 <> deck_A proj
+R3822:3827 Lemma1 <> deck_B proj
+R3822:3827 Lemma1 <> deck_B proj
+R3813:3816 Corelib.Init.Datatypes <> ::list_scope:x_'++'_x not
+R3817:3817 Stdlib.Lists.List ListNotations ::list_scope:'['_x_']' not
+R3819:3819 Stdlib.Lists.List ListNotations ::list_scope:'['_x_']' not
+R3834:3837 Corelib.Init.Datatypes <> ::list_scope:x_'++'_x not
+R3838:3838 Stdlib.Lists.List ListNotations ::list_scope:'['_x_']' not
+R3840:3840 Stdlib.Lists.List ListNotations ::list_scope:'['_x_']' not
+R3783:3790 Lemma1 <> RunsCons constr
+R3800:3805 Lemma1 <> deck_A proj
+R3800:3805 Lemma1 <> deck_A proj
+R3800:3805 Lemma1 <> deck_A proj
+R3822:3827 Lemma1 <> deck_B proj
+R3822:3827 Lemma1 <> deck_B proj
+R3813:3816 Corelib.Init.Datatypes <> ::list_scope:x_'++'_x not
+R3817:3817 Stdlib.Lists.List ListNotations ::list_scope:'['_x_']' not
+R3819:3819 Stdlib.Lists.List ListNotations ::list_scope:'['_x_']' not
+R3834:3837 Corelib.Init.Datatypes <> ::list_scope:x_'++'_x not
+R3838:3838 Stdlib.Lists.List ListNotations ::list_scope:'['_x_']' not
+R3840:3840 Stdlib.Lists.List ListNotations ::list_scope:'['_x_']' not
+R3783:3790 Lemma1 <> RunsCons constr
+R3858:3863 Lemma1 <> StepNN constr
+R3858:3863 Lemma1 <> StepNN constr
+prf 3906:3928 <> trace_outcomes_nonempty
+binder 3941:3942 <> tr:35
+R3957:3964 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R3951:3954 Corelib.Init.Logic <> ::type_scope:x_'<>'_x not
+R3949:3950 Lemma5 <> tr:35 var
+R3955:3956 Stdlib.Lists.List ListNotations ::list_scope:'['_']' not
+R3982:3985 Corelib.Init.Logic <> ::type_scope:x_'<>'_x not
+R3965:3978 Lemma5 <> trace_outcomes def
+R3980:3981 Lemma5 <> tr:35 var
+R3986:3987 Stdlib.Lists.List ListNotations ::list_scope:'['_']' not
+prf 4098:4127 <> nonempty_prefix_changes_length
+binder 4140:4140 <> X:36
+R4159:4162 Corelib.Init.Datatypes <> list ind
+R4164:4164 Lemma5 <> X:36 var
+binder 4143:4148 <> prefix:37
+binder 4150:4155 <> suffix:38
+R4184:4191 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R4178:4181 Corelib.Init.Logic <> ::type_scope:x_'<>'_x not
+R4172:4177 Lemma5 <> prefix:37 var
+R4182:4183 Stdlib.Lists.List ListNotations ::list_scope:'['_']' not
+R4208:4211 Corelib.Init.Logic <> ::type_scope:x_'<>'_x not
+R4198:4201 Corelib.Init.Datatypes <> ::list_scope:x_'++'_x not
+R4192:4197 Lemma5 <> prefix:37 var
+R4202:4207 Lemma5 <> suffix:38 var
+R4212:4217 Lemma5 <> suffix:38 var
+R4353:4359 Corelib.Init.Logic <> f_equal thm
+R4363:4368 Corelib.Init.Datatypes <> length def
+R4353:4359 Corelib.Init.Logic <> f_equal thm
+R4363:4368 Corelib.Init.Datatypes <> length def
+R4394:4403 Stdlib.Lists.List <> length_app thm
+R4394:4403 Stdlib.Lists.List <> length_app thm
+R4394:4403 Stdlib.Lists.List <> length_app thm
+prf 4454:4478 <> lemma5_no_repeated_states
+binder 4491:4493 <> phi:39
+binder 4495:4499 <> start:40
+binder 4501:4502 <> tr:41
+R4532:4539 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R4509:4518 Lemma2 <> game_trace def
+R4520:4522 Lemma5 <> phi:39 var
+R4524:4528 Lemma5 <> start:40 var
+R4530:4531 Lemma5 <> tr:41 var
+R4540:4541 Corelib.Init.Logic <> ::type_scope:'~'_x not
+R4542:4548 Corelib.Init.Logic <> ::type_scope:'exists'_x_'..'_x_','_x not
+R4572:4581 Corelib.Init.Logic <> ::type_scope:'exists'_x_'..'_x_','_x not
+binder 4549:4554 <> prefix:42
+binder 4556:4560 <> cycle:43
+binder 4562:4567 <> suffix:44
+binder 4569:4571 <> mid:45
+R4612:4623 Corelib.Init.Logic <> ::type_scope:x_'/\'_x not
+R4584:4586 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R4582:4583 Lemma5 <> tr:41 var
+R4593:4596 Corelib.Init.Datatypes <> ::list_scope:x_'++'_x not
+R4587:4592 Lemma5 <> prefix:42 var
+R4602:4605 Corelib.Init.Datatypes <> ::list_scope:x_'++'_x not
+R4597:4601 Lemma5 <> cycle:43 var
+R4606:4611 Lemma5 <> suffix:44 var
+R4635:4646 Corelib.Init.Logic <> ::type_scope:x_'/\'_x not
+R4629:4632 Corelib.Init.Logic <> ::type_scope:x_'<>'_x not
+R4624:4628 Lemma5 <> cycle:43 var
+R4633:4634 Stdlib.Lists.List ListNotations ::list_scope:'['_']' not
+R4674:4685 Corelib.Init.Logic <> ::type_scope:x_'/\'_x not
+R4647:4652 Lemma5 <> playAB abbrev
+R4654:4656 Lemma5 <> phi:39 var
+R4658:4662 Lemma5 <> start:40 var
+R4664:4669 Lemma5 <> prefix:42 var
+R4671:4673 Lemma5 <> mid:45 var
+R4710:4721 Corelib.Init.Logic <> ::type_scope:x_'/\'_x not
+R4686:4691 Lemma5 <> playAB abbrev
+R4693:4695 Lemma5 <> phi:39 var
+R4697:4699 Lemma5 <> mid:45 var
+R4701:4705 Lemma5 <> cycle:43 var
+R4707:4709 Lemma5 <> mid:45 var
+R4722:4731 Lemma2 <> game_trace def
+R4733:4735 Lemma5 <> phi:39 var
+R4737:4739 Lemma5 <> mid:45 var
+R4741:4746 Lemma5 <> suffix:44 var
+R4922:4933 Lemma5 <> play_to_runs thm
+R4922:4933 Lemma5 <> play_to_runs thm
+R4978:4989 Lemma5 <> play_to_runs thm
+R4978:4989 Lemma5 <> play_to_runs thm
+R5038:5048 Lemma5 <> runs_concat thm
+R5038:5048 Lemma5 <> runs_concat thm
+R5121:5147 Lemma5 <> terminal_runs_deterministic thm
+R5121:5147 Lemma5 <> terminal_runs_deterministic thm
+R5207:5236 Lemma5 <> nonempty_prefix_changes_length thm
+R5241:5254 Lemma5 <> trace_outcomes def
+R5264:5277 Lemma5 <> trace_outcomes def
+R5207:5236 Lemma5 <> nonempty_prefix_changes_length thm
+R5241:5254 Lemma5 <> trace_outcomes def
+R5264:5277 Lemma5 <> trace_outcomes def
+R5300:5322 Lemma5 <> trace_outcomes_nonempty thm
+R5300:5322 Lemma5 <> trace_outcomes_nonempty thm
+R5372:5387 Lemma5 NoRepeatedStates <> sec

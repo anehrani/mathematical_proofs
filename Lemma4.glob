@@ -1,0 +1,151 @@
+DIGEST bf93f3157798a078bceba8d63fc0bcbd
+FLemma4
+R27:30 Stdlib.Lists.List <> <> lib
+R48:53 Lemma1 <> <> lib
+R71:76 Lemma3 <> <> lib
+R86:98 Stdlib.Lists.List ListNotations <> mod
+sec 110:128 <> PhaseTransitionRule
+var  141:141 PhaseTransitionRule A
+var  143:143 PhaseTransitionRule B
+abbrev 164:170 <> rotateA
+R177:194 Lemma3 <> move_top_to_bottom def
+R196:196 Lemma4 <> PhaseTransitionRule.A var
+abbrev 209:215 <> rotateB
+R222:239 Lemma3 <> move_top_to_bottom def
+R241:241 Lemma4 <> PhaseTransitionRule.B var
+def 257:267 <> phase_state
+R286:289 Corelib.Init.Datatypes <> list ind
+R291:291 Lemma4 <> PhaseTransitionRule.A var
+binder 274:282 <> initial_A:3
+R311:314 Corelib.Init.Datatypes <> list ind
+R316:316 Lemma4 <> PhaseTransitionRule.B var
+binder 299:307 <> initial_B:4
+R330:332 Corelib.Init.Datatypes <> nat ind
+binder 324:324 <> i:5
+binder 326:326 <> j:6
+R344:349 Lemma1 <> config rec
+binder 340:340 <> c:7
+R403:408 Corelib.Init.Logic <> ::type_scope:x_'/\'_x not
+R372:374 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R364:369 Lemma1 <> deck_A proj
+R371:371 Lemma4 <> c:7 var
+R375:382 Corelib.Init.Nat <> iter def
+R394:402 Lemma4 <> initial_A:3 var
+R386:392 Lemma4 <> rotateA abbrev
+R384:384 Lemma4 <> i:5 var
+R417:419 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R409:414 Lemma1 <> deck_B proj
+R416:416 Lemma4 <> c:7 var
+R420:427 Corelib.Init.Nat <> iter def
+R439:447 Lemma4 <> initial_B:4 var
+R431:437 Lemma4 <> rotateB abbrev
+R429:429 Lemma4 <> j:6 var
+prf 459:486 <> lemma4_phase_transition_rule
+binder 499:501 <> phi:8
+binder 503:511 <> initial_A:9
+binder 513:521 <> initial_B:10
+binder 523:523 <> i:11
+binder 525:525 <> j:12
+binder 527:528 <> c1:13
+binder 530:530 <> o:14
+binder 532:533 <> c2:15
+R578:585 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R540:550 Lemma4 <> phase_state def
+R552:560 Lemma4 <> initial_A:9 var
+R562:570 Lemma4 <> initial_B:10 var
+R572:572 Lemma4 <> i:11 var
+R574:574 Lemma4 <> j:12 var
+R576:577 Lemma4 <> c1:13 var
+R602:609 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R586:589 Lemma1 <> step ind
+R591:593 Lemma4 <> phi:8 var
+R595:596 Lemma4 <> c1:13 var
+R598:598 Lemma4 <> o:14 var
+R600:601 Lemma4 <> c2:15 var
+R616:616 Lemma4 <> o:14 var
+R629:630 Lemma1 <> WA constr
+R635:645 Lemma4 <> phase_state def
+R647:655 Lemma4 <> initial_A:9 var
+R657:665 Lemma4 <> initial_B:10 var
+R667:667 Lemma4 <> i:11 var
+R670:670 Corelib.Init.Datatypes <> S constr
+R672:672 Lemma4 <> j:12 var
+R675:676 Lemma4 <> c2:15 var
+R684:685 Lemma1 <> WB constr
+R690:700 Lemma4 <> phase_state def
+R702:710 Lemma4 <> initial_A:9 var
+R712:720 Lemma4 <> initial_B:10 var
+R723:723 Corelib.Init.Datatypes <> S constr
+R725:725 Lemma4 <> i:11 var
+R728:728 Lemma4 <> j:12 var
+R730:731 Lemma4 <> c2:15 var
+R739:740 Lemma1 <> NN constr
+R745:755 Lemma4 <> phase_state def
+R757:765 Lemma4 <> initial_A:9 var
+R767:775 Lemma4 <> initial_B:10 var
+R778:778 Corelib.Init.Datatypes <> S constr
+R780:780 Lemma4 <> i:11 var
+R784:784 Corelib.Init.Datatypes <> S constr
+R786:786 Lemma4 <> j:12 var
+R789:790 Lemma4 <> c2:15 var
+R798:799 Lemma1 <> TT constr
+R804:807 Corelib.Init.Logic <> True ind
+R1002:1004 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R995:998 Corelib.Init.Datatypes <> ::list_scope:x_'++'_x not
+R999:999 Stdlib.Lists.List ListNotations ::list_scope:'['_x_']' not
+R1001:1001 Stdlib.Lists.List ListNotations ::list_scope:'['_x_']' not
+R1005:1011 Lemma4 <> rotateB abbrev
+R1014:1021 Corelib.Init.Nat <> iter def
+R1025:1031 Lemma4 <> rotateB abbrev
+R1002:1004 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R995:998 Corelib.Init.Datatypes <> ::list_scope:x_'++'_x not
+R999:999 Stdlib.Lists.List ListNotations ::list_scope:'['_x_']' not
+R1001:1001 Stdlib.Lists.List ListNotations ::list_scope:'['_x_']' not
+R1005:1011 Lemma4 <> rotateB abbrev
+R1014:1021 Corelib.Init.Nat <> iter def
+R1025:1031 Lemma4 <> rotateB abbrev
+R1121:1123 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R1114:1117 Corelib.Init.Datatypes <> ::list_scope:x_'++'_x not
+R1118:1118 Stdlib.Lists.List ListNotations ::list_scope:'['_x_']' not
+R1120:1120 Stdlib.Lists.List ListNotations ::list_scope:'['_x_']' not
+R1124:1130 Lemma4 <> rotateA abbrev
+R1133:1140 Corelib.Init.Nat <> iter def
+R1144:1150 Lemma4 <> rotateA abbrev
+R1121:1123 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R1114:1117 Corelib.Init.Datatypes <> ::list_scope:x_'++'_x not
+R1118:1118 Stdlib.Lists.List ListNotations ::list_scope:'['_x_']' not
+R1120:1120 Stdlib.Lists.List ListNotations ::list_scope:'['_x_']' not
+R1124:1130 Lemma4 <> rotateA abbrev
+R1133:1140 Corelib.Init.Nat <> iter def
+R1144:1150 Lemma4 <> rotateA abbrev
+R1231:1231 Corelib.Init.Logic <> I constr
+R1231:1231 Corelib.Init.Logic <> I constr
+R1269:1271 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R1262:1265 Corelib.Init.Datatypes <> ::list_scope:x_'++'_x not
+R1266:1266 Stdlib.Lists.List ListNotations ::list_scope:'['_x_']' not
+R1268:1268 Stdlib.Lists.List ListNotations ::list_scope:'['_x_']' not
+R1272:1278 Lemma4 <> rotateA abbrev
+R1281:1288 Corelib.Init.Nat <> iter def
+R1292:1298 Lemma4 <> rotateA abbrev
+R1269:1271 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R1262:1265 Corelib.Init.Datatypes <> ::list_scope:x_'++'_x not
+R1266:1266 Stdlib.Lists.List ListNotations ::list_scope:'['_x_']' not
+R1268:1268 Stdlib.Lists.List ListNotations ::list_scope:'['_x_']' not
+R1272:1278 Lemma4 <> rotateA abbrev
+R1281:1288 Corelib.Init.Nat <> iter def
+R1292:1298 Lemma4 <> rotateA abbrev
+R1376:1378 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R1369:1372 Corelib.Init.Datatypes <> ::list_scope:x_'++'_x not
+R1373:1373 Stdlib.Lists.List ListNotations ::list_scope:'['_x_']' not
+R1375:1375 Stdlib.Lists.List ListNotations ::list_scope:'['_x_']' not
+R1379:1385 Lemma4 <> rotateB abbrev
+R1388:1395 Corelib.Init.Nat <> iter def
+R1399:1405 Lemma4 <> rotateB abbrev
+R1376:1378 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R1369:1372 Corelib.Init.Datatypes <> ::list_scope:x_'++'_x not
+R1373:1373 Stdlib.Lists.List ListNotations ::list_scope:'['_x_']' not
+R1375:1375 Stdlib.Lists.List ListNotations ::list_scope:'['_x_']' not
+R1379:1385 Lemma4 <> rotateB abbrev
+R1388:1395 Corelib.Init.Nat <> iter def
+R1399:1405 Lemma4 <> rotateB abbrev
+R1470:1488 Lemma4 PhaseTransitionRule <> sec
