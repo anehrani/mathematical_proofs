@@ -1,0 +1,841 @@
+DIGEST 2d4090612fa9735849b78793064c650f
+FLowerBound
+R27:30 Stdlib.Lists.List <> <> lib
+R32:36 Stdlib.Arith.Arith <> <> lib
+R38:40 Stdlib.micromega.Lia <> <> lib
+R42:49 Stdlib.Arith.PeanoNat <> <> lib
+R67:80 CorollaryUpper <> <> lib
+R90:102 Stdlib.Lists.List ListNotations <> mod
+sec 114:123 <> LowerBound
+ind 137:143 <> outcome
+constr 148:149 <> WA
+constr 153:154 <> WB
+constr 158:159 <> TT
+constr 163:164 <> NN
+scheme 137:143 <> outcome_rect
+scheme 137:143 <> outcome_ind
+scheme 137:143 <> outcome_rec
+scheme 137:143 <> outcome_sind
+def 179:192 <> outcome_eq_dec
+R209:215 LowerBound <> outcome ind
+binder 203:203 <> x:3
+binder 205:205 <> y:4
+R218:218 Corelib.Init.Specif <> ::type_scope:'{'_x_'}'_'+'_'{'_x_'}' not
+R224:228 Corelib.Init.Specif <> ::type_scope:'{'_x_'}'_'+'_'{'_x_'}' not
+R235:235 Corelib.Init.Specif <> ::type_scope:'{'_x_'}'_'+'_'{'_x_'}' not
+R220:222 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R219:219 LowerBound <> x:3 var
+R223:223 LowerBound <> y:4 var
+R230:233 Corelib.Init.Logic <> ::type_scope:x_'<>'_x not
+R229:229 LowerBound <> x:3 var
+R234:234 LowerBound <> y:4 var
+rec 279:284 <> config
+proj 293:298 <> deck_A
+proj 314:319 <> deck_B
+R302:305 Corelib.Init.Datatypes <> list ind
+R307:309 Corelib.Init.Datatypes <> nat ind
+R323:326 Corelib.Init.Datatypes <> list ind
+R328:330 Corelib.Init.Datatypes <> nat ind
+ind 346:349 <> step
+constr 424:429 <> StepWA
+constr 598:603 <> StepWB
+constr 772:777 <> StepTT
+constr 934:939 <> StepNN
+R361:364 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R358:360 Corelib.Init.Datatypes <> nat ind
+R368:371 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R365:367 Corelib.Init.Datatypes <> nat ind
+R372:378 LowerBound <> outcome ind
+binder 352:354 <> phi:8
+R389:392 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R383:388 LowerBound <> config rec
+R400:403 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R393:399 LowerBound <> outcome ind
+R410:413 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R404:409 LowerBound <> config rec
+binder 440:440 <> a:11
+binder 442:444 <> as_:12
+binder 446:446 <> b:13
+binder 448:449 <> bs:14
+R468:475 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R463:465 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R456:458 LowerBound <> phi:8 var
+R462:462 LowerBound <> b:13 var
+R460:460 LowerBound <> a:11 var
+R466:467 LowerBound <> WA constr
+R476:479 LowerBound <> step:9 ind
+R553:558 LowerBound <> deck_A proj
+R553:558 LowerBound <> deck_A proj
+R553:558 LowerBound <> deck_A proj
+R573:578 LowerBound <> deck_B proj
+R573:578 LowerBound <> deck_B proj
+R564:567 Corelib.Init.Datatypes <> ::list_scope:x_'::'_x not
+R563:563 LowerBound <> a:11 var
+R568:570 LowerBound <> as_:12 var
+R585:588 Corelib.Init.Datatypes <> ::list_scope:x_'++'_x not
+R583:584 LowerBound <> bs:14 var
+R589:589 Stdlib.Lists.List ListNotations ::list_scope:'['_x_']' not
+R591:591 Stdlib.Lists.List ListNotations ::list_scope:'['_x_']' not
+R590:590 LowerBound <> b:13 var
+R541:542 LowerBound <> WA constr
+R494:499 LowerBound <> deck_A proj
+R494:499 LowerBound <> deck_A proj
+R494:499 LowerBound <> deck_A proj
+R514:519 LowerBound <> deck_B proj
+R514:519 LowerBound <> deck_B proj
+R505:508 Corelib.Init.Datatypes <> ::list_scope:x_'::'_x not
+R504:504 LowerBound <> a:11 var
+R509:511 LowerBound <> as_:12 var
+R525:528 Corelib.Init.Datatypes <> ::list_scope:x_'::'_x not
+R524:524 LowerBound <> b:13 var
+R529:530 LowerBound <> bs:14 var
+R481:483 LowerBound <> phi:8 var
+binder 614:614 <> a:15
+binder 616:618 <> as_:16
+binder 620:620 <> b:17
+binder 622:623 <> bs:18
+R642:649 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R637:639 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R630:632 LowerBound <> phi:8 var
+R636:636 LowerBound <> b:17 var
+R634:634 LowerBound <> a:15 var
+R640:641 LowerBound <> WB constr
+R650:653 LowerBound <> step:9 ind
+R727:732 LowerBound <> deck_A proj
+R727:732 LowerBound <> deck_A proj
+R727:732 LowerBound <> deck_A proj
+R749:754 LowerBound <> deck_B proj
+R749:754 LowerBound <> deck_B proj
+R740:743 Corelib.Init.Datatypes <> ::list_scope:x_'++'_x not
+R737:739 LowerBound <> as_:16 var
+R744:744 Stdlib.Lists.List ListNotations ::list_scope:'['_x_']' not
+R746:746 Stdlib.Lists.List ListNotations ::list_scope:'['_x_']' not
+R745:745 LowerBound <> a:15 var
+R760:763 Corelib.Init.Datatypes <> ::list_scope:x_'::'_x not
+R759:759 LowerBound <> b:17 var
+R764:765 LowerBound <> bs:18 var
+R715:716 LowerBound <> WB constr
+R668:673 LowerBound <> deck_A proj
+R668:673 LowerBound <> deck_A proj
+R668:673 LowerBound <> deck_A proj
+R688:693 LowerBound <> deck_B proj
+R688:693 LowerBound <> deck_B proj
+R679:682 Corelib.Init.Datatypes <> ::list_scope:x_'::'_x not
+R678:678 LowerBound <> a:15 var
+R683:685 LowerBound <> as_:16 var
+R699:702 Corelib.Init.Datatypes <> ::list_scope:x_'::'_x not
+R698:698 LowerBound <> b:17 var
+R703:704 LowerBound <> bs:18 var
+R655:657 LowerBound <> phi:8 var
+binder 788:788 <> a:19
+binder 790:792 <> as_:20
+binder 794:794 <> b:21
+binder 796:797 <> bs:22
+R816:823 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R811:813 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R804:806 LowerBound <> phi:8 var
+R810:810 LowerBound <> b:21 var
+R808:808 LowerBound <> a:19 var
+R814:815 LowerBound <> TT constr
+R824:827 LowerBound <> step:9 ind
+R901:906 LowerBound <> deck_A proj
+R901:906 LowerBound <> deck_A proj
+R901:906 LowerBound <> deck_A proj
+R916:921 LowerBound <> deck_B proj
+R916:921 LowerBound <> deck_B proj
+R911:913 LowerBound <> as_:20 var
+R926:927 LowerBound <> bs:22 var
+R889:890 LowerBound <> TT constr
+R842:847 LowerBound <> deck_A proj
+R842:847 LowerBound <> deck_A proj
+R842:847 LowerBound <> deck_A proj
+R862:867 LowerBound <> deck_B proj
+R862:867 LowerBound <> deck_B proj
+R853:856 Corelib.Init.Datatypes <> ::list_scope:x_'::'_x not
+R852:852 LowerBound <> a:19 var
+R857:859 LowerBound <> as_:20 var
+R873:876 Corelib.Init.Datatypes <> ::list_scope:x_'::'_x not
+R872:872 LowerBound <> b:21 var
+R877:878 LowerBound <> bs:22 var
+R829:831 LowerBound <> phi:8 var
+binder 950:950 <> a:23
+binder 952:954 <> as_:24
+binder 956:956 <> b:25
+binder 958:959 <> bs:26
+R978:985 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R973:975 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R966:968 LowerBound <> phi:8 var
+R972:972 LowerBound <> b:25 var
+R970:970 LowerBound <> a:23 var
+R976:977 LowerBound <> NN constr
+R986:989 LowerBound <> step:9 ind
+R1063:1068 LowerBound <> deck_A proj
+R1063:1068 LowerBound <> deck_A proj
+R1063:1068 LowerBound <> deck_A proj
+R1085:1090 LowerBound <> deck_B proj
+R1085:1090 LowerBound <> deck_B proj
+R1076:1079 Corelib.Init.Datatypes <> ::list_scope:x_'++'_x not
+R1073:1075 LowerBound <> as_:24 var
+R1080:1080 Stdlib.Lists.List ListNotations ::list_scope:'['_x_']' not
+R1082:1082 Stdlib.Lists.List ListNotations ::list_scope:'['_x_']' not
+R1081:1081 LowerBound <> a:23 var
+R1097:1100 Corelib.Init.Datatypes <> ::list_scope:x_'++'_x not
+R1095:1096 LowerBound <> bs:26 var
+R1101:1101 Stdlib.Lists.List ListNotations ::list_scope:'['_x_']' not
+R1103:1103 Stdlib.Lists.List ListNotations ::list_scope:'['_x_']' not
+R1102:1102 LowerBound <> b:25 var
+R1051:1052 LowerBound <> NN constr
+R1004:1009 LowerBound <> deck_A proj
+R1004:1009 LowerBound <> deck_A proj
+R1004:1009 LowerBound <> deck_A proj
+R1024:1029 LowerBound <> deck_B proj
+R1024:1029 LowerBound <> deck_B proj
+R1015:1018 Corelib.Init.Datatypes <> ::list_scope:x_'::'_x not
+R1014:1014 LowerBound <> a:23 var
+R1019:1021 LowerBound <> as_:24 var
+R1035:1038 Corelib.Init.Datatypes <> ::list_scope:x_'::'_x not
+R1034:1034 LowerBound <> b:25 var
+R1039:1040 LowerBound <> bs:26 var
+R991:993 LowerBound <> phi:8 var
+scheme 346:349 <> step_ind
+scheme 346:349 <> step_sind
+ind 1120:1123 <> runs
+constr 1203:1209 <> RunsNil
+constr 1245:1252 <> RunsCons
+R1135:1138 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R1132:1134 Corelib.Init.Datatypes <> nat ind
+R1142:1145 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R1139:1141 Corelib.Init.Datatypes <> nat ind
+R1146:1152 LowerBound <> outcome ind
+binder 1126:1128 <> phi:27
+R1163:1166 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R1157:1162 LowerBound <> config rec
+R1179:1182 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R1167:1170 Corelib.Init.Datatypes <> list ind
+R1172:1178 LowerBound <> outcome ind
+R1189:1192 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R1183:1188 LowerBound <> config rec
+binder 1220:1220 <> c:30
+R1227:1230 LowerBound <> runs:28 ind
+R1241:1241 LowerBound <> c:30 var
+R1238:1239 Stdlib.Lists.List ListNotations ::list_scope:'['_']' not
+R1236:1236 LowerBound <> c:30 var
+R1232:1234 LowerBound <> phi:27 var
+binder 1263:1264 <> c1:31
+binder 1266:1267 <> c2:32
+binder 1269:1270 <> c3:33
+binder 1272:1272 <> o:34
+binder 1274:1275 <> os:35
+R1298:1305 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R1282:1285 LowerBound <> step ind
+R1287:1289 LowerBound <> phi:27 var
+R1291:1292 LowerBound <> c1:31 var
+R1294:1294 LowerBound <> o:34 var
+R1296:1297 LowerBound <> c2:32 var
+R1323:1330 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R1306:1309 LowerBound <> runs:28 ind
+R1321:1322 LowerBound <> c3:33 var
+R1318:1319 LowerBound <> os:35 var
+R1315:1316 LowerBound <> c2:32 var
+R1311:1313 LowerBound <> phi:27 var
+R1331:1334 LowerBound <> runs:28 ind
+R1353:1354 LowerBound <> c3:33 var
+R1345:1348 Corelib.Init.Datatypes <> ::list_scope:x_'::'_x not
+R1344:1344 LowerBound <> o:34 var
+R1349:1350 LowerBound <> os:35 var
+R1340:1341 LowerBound <> c1:31 var
+R1336:1338 LowerBound <> phi:27 var
+scheme 1120:1123 <> runs_ind
+scheme 1120:1123 <> runs_sind
+def 1369:1372 <> game
+R1384:1387 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R1381:1383 Corelib.Init.Datatypes <> nat ind
+R1391:1394 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R1388:1390 Corelib.Init.Datatypes <> nat ind
+R1395:1401 LowerBound <> outcome ind
+binder 1375:1377 <> phi:36
+R1413:1418 LowerBound <> config rec
+binder 1405:1409 <> start:37
+R1427:1430 Corelib.Init.Datatypes <> list ind
+R1432:1438 LowerBound <> outcome ind
+binder 1422:1423 <> os:38
+R1453:1456 LowerBound <> runs ind
+R1458:1460 LowerBound <> phi:36 var
+R1462:1466 LowerBound <> start:37 var
+R1468:1469 LowerBound <> os:38 var
+R1474:1479 LowerBound <> deck_A proj
+R1474:1479 LowerBound <> deck_A proj
+R1474:1479 LowerBound <> deck_A proj
+R1488:1493 LowerBound <> deck_B proj
+R1488:1493 LowerBound <> deck_B proj
+R1484:1485 Stdlib.Lists.List ListNotations ::list_scope:'['_']' not
+R1498:1499 Stdlib.Lists.List ListNotations ::list_scope:'['_']' not
+def 1517:1524 <> duration
+R1532:1535 Corelib.Init.Datatypes <> list ind
+R1537:1543 LowerBound <> outcome ind
+binder 1527:1528 <> os:39
+R1548:1550 Corelib.Init.Datatypes <> nat ind
+R1555:1560 Corelib.Init.Datatypes <> length def
+R1562:1563 LowerBound <> os:39 var
+def 1578:1587 <> tie_weight
+R1594:1600 LowerBound <> outcome ind
+binder 1590:1590 <> o:40
+R1605:1607 Corelib.Init.Datatypes <> nat ind
+R1620:1620 LowerBound <> o:40 var
+R1631:1632 LowerBound <> TT constr
+def 1669:1678 <> phase_term
+R1685:1687 Corelib.Init.Datatypes <> nat ind
+binder 1681:1681 <> m:42
+R1692:1694 Corelib.Init.Datatypes <> nat ind
+R1708:1710 Corelib.Init.Peano <> ::nat_scope:x_'+'_x not
+R1704:1706 Corelib.Init.Peano <> ::nat_scope:x_'-'_x not
+R1700:1702 Corelib.Init.Peano <> ::nat_scope:x_'*'_x not
+R1699:1699 LowerBound <> m:42 var
+R1703:1703 LowerBound <> m:42 var
+R1707:1707 LowerBound <> m:42 var
+def 1724:1724 <> T
+R1731:1733 Corelib.Init.Datatypes <> nat ind
+binder 1727:1727 <> n:43
+R1738:1740 Corelib.Init.Datatypes <> nat ind
+R1753:1753 LowerBound <> n:43 var
+R1775:1775 Corelib.Init.Datatypes <> S constr
+R1785:1787 Corelib.Init.Peano <> ::nat_scope:x_'+'_x not
+R1782:1782 LowerBound <> T:44 def
+R1788:1797 LowerBound <> phase_term def
+R1800:1800 Corelib.Init.Datatypes <> S constr
+def 1824:1843 <> lower_bound_solution
+R1850:1852 Corelib.Init.Datatypes <> nat ind
+binder 1846:1846 <> m:46
+R1867:1874 Corelib.Init.Logic <> ::type_scope:'exists'_x_'..'_x_','_x not
+R1939:1945 Corelib.Init.Logic <> ::type_scope:'exists'_x_'..'_x_','_x not
+R1884:1887 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R1881:1883 Corelib.Init.Datatypes <> nat ind
+R1891:1894 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R1888:1890 Corelib.Init.Datatypes <> nat ind
+R1895:1901 LowerBound <> outcome ind
+binder 1875:1877 <> phi:47
+R1913:1918 LowerBound <> config rec
+binder 1905:1909 <> start:48
+R1927:1930 Corelib.Init.Datatypes <> list ind
+R1932:1938 LowerBound <> outcome ind
+binder 1922:1923 <> os:49
+R1971:1978 Corelib.Init.Logic <> ::type_scope:x_'/\'_x not
+R1967:1969 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R1946:1951 Corelib.Init.Datatypes <> length def
+R1954:1959 LowerBound <> deck_A proj
+R1961:1965 LowerBound <> start:48 var
+R1970:1970 LowerBound <> m:46 var
+R2004:2011 Corelib.Init.Logic <> ::type_scope:x_'/\'_x not
+R2000:2002 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R1979:1984 Corelib.Init.Datatypes <> length def
+R1987:1992 LowerBound <> deck_B proj
+R1994:1998 LowerBound <> start:48 var
+R2003:2003 LowerBound <> m:46 var
+R2029:2036 Corelib.Init.Logic <> ::type_scope:x_'/\'_x not
+R2012:2015 LowerBound <> game def
+R2017:2019 LowerBound <> phi:47 var
+R2021:2025 LowerBound <> start:48 var
+R2027:2028 LowerBound <> os:49 var
+R2048:2050 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R2037:2044 LowerBound <> duration def
+R2046:2047 LowerBound <> os:49 var
+R2051:2051 LowerBound <> T def
+R2053:2053 LowerBound <> m:46 var
+prf 2131:2152 <> step_length_accounting
+binder 2165:2167 <> phi:50
+binder 2169:2170 <> c1:51
+binder 2172:2172 <> o:52
+binder 2174:2175 <> c2:53
+R2198:2205 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R2182:2185 LowerBound <> step ind
+R2187:2189 LowerBound <> phi:50 var
+R2191:2192 LowerBound <> c1:51 var
+R2194:2194 LowerBound <> o:52 var
+R2196:2197 LowerBound <> c2:53 var
+R2260:2267 Corelib.Init.Logic <> ::type_scope:x_'/\'_x not
+R2239:2241 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R2224:2226 Corelib.Init.Peano <> ::nat_scope:x_'+'_x not
+R2206:2211 Corelib.Init.Datatypes <> length def
+R2214:2219 LowerBound <> deck_A proj
+R2221:2222 LowerBound <> c2:53 var
+R2227:2236 LowerBound <> tie_weight def
+R2238:2238 LowerBound <> o:52 var
+R2242:2247 Corelib.Init.Datatypes <> length def
+R2250:2255 LowerBound <> deck_A proj
+R2257:2258 LowerBound <> c1:51 var
+R2301:2303 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R2286:2288 Corelib.Init.Peano <> ::nat_scope:x_'+'_x not
+R2268:2273 Corelib.Init.Datatypes <> length def
+R2276:2281 LowerBound <> deck_B proj
+R2283:2284 LowerBound <> c2:53 var
+R2289:2298 LowerBound <> tie_weight def
+R2300:2300 LowerBound <> o:52 var
+R2304:2309 Corelib.Init.Datatypes <> length def
+R2312:2317 LowerBound <> deck_B proj
+R2319:2320 LowerBound <> c1:51 var
+R2393:2402 Stdlib.Lists.List <> length_app thm
+R2393:2402 Stdlib.Lists.List <> length_app thm
+R2393:2402 Stdlib.Lists.List <> length_app thm
+R2393:2402 Stdlib.Lists.List <> length_app thm
+R2393:2402 Stdlib.Lists.List <> length_app thm
+R2393:2402 Stdlib.Lists.List <> length_app thm
+R2393:2402 Stdlib.Lists.List <> length_app thm
+R2393:2402 Stdlib.Lists.List <> length_app thm
+R2393:2402 Stdlib.Lists.List <> length_app thm
+R2393:2402 Stdlib.Lists.List <> length_app thm
+R2393:2402 Stdlib.Lists.List <> length_app thm
+R2393:2402 Stdlib.Lists.List <> length_app thm
+R2393:2402 Stdlib.Lists.List <> length_app thm
+prf 2429:2450 <> lemma6_phase_term_succ
+binder 2463:2463 <> m:54
+R2486:2488 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R2470:2479 LowerBound <> phase_term def
+R2482:2482 Corelib.Init.Datatypes <> S constr
+R2484:2484 LowerBound <> m:54 var
+R2501:2503 Corelib.Init.Peano <> ::nat_scope:x_'+'_x not
+R2489:2498 LowerBound <> phase_term def
+R2500:2500 LowerBound <> m:54 var
+R2505:2507 Corelib.Init.Peano <> ::nat_scope:x_'*'_x not
+R2508:2508 LowerBound <> m:54 var
+R2538:2547 LowerBound <> phase_term def
+prf 2569:2590 <> lemma7_row_handoff_mod
+binder 2603:2603 <> n:55
+binder 2605:2605 <> i:56
+R2617:2624 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R2613:2615 Corelib.Init.Peano <> ::nat_scope:x_'>'_x not
+R2612:2612 LowerBound <> n:55 var
+R2636:2638 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R2625:2625 Stdlib.Arith.PeanoNat <> ::nat_scope:x_'mod'_x not
+R2629:2634 Stdlib.Arith.PeanoNat <> ::nat_scope:x_'mod'_x not
+R2626:2626 Corelib.Init.Datatypes <> S constr
+R2628:2628 LowerBound <> i:56 var
+R2635:2635 LowerBound <> n:55 var
+R2639:2639 Stdlib.Arith.PeanoNat <> ::nat_scope:x_'mod'_x not
+R2645:2650 Stdlib.Arith.PeanoNat <> ::nat_scope:x_'mod'_x not
+R2641:2643 Corelib.Init.Peano <> ::nat_scope:x_'+'_x not
+R2640:2640 LowerBound <> i:56 var
+R2651:2651 LowerBound <> n:55 var
+R2688:2698 Stdlib.Arith.PeanoNat Nat add_1_r thm
+R2688:2698 Stdlib.Arith.PeanoNat Nat add_1_r thm
+R2688:2698 Stdlib.Arith.PeanoNat Nat add_1_r thm
+def 2962:2981 <> extension_compatible
+R2988:2990 Corelib.Init.Datatypes <> nat ind
+binder 2984:2984 <> m:57
+R3001:3004 Corelib.Init.Datatypes <> list ind
+R3010:3012 Corelib.Init.Datatypes <> ::type_scope:x_'*'_x not
+R3007:3009 Corelib.Init.Datatypes <> nat ind
+R3013:3015 Corelib.Init.Datatypes <> nat ind
+binder 2994:2997 <> path:58
+R3042:3044 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R3031:3036 Corelib.Init.Datatypes <> length def
+R3038:3041 LowerBound <> path:58 var
+R3045:3054 LowerBound <> phase_term def
+R3057:3057 Corelib.Init.Datatypes <> S constr
+R3059:3059 LowerBound <> m:57 var
+def 3075:3090 <> path_well_formed
+R3097:3099 Corelib.Init.Datatypes <> nat ind
+binder 3093:3093 <> m:59
+R3110:3113 Corelib.Init.Datatypes <> list ind
+R3119:3121 Corelib.Init.Datatypes <> ::type_scope:x_'*'_x not
+R3116:3118 Corelib.Init.Datatypes <> nat ind
+R3122:3124 Corelib.Init.Datatypes <> nat ind
+binder 3103:3106 <> path:60
+R3170:3173 Corelib.Init.Logic <> ::type_scope:x_'/\'_x not
+R3151:3153 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R3140:3145 Corelib.Init.Datatypes <> length def
+R3147:3150 LowerBound <> path:60 var
+R3154:3163 LowerBound <> phase_term def
+R3166:3166 Corelib.Init.Datatypes <> S constr
+R3168:3168 LowerBound <> m:59 var
+R3174:3178 Stdlib.Lists.List <> NoDup ind
+R3180:3183 LowerBound <> path:60 var
+prf 3193:3213 <> extension_path_exists
+binder 3226:3226 <> m:61
+R3238:3245 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R3234:3236 Corelib.Init.Peano <> ::nat_scope:x_'>'_x not
+R3233:3233 LowerBound <> m:61 var
+R3268:3275 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R3246:3265 LowerBound <> lower_bound_solution def
+R3267:3267 LowerBound <> m:61 var
+R3276:3282 Corelib.Init.Logic <> ::type_scope:'exists'_x_'..'_x_','_x not
+R3306:3313 Corelib.Init.Logic <> ::type_scope:'exists'_x_'..'_x_','_x not
+R3290:3293 Corelib.Init.Datatypes <> list ind
+R3299:3301 Corelib.Init.Datatypes <> ::type_scope:x_'*'_x not
+R3296:3298 Corelib.Init.Datatypes <> nat ind
+R3302:3304 Corelib.Init.Datatypes <> nat ind
+binder 3283:3286 <> path:62
+R3314:3329 LowerBound <> path_well_formed def
+R3331:3331 LowerBound <> m:61 var
+R3333:3336 LowerBound <> path:62 var
+R3378:3387 LowerBound <> phase_term def
+R3390:3390 Corelib.Init.Datatypes <> S constr
+R3378:3387 LowerBound <> phase_term def
+R3390:3390 Corelib.Init.Datatypes <> S constr
+R3407:3409 Corelib.Lists.ListDef <> map def
+R3430:3432 Corelib.Lists.ListDef <> seq def
+binder 3416:3416 <> k:63
+R3421:3421 Corelib.Init.Datatypes <> ::core_scope:'('_x_','_x_','_'..'_','_x_')' not
+R3423:3424 Corelib.Init.Datatypes <> ::core_scope:'('_x_','_x_','_'..'_','_x_')' not
+R3426:3426 Corelib.Init.Datatypes <> ::core_scope:'('_x_','_x_','_'..'_','_x_')' not
+R3425:3425 LowerBound <> k:63 var
+R3407:3409 Corelib.Lists.ListDef <> map def
+R3430:3432 Corelib.Lists.ListDef <> seq def
+binder 3416:3416 <> k:64
+R3421:3421 Corelib.Init.Datatypes <> ::core_scope:'('_x_','_x_','_'..'_','_x_')' not
+R3423:3424 Corelib.Init.Datatypes <> ::core_scope:'('_x_','_x_','_'..'_','_x_')' not
+R3426:3426 Corelib.Init.Datatypes <> ::core_scope:'('_x_','_x_','_'..'_','_x_')' not
+R3425:3425 LowerBound <> k:64 var
+R3450:3465 LowerBound <> path_well_formed def
+R3489:3498 Stdlib.Lists.List <> length_map thm
+R3501:3510 Stdlib.Lists.List <> length_seq thm
+R3489:3498 Stdlib.Lists.List <> length_map thm
+R3489:3498 Stdlib.Lists.List <> length_map thm
+R3501:3510 Stdlib.Lists.List <> length_seq thm
+R3501:3510 Stdlib.Lists.List <> length_seq thm
+R3562:3565 Corelib.Init.Datatypes <> list ind
+R3567:3569 Corelib.Init.Datatypes <> nat ind
+binder 3558:3558 <> l:65
+R3587:3590 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R3580:3584 Stdlib.Lists.List <> NoDup ind
+R3586:3586 LowerBound <> l:65 var
+R3591:3595 Stdlib.Lists.List <> NoDup ind
+R3598:3600 Corelib.Lists.ListDef <> map def
+R3620:3620 LowerBound <> l:65 var
+binder 3607:3607 <> k:66
+R3612:3612 Corelib.Init.Datatypes <> ::core_scope:'('_x_','_x_','_'..'_','_x_')' not
+R3614:3615 Corelib.Init.Datatypes <> ::core_scope:'('_x_','_x_','_'..'_','_x_')' not
+R3617:3617 Corelib.Init.Datatypes <> ::core_scope:'('_x_','_x_','_'..'_','_x_')' not
+R3616:3616 LowerBound <> k:66 var
+R3562:3565 Corelib.Init.Datatypes <> list ind
+R3567:3569 Corelib.Init.Datatypes <> nat ind
+binder 3558:3558 <> l:67
+R3587:3590 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R3580:3584 Stdlib.Lists.List <> NoDup ind
+R3586:3586 LowerBound <> l:67 var
+R3591:3595 Stdlib.Lists.List <> NoDup ind
+R3598:3600 Corelib.Lists.ListDef <> map def
+R3620:3620 LowerBound <> l:67 var
+binder 3607:3607 <> k:68
+R3612:3612 Corelib.Init.Datatypes <> ::core_scope:'('_x_','_x_','_'..'_','_x_')' not
+R3614:3615 Corelib.Init.Datatypes <> ::core_scope:'('_x_','_x_','_'..'_','_x_')' not
+R3617:3617 Corelib.Init.Datatypes <> ::core_scope:'('_x_','_x_','_'..'_','_x_')' not
+R3616:3616 LowerBound <> k:68 var
+R3784:3793 Stdlib.Lists.List <> in_map_iff thm
+R3784:3793 Stdlib.Lists.List <> in_map_iff thm
+R3962:3970 Stdlib.Lists.List <> seq_NoDup thm
+R3962:3970 Stdlib.Lists.List <> seq_NoDup thm
+prf 3985:4007 <> extension_compatibility
+binder 4020:4020 <> m:69
+binder 4022:4025 <> path:70
+R4055:4062 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R4032:4047 LowerBound <> path_well_formed def
+R4049:4049 LowerBound <> m:69 var
+R4051:4054 LowerBound <> path:70 var
+R4063:4082 LowerBound <> extension_compatible def
+R4084:4084 LowerBound <> m:69 var
+R4086:4089 LowerBound <> path:70 var
+R4129:4144 LowerBound <> path_well_formed def
+R4163:4182 LowerBound <> extension_compatible def
+prf 4206:4226 <> extension_build_start
+binder 4239:4239 <> m:71
+binder 4241:4244 <> path:72
+R4256:4263 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R4252:4254 Corelib.Init.Peano <> ::nat_scope:x_'>'_x not
+R4251:4251 LowerBound <> m:71 var
+R4286:4293 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R4264:4283 LowerBound <> lower_bound_solution def
+R4285:4285 LowerBound <> m:71 var
+R4321:4328 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R4294:4313 LowerBound <> extension_compatible def
+R4315:4315 LowerBound <> m:71 var
+R4317:4320 LowerBound <> path:72 var
+R4329:4335 Corelib.Init.Logic <> ::type_scope:'exists'_x_'..'_x_','_x not
+R4350:4357 Corelib.Init.Logic <> ::type_scope:'exists'_x_'..'_x_','_x not
+R4344:4349 LowerBound <> config rec
+binder 4336:4340 <> start:73
+R4385:4394 Corelib.Init.Logic <> ::type_scope:x_'/\'_x not
+R4379:4381 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R4358:4363 Corelib.Init.Datatypes <> length def
+R4366:4371 LowerBound <> deck_A proj
+R4373:4377 LowerBound <> start:73 var
+R4382:4382 Corelib.Init.Datatypes <> S constr
+R4384:4384 LowerBound <> m:71 var
+R4416:4418 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R4395:4400 Corelib.Init.Datatypes <> length def
+R4403:4408 LowerBound <> deck_B proj
+R4410:4414 LowerBound <> start:73 var
+R4419:4419 Corelib.Init.Datatypes <> S constr
+R4421:4421 LowerBound <> m:71 var
+R4476:4481 LowerBound <> deck_A proj
+R4476:4481 LowerBound <> deck_A proj
+R4476:4481 LowerBound <> deck_A proj
+R4502:4507 LowerBound <> deck_B proj
+R4502:4507 LowerBound <> deck_B proj
+R4486:4491 Corelib.Lists.ListDef <> repeat def
+R4496:4496 Corelib.Init.Datatypes <> S constr
+R4512:4517 Corelib.Lists.ListDef <> repeat def
+R4522:4522 Corelib.Init.Datatypes <> S constr
+R4476:4481 LowerBound <> deck_A proj
+R4476:4481 LowerBound <> deck_A proj
+R4476:4481 LowerBound <> deck_A proj
+R4502:4507 LowerBound <> deck_B proj
+R4502:4507 LowerBound <> deck_B proj
+R4486:4491 Corelib.Lists.ListDef <> repeat def
+R4496:4496 Corelib.Init.Datatypes <> S constr
+R4512:4517 Corelib.Lists.ListDef <> repeat def
+R4522:4522 Corelib.Init.Datatypes <> S constr
+R4559:4571 Stdlib.Lists.List <> repeat_length thm
+R4559:4571 Stdlib.Lists.List <> repeat_length thm
+R4559:4571 Stdlib.Lists.List <> repeat_length thm
+R4598:4610 Stdlib.Lists.List <> repeat_length thm
+R4598:4610 Stdlib.Lists.List <> repeat_length thm
+R4598:4610 Stdlib.Lists.List <> repeat_length thm
+prf 4630:4655 <> extension_path_to_outcomes
+binder 4668:4668 <> m:74
+binder 4670:4673 <> path:75
+binder 4675:4679 <> start:76
+R4691:4698 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R4687:4689 Corelib.Init.Peano <> ::nat_scope:x_'>'_x not
+R4686:4686 LowerBound <> m:74 var
+R4721:4728 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R4699:4718 LowerBound <> lower_bound_solution def
+R4720:4720 LowerBound <> m:74 var
+R4756:4763 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R4729:4748 LowerBound <> extension_compatible def
+R4750:4750 LowerBound <> m:74 var
+R4752:4755 LowerBound <> path:75 var
+R4791:4798 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R4785:4787 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R4764:4769 Corelib.Init.Datatypes <> length def
+R4772:4777 LowerBound <> deck_A proj
+R4779:4783 LowerBound <> start:76 var
+R4788:4788 Corelib.Init.Datatypes <> S constr
+R4790:4790 LowerBound <> m:74 var
+R4826:4833 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R4820:4822 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R4799:4804 Corelib.Init.Datatypes <> length def
+R4807:4812 LowerBound <> deck_B proj
+R4814:4818 LowerBound <> start:76 var
+R4823:4823 Corelib.Init.Datatypes <> S constr
+R4825:4825 LowerBound <> m:74 var
+R4834:4840 Corelib.Init.Logic <> ::type_scope:'exists'_x_'..'_x_','_x not
+R4858:4865 Corelib.Init.Logic <> ::type_scope:'exists'_x_'..'_x_','_x not
+R4846:4849 Corelib.Init.Datatypes <> list ind
+R4851:4857 LowerBound <> outcome ind
+binder 4841:4842 <> os:77
+R4866:4869 Corelib.Init.Logic <> True ind
+R4933:4934 Stdlib.Lists.List ListNotations ::list_scope:'['_']' not
+R4933:4934 Stdlib.Lists.List ListNotations ::list_scope:'['_']' not
+var 4960:4988 LowerBound extension_outcomes_realizable
+binder 5001:5001 <> m:78
+binder 5003:5006 <> path:79
+binder 5008:5012 <> start:80
+binder 5014:5015 <> os:81
+R5027:5034 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R5023:5025 Corelib.Init.Peano <> ::nat_scope:x_'>'_x not
+R5022:5022 LowerBound <> m:78 var
+R5057:5064 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R5035:5054 LowerBound <> lower_bound_solution def
+R5056:5056 LowerBound <> m:78 var
+R5092:5099 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R5065:5084 LowerBound <> extension_compatible def
+R5086:5086 LowerBound <> m:78 var
+R5088:5091 LowerBound <> path:79 var
+R5127:5134 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R5121:5123 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R5100:5105 Corelib.Init.Datatypes <> length def
+R5108:5113 LowerBound <> deck_A proj
+R5115:5119 LowerBound <> start:80 var
+R5124:5124 Corelib.Init.Datatypes <> S constr
+R5126:5126 LowerBound <> m:78 var
+R5162:5169 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R5156:5158 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R5135:5140 Corelib.Init.Datatypes <> length def
+R5143:5148 LowerBound <> deck_B proj
+R5150:5154 LowerBound <> start:80 var
+R5159:5159 Corelib.Init.Datatypes <> S constr
+R5161:5161 LowerBound <> m:78 var
+R5170:5176 Corelib.Init.Logic <> ::type_scope:'exists'_x_'..'_x_','_x not
+R5204:5211 Corelib.Init.Logic <> ::type_scope:'exists'_x_'..'_x_','_x not
+R5186:5189 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R5183:5185 Corelib.Init.Datatypes <> nat ind
+R5193:5196 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R5190:5192 Corelib.Init.Datatypes <> nat ind
+R5197:5203 LowerBound <> outcome ind
+binder 5177:5179 <> phi:82
+R5229:5232 Corelib.Init.Logic <> ::type_scope:x_'/\'_x not
+R5212:5215 LowerBound <> game def
+R5217:5219 LowerBound <> phi:82 var
+R5221:5225 LowerBound <> start:80 var
+R5227:5228 LowerBound <> os:81 var
+R5244:5246 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R5233:5240 LowerBound <> duration def
+R5242:5243 LowerBound <> os:81 var
+R5247:5247 LowerBound <> T def
+R5250:5250 Corelib.Init.Datatypes <> S constr
+R5252:5252 LowerBound <> m:78 var
+prf 5263:5288 <> dynamic_backward_extension
+binder 5301:5301 <> m:85
+R5313:5320 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R5309:5311 Corelib.Init.Peano <> ::nat_scope:x_'>'_x not
+R5308:5308 LowerBound <> m:85 var
+R5343:5350 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R5321:5340 LowerBound <> lower_bound_solution def
+R5342:5342 LowerBound <> m:85 var
+R5351:5370 LowerBound <> lower_bound_solution def
+R5373:5373 Corelib.Init.Datatypes <> S constr
+R5375:5375 LowerBound <> m:85 var
+R5418:5438 LowerBound <> extension_path_exists thm
+R5418:5438 LowerBound <> extension_path_exists thm
+R5490:5509 LowerBound <> extension_compatible def
+R5490:5509 LowerBound <> extension_compatible def
+R5535:5557 LowerBound <> extension_compatibility thm
+R5535:5557 LowerBound <> extension_compatibility thm
+R5599:5619 LowerBound <> extension_build_start thm
+R5599:5619 LowerBound <> extension_build_start thm
+R5677:5702 LowerBound <> extension_path_to_outcomes thm
+R5677:5702 LowerBound <> extension_path_to_outcomes thm
+R5767:5795 LowerBound <> extension_outcomes_realizable prfax
+R5767:5795 LowerBound <> extension_outcomes_realizable prfax
+prf 5983:6003 <> base_case_lower_bound
+R6009:6028 LowerBound <> lower_bound_solution def
+R6061:6062 LowerBound <> TT constr
+R6061:6062 LowerBound <> TT constr
+R6078:6083 LowerBound <> deck_A proj
+R6078:6083 LowerBound <> deck_A proj
+R6078:6083 LowerBound <> deck_A proj
+R6093:6098 LowerBound <> deck_B proj
+R6093:6098 LowerBound <> deck_B proj
+R6088:6088 Stdlib.Lists.List ListNotations ::list_scope:'['_x_']' not
+R6090:6090 Stdlib.Lists.List ListNotations ::list_scope:'['_x_']' not
+R6103:6103 Stdlib.Lists.List ListNotations ::list_scope:'['_x_']' not
+R6105:6105 Stdlib.Lists.List ListNotations ::list_scope:'['_x_']' not
+R6078:6083 LowerBound <> deck_A proj
+R6078:6083 LowerBound <> deck_A proj
+R6078:6083 LowerBound <> deck_A proj
+R6093:6098 LowerBound <> deck_B proj
+R6093:6098 LowerBound <> deck_B proj
+R6088:6088 Stdlib.Lists.List ListNotations ::list_scope:'['_x_']' not
+R6090:6090 Stdlib.Lists.List ListNotations ::list_scope:'['_x_']' not
+R6103:6103 Stdlib.Lists.List ListNotations ::list_scope:'['_x_']' not
+R6105:6105 Stdlib.Lists.List ListNotations ::list_scope:'['_x_']' not
+R6120:6120 Stdlib.Lists.List ListNotations ::list_scope:'['_x_']' not
+R6123:6123 Stdlib.Lists.List ListNotations ::list_scope:'['_x_']' not
+R6121:6122 LowerBound <> TT constr
+R6120:6120 Stdlib.Lists.List ListNotations ::list_scope:'['_x_']' not
+R6123:6123 Stdlib.Lists.List ListNotations ::list_scope:'['_x_']' not
+R6121:6122 LowerBound <> TT constr
+R6210:6213 LowerBound <> game def
+R6231:6238 LowerBound <> RunsCons constr
+R6231:6238 LowerBound <> RunsCons constr
+R6258:6263 LowerBound <> StepTT constr
+R6258:6263 LowerBound <> StepTT constr
+R6296:6302 LowerBound <> RunsNil constr
+R6296:6302 LowerBound <> RunsNil constr
+R6320:6327 LowerBound <> duration def
+R6330:6330 LowerBound <> T def
+R6333:6342 LowerBound <> phase_term def
+prf 6454:6480 <> theorem2_lower_bound_exists
+binder 6493:6493 <> n:86
+R6505:6512 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R6501:6503 Corelib.Init.Peano <> ::nat_scope:x_'>'_x not
+R6500:6500 LowerBound <> n:86 var
+R6513:6532 LowerBound <> lower_bound_solution def
+R6534:6534 LowerBound <> n:86 var
+R6626:6646 LowerBound <> base_case_lower_bound thm
+R6626:6646 LowerBound <> base_case_lower_bound thm
+R6661:6686 LowerBound <> dynamic_backward_extension thm
+R6661:6686 LowerBound <> dynamic_backward_extension thm
+prf 6737:6749 <> T_as_sum_upto
+binder 6762:6762 <> n:87
+R6772:6774 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R6769:6769 LowerBound <> T def
+R6771:6771 LowerBound <> n:87 var
+R6775:6797 CorollaryUpper <> sum_upto def
+R6799:6808 LowerBound <> phase_term def
+R6810:6810 LowerBound <> n:87 var
+prf 6911:6936 <> sum_upto_phase_term_bridge
+binder 6949:6949 <> n:88
+R6992:6998 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R6956:6978 CorollaryUpper <> sum_upto def
+R6980:6989 LowerBound <> phase_term def
+R6991:6991 LowerBound <> n:88 var
+R6999:7021 CorollaryUpper <> sum_upto def
+R7023:7047 CorollaryUpper <> phase_term def
+R7049:7049 LowerBound <> n:88 var
+R7136:7145 LowerBound <> phase_term def
+R7148:7172 CorollaryUpper <> phase_term def
+prf 7271:7283 <> T_closed_form
+binder 7296:7296 <> n:89
+R7306:7308 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R7303:7303 LowerBound <> T def
+R7305:7305 LowerBound <> n:89 var
+R7324:7326 Stdlib.Arith.PeanoNat <> ::nat_scope:x_'/'_x not
+R7310:7313 Corelib.Init.Peano <> ::nat_scope:x_'*'_x not
+R7323:7323 Corelib.Init.Peano <> ::nat_scope:x_'*'_x not
+R7309:7309 LowerBound <> n:89 var
+R7319:7321 Corelib.Init.Peano <> ::nat_scope:x_'+'_x not
+R7315:7317 Corelib.Init.Peano <> ::nat_scope:x_'*'_x not
+R7314:7314 LowerBound <> n:89 var
+R7318:7318 LowerBound <> n:89 var
+R7358:7370 LowerBound <> T_as_sum_upto thm
+R7358:7370 LowerBound <> T_as_sum_upto thm
+R7358:7370 LowerBound <> T_as_sum_upto thm
+R7383:7408 LowerBound <> sum_upto_phase_term_bridge thm
+R7383:7408 LowerBound <> sum_upto_phase_term_bridge thm
+R7383:7408 LowerBound <> sum_upto_phase_term_bridge thm
+R7419:7461 CorollaryUpper <> corollary_upper_sum_identity thm
+R7419:7461 CorollaryUpper <> corollary_upper_sum_identity thm
+prf 7534:7565 <> theorem3_lower_bound_closed_form
+binder 7578:7578 <> n:90
+R7590:7597 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R7586:7588 Corelib.Init.Peano <> ::nat_scope:x_'>'_x not
+R7585:7585 LowerBound <> n:90 var
+R7598:7605 Corelib.Init.Logic <> ::type_scope:'exists'_x_'..'_x_','_x not
+R7670:7678 Corelib.Init.Logic <> ::type_scope:'exists'_x_'..'_x_','_x not
+R7615:7618 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R7612:7614 Corelib.Init.Datatypes <> nat ind
+R7622:7625 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R7619:7621 Corelib.Init.Datatypes <> nat ind
+R7626:7632 LowerBound <> outcome ind
+binder 7606:7608 <> phi:91
+R7644:7649 LowerBound <> config rec
+binder 7636:7640 <> start:92
+R7658:7661 Corelib.Init.Datatypes <> list ind
+R7663:7669 LowerBound <> outcome ind
+binder 7653:7654 <> os:93
+R7704:7713 Corelib.Init.Logic <> ::type_scope:x_'/\'_x not
+R7700:7702 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R7679:7684 Corelib.Init.Datatypes <> length def
+R7687:7692 LowerBound <> deck_A proj
+R7694:7698 LowerBound <> start:92 var
+R7703:7703 LowerBound <> n:90 var
+R7739:7748 Corelib.Init.Logic <> ::type_scope:x_'/\'_x not
+R7735:7737 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R7714:7719 Corelib.Init.Datatypes <> length def
+R7722:7727 LowerBound <> deck_B proj
+R7729:7733 LowerBound <> start:92 var
+R7738:7738 LowerBound <> n:90 var
+R7766:7775 Corelib.Init.Logic <> ::type_scope:x_'/\'_x not
+R7749:7752 LowerBound <> game def
+R7754:7756 LowerBound <> phi:91 var
+R7758:7762 LowerBound <> start:92 var
+R7764:7765 LowerBound <> os:93 var
+R7787:7789 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R7776:7783 LowerBound <> duration def
+R7785:7786 LowerBound <> os:93 var
+R7805:7807 Stdlib.Arith.PeanoNat <> ::nat_scope:x_'/'_x not
+R7791:7794 Corelib.Init.Peano <> ::nat_scope:x_'*'_x not
+R7804:7804 Corelib.Init.Peano <> ::nat_scope:x_'*'_x not
+R7790:7790 LowerBound <> n:90 var
+R7800:7802 Corelib.Init.Peano <> ::nat_scope:x_'+'_x not
+R7796:7798 Corelib.Init.Peano <> ::nat_scope:x_'*'_x not
+R7795:7795 LowerBound <> n:90 var
+R7799:7799 LowerBound <> n:90 var
+R7847:7873 LowerBound <> theorem2_lower_bound_exists thm
+R7847:7873 LowerBound <> theorem2_lower_bound_exists thm
+R7898:7917 LowerBound <> lower_bound_solution def
+R8058:8070 LowerBound <> T_closed_form thm
+R8058:8070 LowerBound <> T_closed_form thm
+R8058:8070 LowerBound <> T_closed_form thm
+R8097:8106 LowerBound LowerBound <> sec
