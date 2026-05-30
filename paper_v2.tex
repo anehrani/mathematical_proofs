@@ -404,37 +404,211 @@ $\phi_n(a_i, b_j) = \WA$ for all other $j$.
 \item Row $i = n - 1$: $\phi_n(a_{n-1}, b_0) = \TT$ and $\phi_n(a_{n-1}, b_j) = \WA$ for $j \in \{1, \dots, n - 1\}$.
 \end{itemize}
 
-\subsection{Phase-1 traversal}
-Row $i$ ($0 \le i \le n - 2$) is entered at column $j_{\mathrm{start}} \equiv -i \pmod n$. The path scans rightward along
-$\WA$-cells until it reaches $c_N(i) = -2 - i$, where the single $\NN$ outcome sends it diagonally to the next row.
+\subsection{Canonical global-to-local restriction and dynamics}
+Let phase $k$ have active size $m = n-k+1$, active cards
+\[
+A_m = \{a_0,\dots,a_{m-1}\},\qquad
+B_m = \{b_{n-m},\dots,b_{n-1}\}.
+\]
+For $(a_i,b_j)\in A_m\times B_m$, define canonical local coordinates
+\[
+u=i,\qquad v=j-(n-m),\qquad 0\le u,v\le m-1.
+\]
+The global table restricts to the phase-local table
+\[
+\Phi_m(u,v)=
+\begin{cases}
+\TT & \text{if } u+v=m-1,\\
+\NN & \text{if } u+v=m-2,\\
+\WA & \text{otherwise}.
+\end{cases}
+\]
+The local transition dynamics are
+\[
+\begin{aligned}
+\Phi_m(u,v)=\WA &: (u,v)\mapsto\bigl(u,(v+1)\bmod m\bigr),\\
+\Phi_m(u,v)=\NN &: (u,v)\mapsto\bigl((u+1)\bmod m,(v+1)\bmod m\bigr).
+\end{aligned}
+\]
 
-\begin{lemma}[Row handoff]\label{lem:handoff}
-For $0 \le i \le n-2$, the $\NN$ transition at the end of row $i$ maps $(i, -2-i) \mapsto (i + 1, -1 - i)$. Since
-$-1 - i \equiv -(i + 1) \pmod n$, the landing column equals the entry column $j_{\mathrm{start}} = -(i+1)$ of row
-$i+1$, and the forbidden cell $(i, n-1-i) = (i, -1-i)$ is skipped. Consequently row $i$ visits exactly $n - 1$ columns.
+\subsection{De-circularized row dynamics}
+\begin{lemma}[Joint intermediate row-dynamics induction]\label{lem:joint-row}
+Let $m>2$. Starting from $(0,0)$, for every row index $u\in\{0,\dots,m-2\}$:
+\begin{enumerate}[label=(\roman*),nosep]
+\item row $u$ is entered at $v_{\mathrm{start}}(u)=(m-u)\bmod m$;
+\item row $u$ executes exactly $m-2$ consecutive $\WA$ steps and exits uniquely at $(u,m-2-u)$ via $\NN$;
+\item that $\NN$ transition lands at $\bigl(u+1,(m-(u+1))\bmod m\bigr)$, the entry coordinate of row $u+1$.
+\end{enumerate}
 \end{lemma}
 \begin{proof}
-By~\eqref{eq:trans} the $\NN$ outcome at $(i, -2 - i)$ yields $(i + 1, -1 - i)$. The identity $-1 - i \equiv -(i + 1)$ is
-immediate, and $-(i + 1)$ is the entry column of row $i+1$. The forbidden cell of row $i$ sits at column $-1 - i$, which
-the scan jumps over; hence row $i$ visits every column except $-1 - i$.
+By induction on $u$.
+
+For $u=0$, the entry is $(0,0)$ since $(m-0)\bmod m=0$. For $v\in\{0,\dots,m-3\}$, $0+v\le m-3$, so
+the outcome is $\WA$ and $v$ increments by $1$. Thus exactly $m-2$ consecutive $\WA$ moves occur before
+reaching $(0,m-2)$, where $0+(m-2)=m-2$, so the outcome is $\NN$. Its transition gives
+\[
+(0,m-2)\mapsto\bigl(1,(m-1)\bmod m\bigr),
+\]
+which is the row-1 entry coordinate.
+
+Assume the statement for row $u-1$ with $1\le u\le m-2$. By the inductive handoff, row $u$ is entered at
+$(u,(m-u)\bmod m)=(u,m-u)$. On columns $v\in\{m-u,\dots,m-1\}$ we have $u+v\ge m$, so outcomes are $\WA$.
+After wrap-around, on columns $v\in\{0,\dots,m-3-u\}$ we have $u+v\le m-3$, so outcomes are also $\WA$.
+These two segments have lengths $u$ and $m-2-u$, totaling $m-2$. The next column is $m-2-u$, where
+$u+(m-2-u)=m-2$, so the unique exit is $\NN$ at $(u,m-2-u)$. Applying the $\NN$ transition yields
+\[
+\bigl((u+1)\bmod m,(m-(u+1))\bmod m\bigr),
+\]
+and because $u\le m-2$, this equals $\bigl(u+1,(m-(u+1))\bmod m\bigr)$.
 \end{proof}
 
-The final row $i = n - 1$ is entered at $j = 1$ and scans all $n$ columns $1, 2, \dots, n - 1, 0$, ending in the active
-tie at $j = 0$. Hence
+\begin{lemma}[Final-row traversal and termination]\label{lem:final-row}
+On row $u=m-1$, the trajectory enters at column $v=1$, executes exactly $m-1$ consecutive $\WA$ steps,
+and terminates at $(m-1,0)$ via $\TT$.
+\end{lemma}
+\begin{proof}
+By Lemma~\ref{lem:joint-row}(iii) applied at $u=m-2$, entry to row $m-1$ is at
+\[
+v=(m-((m-2)+1))\bmod m=1.
+\]
+For $v\in\{1,\dots,m-1\}$, $(m-1)+v\ge m$, so outcomes are $\WA$, producing exactly $m-1$ steps and wrapping
+to $(m-1,0)$. There, $(m-1)+0=m-1$, so the outcome is $\TT$ and the phase terminates.
+\end{proof}
+
+\begin{lemma}[Monotonic row development]\label{lem:row-mono}
+From $(0,0)$, row coordinates are non-decreasing across the active phase timeline, progress through
+$u=0,1,\dots,m-1$ in order, and terminate on row $m-1$ before any modular row wrap-around can occur.
+\end{lemma}
+\begin{proof}
+By Lemma~\ref{lem:joint-row}, each intermediate row $u\in\{0,\dots,m-2\}$ has exactly one exit, an $\NN$ move to
+row $u+1$ (without wrap since $u+1\le m-1$). By Lemma~\ref{lem:final-row}, row $m-1$ ends at a tie and stops.
+Hence no transition after row $m-1$ occurs, so row wrap-around is impossible.
+\end{proof}
+
+\subsection{Trajectory injectivity and visited-row sets}
+\begin{lemma}[Formal trajectory injectivity]\label{lem:traj-inj}
+Let $\mathcal P_m=(S_0,S_1,\dots,S_{\tau_{\mathrm{term}}})$ be the local trajectory from $S_0=(0,0)$. If
+$\tau\neq\tau'$, then $S_\tau\neq S_{\tau'}$.
+\end{lemma}
+\begin{proof}
+Assume $\tau<\tau'$ and write $S_t=(u_t,v_t)$.
+
+If $u_\tau\neq u_{\tau'}$, then by Lemma~\ref{lem:row-mono} we have $u_\tau<u_{\tau'}$, so states differ.
+
+If $u_\tau=u_{\tau'}=u$, then both times lie within one row residency. In that residency, transitions are
+$\WA$-moves until the unique row exit/terminal cell (Lemmas~\ref{lem:joint-row} and~\ref{lem:final-row}), so
+$v\mapsto v+1\pmod m$ each step. The residency length is at most $m-1$ ($m-2$ on intermediate rows, $m-1$
+on final row), so no column can repeat before leaving the row. Thus $v_\tau\neq v_{\tau'}$, hence
+$S_\tau\neq S_{\tau'}$.
+\end{proof}
+
+\begin{definition}[Visited columns per row]\label{def:Vu}
+For $u\in\{0,\dots,m-1\}$ define
+\[
+V_u=
+\begin{cases}
+\{0,1,\dots,m-2\}, & u=0,\\
+\{m-u,\dots,m-1\}\cup\{0,\dots,m-2-u\}, & 1\le u\le m-2,\\
+\{1,2,\dots,m-1,0\}, & u=m-1.
+\end{cases}
+\]
+\end{definition}
+
+\begin{lemma}[Exact cardinality of row sets]\label{lem:Vu-card}
+\[
+|V_u|=
+\begin{cases}
+m-1,& 0\le u\le m-2,\\
+m,& u=m-1.
+\end{cases}
+\]
+\end{lemma}
+\begin{proof}
+For $u=0$, $V_0=\{0,\dots,m-2\}$ has $m-1$ elements.
+
+For $1\le u\le m-2$, the two intervals are disjoint and have sizes
+$m-1-(m-u)+1=u$ and $(m-2-u)-0+1=m-1-u$, totaling $m-1$.
+
+For $u=m-1$, the set contains all residues $0,1,\dots,m-1$, hence size $m$.
+\end{proof}
+
+\begin{theorem}[Complete global trajectory theorem]\label{thm:global-traj}
+For any phase size $m>2$ initialized at $(0,0)$, the trajectory visits exactly the cells
+$(u,v)$ with $v\in V_u$ once each, skips all non-terminal tie cells, and terminates at $(m-1,0)$ after
+exactly $m^2-m+1$ visited states.
+\end{theorem}
+\begin{proof}
+By Lemma~\ref{lem:joint-row}, row $0$ visits $V_0$ and exits at $(0,m-2)$; the omitted column is $m-1$, where
+$0+(m-1)=m-1$ is a tie. For each $1\le u\le m-2$, Lemma~\ref{lem:joint-row} gives visited set
+$V_u=\{m-u,\dots,m-1\}\cup\{0,\dots,m-2-u\}$ and unique omitted column $m-1-u$, where
+$u+(m-1-u)=m-1$ is again tie. By Lemma~\ref{lem:final-row}, row $m-1$ visits
+$V_{m-1}=\{1,\dots,m-1,0\}$ and terminates at $(m-1,0)$.
+
+By Lemma~\ref{lem:traj-inj}, all visited states are distinct. Therefore
+\[
+L_1=\sum_{u=0}^{m-1}|V_u|
+=(m-1)+\sum_{u=1}^{m-2}(m-1)+m
+=(m-1)^2+m
+=m^2-m+1.
+\]
+\end{proof}
+
+\subsection{Base cases and inter-phase handoff}
+\begin{lemma}[Base case $m=1$]\label{lem:base-m1}
+The local phase has duration $1$ and terminates immediately; this equals $1^2-1+1$.
+\end{lemma}
+\begin{proof}
+The only state is $(0,0)$ and $0+0=m-1$, so it is a tie and the phase ends at once.
+\end{proof}
+
+\begin{lemma}[Base case $m=2$]\label{lem:base-m2}
+The local trajectory is
+$(0,0)\xrightarrow{\NN}(1,1)\xrightarrow{\WA}(1,0)\xrightarrow{\TT}$,
+so duration is $3=2^2-2+1$, skipping the non-terminal tie cell $(0,1)$.
+\end{lemma}
+\begin{proof}
+Direct evaluation: $0+0=0=m-2$ gives $\NN$; then $1+1=2\notin\{0,1\}$ gives $\WA$; then $1+0=1=m-1$ gives $\TT$.
+Hence exactly three visited states.
+\end{proof}
+
+\begin{lemma}[Deck-order permutation invariant and clean collapse]\label{lem:handoff}
+Let phase $k$ have size $m$ with initial active sequences
+\[
+A_m=[a_0,\dots,a_{m-1}],\qquad B_m=[b_{n-m},\dots,b_{n-1}].
+\]
+At local state $(u_\tau,v_\tau)$, the physical decks are
+\[
+D_A^\tau=\bigl[a_{(u_\tau+\alpha)\bmod m}\mid \alpha=0,\dots,m-1\bigr],
+\]
+\[
+D_B^\tau=\bigl[b_{n-m+(v_\tau+\beta)\bmod m}\mid \beta=0,\dots,m-1\bigr].
+\]
+At phase termination $(m-1,0)$, tie-removal deletes exactly $a_{m-1}$ and $b_{n-m}$, leaving
+\[
+[a_0,\dots,a_{m-2}],\qquad [b_{n-m+1},\dots,b_{n-1}],
+\]
+which is precisely the canonical start configuration of the next phase of size $m-1$.
+\end{lemma}
+\begin{proof}
+Induct on local time $\tau$. The base case $\tau=0$ is immediate.
+
+If the outcome is $\WA$, only deck $B$ rotates by one, so $v$ increments by one modulo $m$ and the displayed
+formula remains true. If the outcome is $\NN$, both decks rotate by one, so both indices increment modulo $m$,
+again preserving the formula.
+
+By Theorem~\ref{thm:global-traj}, termination is at $(m-1,0)$, so
+\[
+D_A^{\mathrm{term}}=[a_{m-1},a_0,\dots,a_{m-2}],\qquad
+D_B^{\mathrm{term}}=[b_{n-m},b_{n-m+1},\dots,b_{n-1}].
+\]
+Applying tie-removal deletes those top cards and yields exactly
+$[a_0,\dots,a_{m-2}]$ and $[b_{n-m+1},\dots,b_{n-1}]$, the canonical phase-$(k+1)$ start.
+\end{proof}
+
+As an immediate phase-1 corollary of Theorem~\ref{thm:global-traj},
 \begin{equation}\label{eq:L1}
-L_1 = \underbrace{(n - 1)(n - 1)}_{\text{first } n-1 \text{ rows}} + \underbrace{n}_{\text{final row}}
-= n^2 - n + 1 = m_1^2 - m_1 + 1.
+L_1=n^2-n+1=m_1^2-m_1+1.
 \end{equation}
-
-\subsection{Residue arithmetic at the phase boundary}
-\paragraph{Deck $A$.} A card of $A$ moves to the bottom only on $\WB$ or $\NN$. Phase 1 uses no $\WB$ and exactly one
-$\NN$ per row for the first $n - 1$ rows, so $A$ undergoes $n - 1$ rotations:
-$[a_0, \dots, a_{n-1}] \mapsto [a_{n-1}, a_0, \dots, a_{n-2}]$. The top card $a_{n-1}$ is removed by the active tie,
-leaving $D^{(n-1)}_A = [a_0, \dots, a_{n-2}]$.
-
-\paragraph{Deck $B$.} A card of $B$ moves to the bottom on $\WA$ or $\NN$, i.e.\ at every non-tie step, of which there
-are $n^2 - n$. Since $n^2 - n \equiv 0 \pmod n$, deck $B$ returns to $[b_0, \dots, b_{n-1}]$ at the tie. The top card
-$b_0$ is removed, leaving $[b_1, \dots, b_{n-1}]$, i.e.\ $[b'_0, \dots, b'_{n-2}]$ under $b'_k := b_{k+1}$.
 
 \subsection{Closing the induction}
 \begin{lemma}[Table restriction]\label{lem:restrict}

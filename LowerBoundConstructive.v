@@ -34,6 +34,18 @@ Proof.
     reflexivity.
 Qed.
 
+Lemma iter_move_top_to_bottom_length :
+  forall X (xs : list X) n,
+    length (Nat.iter n move_top_to_bottom xs) = length xs.
+Proof.
+  intros X xs n.
+  induction n as [|n IH].
+  - reflexivity.
+  - simpl.
+    rewrite move_top_to_bottom_length.
+    exact IH.
+Qed.
+
 Lemma runs_cons_inv :
   forall phi c o os c',
     LowerBound.runs phi c (o :: os) c' ->
@@ -68,6 +80,28 @@ Lemma step_NN_from_heads :
 Proof.
   intros phi a as_ b bs c2 Hs.
   inversion Hs; subst; reflexivity.
+Qed.
+
+Lemma step_NN_head_value :
+  forall phi a as_ b bs c2,
+    LowerBound.step phi
+      {| LowerBound.deck_A := a :: as_; LowerBound.deck_B := b :: bs |}
+      LowerBound.NN c2 ->
+    phi a b = LowerBound.NN.
+Proof.
+  intros phi a as_ b bs c2 Hs.
+  inversion Hs; subst; assumption.
+Qed.
+
+Lemma step_WA_head_value :
+  forall phi a as_ b bs c2,
+    LowerBound.step phi
+      {| LowerBound.deck_A := a :: as_; LowerBound.deck_B := b :: bs |}
+      LowerBound.WA c2 ->
+    phi a b = LowerBound.WA.
+Proof.
+  intros phi a as_ b bs c2 Hs.
+  inversion Hs; subst; assumption.
 Qed.
 
 Lemma step_WA_heads_advance_B_when_nonempty_tail :
@@ -384,6 +418,110 @@ Proof.
     exact HAcm.
   - rewrite <- HBshape.
     exact HBcm.
+Qed.
+
+Theorem phase_block_permutation_handoff :
+  forall phi p q c c' m,
+    length (LowerBound.deck_A c) = m ->
+    length (LowerBound.deck_B c) = m ->
+    LowerBound.runs phi c (phase_block_trace p q) c' ->
+    exists a as_ b bs,
+      Nat.iter q move_top_to_bottom (LowerBound.deck_A c) = a :: as_ /\
+      Nat.iter q move_top_to_bottom
+        (Nat.iter p move_top_to_bottom (LowerBound.deck_B c)) = b :: bs /\
+      LowerBound.deck_A c' = as_ /\
+      LowerBound.deck_B c' = bs /\
+      length as_ = m - 1 /\
+      length bs = m - 1.
+Proof.
+  intros phi p q c c' m HAm HBm Hr.
+  destruct (phase_block_post_decks_explicit phi p q c c' Hr)
+    as [a [as_ [b [bs [HAiter [HBiter [HAc' HBc']]]]]]].
+  exists a, as_, b, bs.
+  repeat split; try assumption.
+  - assert (HlenA : length (a :: as_) = m).
+    {
+      rewrite <- HAiter.
+      rewrite iter_move_top_to_bottom_length.
+      exact HAm.
+    }
+    simpl in HlenA.
+    lia.
+  - assert (HlenB : length (b :: bs) = m).
+    {
+      rewrite <- HBiter.
+      rewrite iter_move_top_to_bottom_length.
+      rewrite iter_move_top_to_bottom_length.
+      exact HBm.
+    }
+    simpl in HlenB.
+    lia.
+Qed.
+
+Theorem phase_block_handoff_from_canonical_rotations :
+  forall phi p q c c' a_top a_tail b_top b_tail,
+    LowerBound.runs phi c (phase_block_trace p q) c' ->
+    Nat.iter q move_top_to_bottom (LowerBound.deck_A c) = a_top :: a_tail ->
+    Nat.iter q move_top_to_bottom
+      (Nat.iter p move_top_to_bottom (LowerBound.deck_B c)) = b_top :: b_tail ->
+    LowerBound.deck_A c' = a_tail /\
+    LowerBound.deck_B c' = b_tail.
+Proof.
+  intros phi p q c c' a_top a_tail b_top b_tail Hr HAcanon HBcanon.
+  destruct (phase_block_post_decks_explicit phi p q c c' Hr)
+    as [a [as_ [b [bs [HAiter [HBiter [HAc' HBc']]]]]]].
+  rewrite HAcanon in HAiter.
+  injection HAiter as _ Has.
+  rewrite HBcanon in HBiter.
+  injection HBiter as _ Hbs.
+  split.
+  - rewrite HAc'.
+    symmetry.
+    exact Has.
+  - rewrite HBc'.
+    symmetry.
+    exact Hbs.
+Qed.
+
+Theorem phase_endpoint_canonical_handoff_and_budget :
+  forall phi p q c c' m a_top a_tail b_top b_tail n,
+    m > 2 ->
+    LowerBound.runs phi c (phase_block_trace p q) c' ->
+    length (LowerBound.deck_A c) = m ->
+    length (LowerBound.deck_B c) = m ->
+    Nat.iter q move_top_to_bottom (LowerBound.deck_A c) = a_top :: a_tail ->
+    Nat.iter q move_top_to_bottom
+      (Nat.iter p move_top_to_bottom (LowerBound.deck_B c)) = b_top :: b_tail ->
+    LowerBound.deck_A c' = a_tail /\
+    LowerBound.deck_B c' = b_tail /\
+    length a_tail = m - 1 /\
+    length b_tail = m - 1 /\
+    LowerBound.phase_term m = (m - 1) * (m - 1) + m /\
+    LowerBound.T n = n * (n * n + 2) / 3.
+Proof.
+  intros phi p q c c' m a_top a_tail b_top b_tail n Hm Hr HAm HBm HAcanon HBcanon.
+  destruct (phase_block_permutation_handoff phi p q c c' m HAm HBm Hr)
+    as [a [as_ [b [bs [HAiter [HBiter [HAcp [HBcp [HlenA HlenB]]]]]]]]].
+  destruct (phase_block_handoff_from_canonical_rotations
+              phi p q c c' a_top a_tail b_top b_tail Hr HAcanon HBcanon)
+    as [HAc HBc].
+  assert (Ha_tail : a_tail = as_) by congruence.
+  assert (Hb_tail : b_tail = bs) by congruence.
+  assert (Hmcase : LowerBound.phase_term m = (m - 1) * (m - 1) + m).
+  {
+    unfold LowerBound.phase_term.
+    nia.
+  }
+  pose proof (LowerBound.T_closed_form n) as HT.
+  repeat split.
+  - exact HAc.
+  - exact HBc.
+  - rewrite Ha_tail.
+    exact HlenA.
+  - rewrite Hb_tail.
+    exact HlenB.
+  - exact Hmcase.
+  - exact HT.
 Qed.
 
 Lemma two_phase_run_accounting :
@@ -1139,6 +1277,210 @@ Proof.
     exact candidate_flex_blocks_obligation_2.
 Qed.
 
+Definition phase_extension_adaptive_step_ge2 : Prop :=
+  forall n phi mid final bs,
+    n >= 2 ->
+    length (LowerBound.deck_A mid) = n ->
+    length (LowerBound.deck_B mid) = n ->
+    length bs = n ->
+    flex_blocks_duration bs = LowerBound.T n ->
+    runs_flex_blocks phi mid bs final ->
+    LowerBound.deck_A final = [] ->
+    LowerBound.deck_B final = [] ->
+    exists b start,
+      flex_blocks_duration [b] = LowerBound.phase_term (S n) /\
+      length (LowerBound.deck_A start) = S n /\
+      length (LowerBound.deck_B start) = S n /\
+      LowerBound.runs phi start (trace_of_flex_block b) mid.
+
+Definition adaptive_tail_reachable
+  (n : nat) (phi : nat -> nat -> LowerBound.outcome) (mid : LowerBound.config) : Prop :=
+  exists final bs,
+    length bs = n /\
+    flex_blocks_duration bs = LowerBound.T n /\
+    runs_flex_blocks phi mid bs final /\
+    LowerBound.deck_A final = [] /\
+    LowerBound.deck_B final = [].
+
+Definition phase_extension_adaptive_step_ge2_on_tail_reachable : Prop :=
+  forall n phi mid,
+    n >= 2 ->
+    length (LowerBound.deck_A mid) = n ->
+    length (LowerBound.deck_B mid) = n ->
+    adaptive_tail_reachable n phi mid ->
+    exists b start,
+      flex_blocks_duration [b] = LowerBound.phase_term (S n) /\
+      length (LowerBound.deck_A start) = S n /\
+      length (LowerBound.deck_B start) = S n /\
+      LowerBound.runs phi start (trace_of_flex_block b) mid.
+
+Definition adaptive_step_at_tail_reachable (n : nat) : Prop :=
+  forall phi mid,
+    length (LowerBound.deck_A mid) = n ->
+    length (LowerBound.deck_B mid) = n ->
+    adaptive_tail_reachable n phi mid ->
+    exists b start,
+      flex_blocks_duration [b] = LowerBound.phase_term (S n) /\
+      length (LowerBound.deck_A start) = S n /\
+      length (LowerBound.deck_B start) = S n /\
+      LowerBound.runs phi start (trace_of_flex_block b) mid.
+
+Definition adaptive_step_ge2_tail_reachable_step : Prop :=
+  forall n,
+    n >= 2 ->
+    adaptive_step_at_tail_reachable n ->
+    adaptive_step_at_tail_reachable (S n).
+
+Theorem phase_extension_adaptive_step_ge2_on_tail_reachable_from_base_step :
+  adaptive_step_at_tail_reachable 2 ->
+  adaptive_step_ge2_tail_reachable_step ->
+  phase_extension_adaptive_step_ge2_on_tail_reachable.
+Proof.
+  intros Hbase2 Hstep n phi mid Hn HAm HBm Hreach.
+  assert (Hall : forall m, m >= 2 -> adaptive_step_at_tail_reachable m).
+  {
+    intros m Hm.
+    assert (Hex : exists k, m = 2 + k) by (exists (m - 2); lia).
+    destruct Hex as [k Hk].
+    subst m.
+    induction k as [|k IH].
+    - replace (2 + 0) with 2 by lia.
+      exact Hbase2.
+    - replace (2 + S k) with (S (2 + k)) by lia.
+      apply Hstep.
+      + lia.
+      + apply IH.
+        lia.
+  }
+  exact (Hall n Hn phi mid HAm HBm Hreach).
+Qed.
+
+Lemma phase_extension_adaptive_step_ge2_from_tail_reachable :
+  phase_extension_adaptive_step_ge2_on_tail_reachable ->
+  phase_extension_adaptive_step_ge2.
+Proof.
+  intros Htail n phi mid final bs Hn HAm HBm Hlen Hdur Hr HfA HfB.
+  apply (Htail n phi mid Hn HAm HBm).
+  exists final, bs.
+  repeat split; assumption.
+Qed.
+
+Lemma phase_extension_adaptive_step_ge2_to_tail_reachable :
+  phase_extension_adaptive_step_ge2 ->
+  phase_extension_adaptive_step_ge2_on_tail_reachable.
+Proof.
+  intros Hstep n phi mid Hn HAm HBm Hreach.
+  destruct Hreach as [final [bs [Hlen [Hdur [Hr [HfA HfB]]]]]].
+  exact (Hstep n phi mid final bs Hn HAm HBm Hlen Hdur Hr HfA HfB).
+Qed.
+
+Lemma lower_bound_flex_blocks_step_ge2_from_adaptive :
+  phase_extension_adaptive_step_ge2 ->
+  forall n,
+    n >= 2 ->
+    lower_bound_flex_blocks_obligation n ->
+    lower_bound_flex_blocks_obligation (S n).
+Proof.
+  intros Hstep n Hn Hob.
+  destruct Hob as [phi [mid [final [bs [HAm [HBm [Hlen [Hdur [Hr [HfA HfB]]]]]]]]]].
+  destruct (Hstep n phi mid final bs Hn HAm HBm Hlen Hdur Hr HfA HfB)
+    as [b [start [Hbdur [HAs [HBs Hr_head]]]]].
+  exists phi, start, final, (b :: bs).
+  split.
+  - exact HAs.
+  - split.
+    + exact HBs.
+    + split.
+      * simpl.
+        rewrite Hlen.
+        reflexivity.
+      * split.
+        -- destruct b as [[m p] q].
+          simpl in Hbdur.
+          simpl.
+          rewrite Hdur.
+          lia.
+        -- split.
+           ++ eapply RunsFlexBlocksCons.
+              ** exact Hr_head.
+              ** exact Hr.
+           ++ split; assumption.
+Qed.
+
+Section AdaptiveGe2Reduction.
+
+Hypothesis Hstep_adaptive_ge2 : phase_extension_adaptive_step_ge2.
+
+Lemma lower_bound_flex_blocks_obligation_from_2_onward_adaptive :
+  forall k,
+    lower_bound_flex_blocks_obligation (k + 2).
+Proof.
+  intro k.
+  induction k as [|k IH].
+  - simpl.
+    apply lower_bound_flex_obligation_from_candidate.
+    exact candidate_flex_blocks_obligation_2.
+  - replace (S k + 2) with (S (k + 2)) by lia.
+    eapply lower_bound_flex_blocks_step_ge2_from_adaptive.
+    + exact Hstep_adaptive_ge2.
+    + lia.
+    + exact IH.
+Qed.
+
+Theorem lower_bound_flex_blocks_obligation_all_adaptive :
+  forall n,
+    lower_bound_flex_blocks_obligation n.
+Proof.
+  intro n.
+  destruct n as [|n'].
+  - apply lower_bound_flex_obligation_from_candidate.
+    exact candidate_flex_blocks_obligation_0.
+  - destruct n' as [|n''].
+    + apply lower_bound_flex_obligation_from_candidate.
+      exact candidate_flex_blocks_obligation_1.
+    + replace (S (S n'')) with (n'' + 2) by lia.
+      apply lower_bound_flex_blocks_obligation_from_2_onward_adaptive.
+Qed.
+
+Theorem lower_bound_solution_all_via_adaptive_ge2_step :
+  forall n,
+    n > 0 ->
+    LowerBound.lower_bound_solution n.
+Proof.
+  intros n Hn.
+  apply lower_bound_solution_from_flex_blocks_obligation.
+  apply lower_bound_flex_blocks_obligation_all_adaptive.
+Qed.
+
+End AdaptiveGe2Reduction.
+
+Theorem lower_bound_solution_all_via_adaptive_ge2_tail_reachable_step :
+  phase_extension_adaptive_step_ge2_on_tail_reachable ->
+  forall n,
+    n > 0 ->
+    LowerBound.lower_bound_solution n.
+Proof.
+  intros Htail n Hn.
+  apply (lower_bound_solution_all_via_adaptive_ge2_step
+           (phase_extension_adaptive_step_ge2_from_tail_reachable Htail)
+           n Hn).
+Qed.
+
+Theorem lower_bound_solution_all_via_adaptive_ge2_base_step :
+  adaptive_step_at_tail_reachable 2 ->
+  adaptive_step_ge2_tail_reachable_step ->
+  forall n,
+    n > 0 ->
+    LowerBound.lower_bound_solution n.
+Proof.
+  intros Hbase2 Hstep n Hn.
+  apply lower_bound_solution_all_via_adaptive_ge2_tail_reachable_step.
+  apply phase_extension_adaptive_step_ge2_on_tail_reachable_from_base_step.
+  - exact Hbase2.
+  - exact Hstep.
+  - exact Hn.
+Qed.
+
 Lemma config_deck_A_nil_of_length_zero :
   forall c,
     length (LowerBound.deck_A c) = 0 ->
@@ -1860,6 +2202,112 @@ Proof.
   repeat split; reflexivity || assumption.
 Qed.
 
+Definition adaptive_step_2_pattern_constructor : Prop :=
+  forall phi mid final bs,
+    length (LowerBound.deck_A mid) = 2 ->
+    length (LowerBound.deck_B mid) = 2 ->
+    length bs = 2 ->
+    flex_blocks_duration bs = LowerBound.T 2 ->
+    runs_flex_blocks phi mid bs final ->
+    LowerBound.deck_A final = [] ->
+    LowerBound.deck_B final = [] ->
+    exists b start,
+      flex_blocks_duration [b] = LowerBound.phase_term 3 /\
+      length (LowerBound.deck_A start) = 3 /\
+      length (LowerBound.deck_B start) = 3 /\
+      LowerBound.runs phi start (trace_of_flex_block b) mid.
+
+Definition adaptive_tail_reachable_2_canonicalizable : Prop :=
+  forall phi mid,
+    length (LowerBound.deck_A mid) = 2 ->
+    length (LowerBound.deck_B mid) = 2 ->
+    adaptive_tail_reachable 2 phi mid ->
+    ge2_tail_reachable 2 phi mid.
+
+Definition adaptive_step_2_from_ge2_pattern : Prop :=
+  forall phi mid u x v y,
+    LowerBound.deck_A mid = [u; x] ->
+    LowerBound.deck_B mid = [v; y] ->
+    phi u v = LowerBound.NN ->
+    phi x y = LowerBound.WA ->
+    phi x v = LowerBound.TT ->
+    exists b start,
+      flex_blocks_duration [b] = LowerBound.phase_term 3 /\
+      length (LowerBound.deck_A start) = 3 /\
+      length (LowerBound.deck_B start) = 3 /\
+      LowerBound.runs phi start (trace_of_flex_block b) mid.
+
+Definition adaptive_step_2_from_ge2_pattern_fixed_head3 : Prop :=
+  forall phi mid u x v y,
+    LowerBound.deck_A mid = [u; x] ->
+    LowerBound.deck_B mid = [v; y] ->
+    phi u v = LowerBound.NN ->
+    phi x y = LowerBound.WA ->
+    phi x v = LowerBound.TT ->
+    exists start,
+      length (LowerBound.deck_A start) = 3 /\
+      length (LowerBound.deck_B start) = 3 /\
+      LowerBound.runs phi start
+        (trace_of_flex_block (flex_block_of_size 3)) mid.
+
+Lemma adaptive_step_2_pattern_constructor_from_canonical_ge2_pattern :
+  adaptive_tail_reachable_2_canonicalizable ->
+  adaptive_step_2_from_ge2_pattern ->
+  adaptive_step_2_pattern_constructor.
+Proof.
+  intros Hcanon Hpat phi mid final bs HAm HBm Hlen Hdur Hr HfA HfB.
+  assert (Hadapt : adaptive_tail_reachable 2 phi mid).
+  {
+    exists final, bs.
+    repeat split; assumption.
+  }
+  pose proof (Hcanon phi mid HAm HBm Hadapt) as Hge2.
+  destruct (ge2_tail_reachable_2_implies_mid_pattern phi mid HAm HBm Hge2)
+    as [u [x [v [y [HA [HB [Hnn [Hwa Htt]]]]]]]].
+  exact (Hpat phi mid u x v y HA HB Hnn Hwa Htt).
+Qed.
+
+Lemma adaptive_step_at_tail_reachable_2_if_pattern_constructor :
+  adaptive_step_2_pattern_constructor ->
+  adaptive_step_at_tail_reachable 2.
+Proof.
+  intros Hpat2 phi mid HAm HBm Hreach.
+  destruct Hreach as [final [bs [Hlen [Hdur [Hr [HfA HfB]]]]]].
+  exact (Hpat2 phi mid final bs HAm HBm Hlen Hdur Hr HfA HfB).
+Qed.
+
+Theorem lower_bound_solution_all_via_adaptive_pattern_base_step :
+  adaptive_step_2_pattern_constructor ->
+  adaptive_step_ge2_tail_reachable_step ->
+  forall n,
+    n > 0 ->
+    LowerBound.lower_bound_solution n.
+Proof.
+  intros Hpat2 Hstep n Hn.
+  apply lower_bound_solution_all_via_adaptive_ge2_base_step.
+  - apply adaptive_step_at_tail_reachable_2_if_pattern_constructor.
+    exact Hpat2.
+  - exact Hstep.
+  - exact Hn.
+Qed.
+
+Theorem lower_bound_solution_all_via_adaptive_canonical_ge2_pattern_base_step :
+  adaptive_tail_reachable_2_canonicalizable ->
+  adaptive_step_2_from_ge2_pattern ->
+  adaptive_step_ge2_tail_reachable_step ->
+  forall n,
+    n > 0 ->
+    LowerBound.lower_bound_solution n.
+Proof.
+  intros Hcanon Hpat Hstep n Hn.
+  apply lower_bound_solution_all_via_adaptive_pattern_base_step.
+  - apply adaptive_step_2_pattern_constructor_from_canonical_ge2_pattern.
+    + exact Hcanon.
+    + exact Hpat.
+  - exact Hstep.
+  - exact Hn.
+Qed.
+
 Definition phase_block_head_constructor_2_pattern_constructor : Prop :=
   forall phi mid u x v y,
     LowerBound.deck_A mid = [u; x] ->
@@ -1873,16 +2321,6 @@ Definition phase_block_head_constructor_2_pattern_constructor : Prop :=
       LowerBound.runs phi start
         (trace_of_flex_block (flex_block_of_size 3)) mid.
 
-Lemma phase_block_head_constructor_at_tail_reachable_2_if_pattern_constructor :
-  phase_block_head_constructor_2_pattern_constructor ->
-  phase_block_head_constructor_at_tail_reachable 2.
-Proof.
-  intros Hpat2 phi mid HAm HBm Hreach.
-  destruct (ge2_tail_reachable_2_implies_mid_pattern phi mid HAm HBm Hreach)
-    as [u [x [v [y [HA [HB [Hnn [Hwa Htt]]]]]]]].
-  exact (Hpat2 phi mid u x v y HA HB Hnn Hwa Htt).
-Qed.
-
 Definition phase_block_head_constructor_at_tail_reachable (n : nat) : Prop :=
   forall phi mid,
     length (LowerBound.deck_A mid) = n ->
@@ -1893,6 +2331,16 @@ Definition phase_block_head_constructor_at_tail_reachable (n : nat) : Prop :=
       length (LowerBound.deck_B start) = S n /\
       LowerBound.runs phi start
         (trace_of_flex_block (flex_block_of_size (S n))) mid.
+
+Lemma phase_block_head_constructor_at_tail_reachable_2_if_pattern_constructor :
+  phase_block_head_constructor_2_pattern_constructor ->
+  phase_block_head_constructor_at_tail_reachable 2.
+Proof.
+  intros Hpat2 phi mid HAm HBm Hreach.
+  destruct (ge2_tail_reachable_2_implies_mid_pattern phi mid HAm HBm Hreach)
+    as [u [x [v [y [HA [HB [Hnn [Hwa Htt]]]]]]]].
+  exact (Hpat2 phi mid u x v y HA HB Hnn Hwa Htt).
+Qed.
 
 Definition phase_block_head_constructor_ge2_step_tail_reachable : Prop :=
   forall n,
@@ -2047,6 +2495,147 @@ Proof.
   unfold trace_of_flex_block.
   simpl.
   reflexivity.
+Qed.
+
+Lemma runs_flex_block_size3_impossible :
+  forall phi start mid,
+    length (LowerBound.deck_A start) = 3 ->
+    length (LowerBound.deck_B start) = 3 ->
+    ~ LowerBound.runs phi start
+        (trace_of_flex_block (flex_block_of_size 3)) mid.
+Proof.
+  intros phi start mid HAs HBs Hr.
+  destruct start as [da db].
+  simpl in HAs, HBs, Hr.
+  destruct da as [|a0 da']; [discriminate HAs|].
+  destruct da' as [|a1 da'']; [discriminate HAs|].
+  destruct da'' as [|a2 da''']; [discriminate HAs|].
+  destruct da''' as [|a3 da'''']; [|discriminate HAs].
+  destruct db as [|b0 db']; [discriminate HBs|].
+  destruct db' as [|b1 db'']; [discriminate HBs|].
+  destruct db'' as [|b2 db''']; [discriminate HBs|].
+  destruct db''' as [|b3 db'''']; [|discriminate HBs].
+  destruct (runs_cons_inv phi
+              {| LowerBound.deck_A := [a0; a1; a2]; LowerBound.deck_B := [b0; b1; b2] |}
+              LowerBound.NN
+              [LowerBound.NN; LowerBound.NN; LowerBound.NN; LowerBound.NN; LowerBound.WA; LowerBound.TT]
+              mid Hr)
+    as [c1 [Hs1 Hr1]].
+  inversion Hs1; subst c1.
+  destruct (runs_cons_inv phi
+              {| LowerBound.deck_A := [a1; a2; a0]; LowerBound.deck_B := [b1; b2; b0] |}
+              LowerBound.NN
+              [LowerBound.NN; LowerBound.NN; LowerBound.NN; LowerBound.WA; LowerBound.TT]
+              mid Hr1)
+    as [c2 [Hs2 Hr2]].
+  inversion Hs2; subst c2.
+  destruct (runs_cons_inv phi
+              {| LowerBound.deck_A := [a2; a0; a1]; LowerBound.deck_B := [b2; b0; b1] |}
+              LowerBound.NN
+              [LowerBound.NN; LowerBound.NN; LowerBound.WA; LowerBound.TT]
+              mid Hr2)
+    as [c3 [Hs3 Hr3]].
+  inversion Hs3; subst c3.
+  destruct (runs_cons_inv phi
+              {| LowerBound.deck_A := [a0; a1; a2]; LowerBound.deck_B := [b0; b1; b2] |}
+              LowerBound.NN
+              [LowerBound.NN; LowerBound.WA; LowerBound.TT]
+              mid Hr3)
+    as [c4 [Hs4 Hr4]].
+  inversion Hs4; subst c4.
+  destruct (runs_cons_inv phi
+              {| LowerBound.deck_A := [a1; a2; a0]; LowerBound.deck_B := [b1; b2; b0] |}
+              LowerBound.NN
+              [LowerBound.WA; LowerBound.TT]
+              mid Hr4)
+    as [c5 [Hs5 Hr5]].
+  inversion Hs5; subst c5.
+  destruct (runs_cons_inv phi
+              {| LowerBound.deck_A := [a2; a0; a1]; LowerBound.deck_B := [b2; b0; b1] |}
+              LowerBound.WA
+              [LowerBound.TT]
+              mid Hr5)
+    as [c6 [Hs6 _]].
+  pose proof (step_NN_head_value phi a2 [a0; a1] b2 [b0; b1]
+                {| LowerBound.deck_A := [a0; a1; a2]; LowerBound.deck_B := [b0; b1; b2] |}
+                Hs3) as Hnn.
+  pose proof (step_WA_head_value phi a2 [a0; a1] b2 [b0; b1] c6 Hs6) as Hwa.
+  rewrite Hnn in Hwa.
+  discriminate.
+Qed.
+
+Lemma ge2_tail_reachable_2_exists_for_phi2 :
+  exists mid,
+    length (LowerBound.deck_A mid) = 2 /\
+    length (LowerBound.deck_B mid) = 2 /\
+    ge2_tail_reachable 2 LowerBound.phi2 mid.
+Proof.
+  destruct runs_flex_blocks_2_witness as [mid [final [HAm [HBm [Hrb [HfA HfB]]]]]].
+  exists mid.
+  repeat split; try assumption.
+  exists final.
+  repeat split; assumption.
+Qed.
+
+Lemma phase_block_head_constructor_at_tail_reachable_2_false :
+  ~ phase_block_head_constructor_at_tail_reachable 2.
+Proof.
+  intro Hbase2.
+  destruct ge2_tail_reachable_2_exists_for_phi2 as [mid [HAm [HBm Hreach]]].
+  destruct (Hbase2 LowerBound.phi2 mid HAm HBm Hreach)
+    as [start [HAs [HBs Hr]]].
+  exact (runs_flex_block_size3_impossible LowerBound.phi2 start mid HAs HBs Hr).
+Qed.
+
+Lemma phase_block_head_constructor_2_pattern_constructor_false :
+  ~ phase_block_head_constructor_2_pattern_constructor.
+Proof.
+  intro Hpat2.
+  apply phase_block_head_constructor_at_tail_reachable_2_false.
+  apply phase_block_head_constructor_at_tail_reachable_2_if_pattern_constructor.
+  exact Hpat2.
+Qed.
+
+Lemma adaptive_step_2_from_ge2_pattern_fixed_head3_false :
+  ~ adaptive_step_2_from_ge2_pattern_fixed_head3.
+Proof.
+  intro Hfixed.
+  apply phase_block_head_constructor_2_pattern_constructor_false.
+  intros phi mid u x v y HA HB Hnn Hwa Htt.
+  destruct (Hfixed phi mid u x v y HA HB Hnn Hwa Htt)
+    as [start [HAs [HBs Hr]]].
+  exists start.
+  repeat split; assumption.
+Qed.
+
+Lemma phase_block_head_constructor_ge2_restricted_false :
+  ~ phase_block_head_constructor_ge2_restricted.
+Proof.
+  intro Hrestricted.
+  assert (Hon : phase_block_head_constructor_ge2_on_tail_reachable).
+  {
+    apply on_tail_reachable_from_restricted_head_constructor.
+    exact Hrestricted.
+  }
+  assert (Hbase2 : phase_block_head_constructor_at_tail_reachable 2).
+  {
+    intros phi mid HAm HBm Hreach.
+    apply (Hon 2 phi mid).
+    - lia.
+    - exact HAm.
+    - exact HBm.
+    - exact Hreach.
+  }
+  exact (phase_block_head_constructor_at_tail_reachable_2_false Hbase2).
+Qed.
+
+Lemma phase_extension_pos_case_ge2_constructor_false :
+  ~ phase_extension_pos_case_ge2_constructor.
+Proof.
+  intro Hge2.
+  apply phase_block_head_constructor_ge2_restricted_false.
+  apply restricted_head_constructor_from_phase_extension_pos_case_ge2.
+  exact Hge2.
 Qed.
 
 Lemma candidate_step_ge2_from_phase_extension_pos_case_ge2 :
@@ -2320,6 +2909,642 @@ Proof.
     as Hbound.
   unfold LowerBound.phase_term.
   lia.
+Qed.
+
+Definition phi_direct (n i j : nat) : LowerBound.outcome :=
+  if Nat.eqb (i + j) (n - 1) then LowerBound.TT
+  else if Nat.eqb (i + j) (n - 2) then LowerBound.NN
+  else LowerBound.WA.
+
+Definition phi_local (m u v : nat) : LowerBound.outcome :=
+  if Nat.eqb (u + v) (m - 1) then LowerBound.TT
+  else if Nat.eqb (u + v) (m - 2) then LowerBound.NN
+  else LowerBound.WA.
+
+Lemma phi_direct_restricts_to_local :
+  forall n m u v,
+    m <= n ->
+    m >= 2 ->
+    u < m ->
+    v < m ->
+    phi_direct n u (v + (n - m)) = phi_local m u v.
+Proof.
+  intros n m u v Hmn Hm Hu Hv.
+  unfold phi_direct, phi_local.
+  assert (Hs1 : u + (v + (n - m)) = (u + v) + (n - m)) by lia.
+  rewrite Hs1.
+  set (x := u + v).
+  assert (Ht : (x + (n - m) =? n - 1) = (x =? m - 1)).
+  {
+    destruct (x + (n - m) =? n - 1) eqn:Hl;
+    destruct (x =? m - 1) eqn:Hr; try reflexivity.
+    - apply Nat.eqb_eq in Hl.
+      apply Nat.eqb_neq in Hr.
+      exfalso.
+      apply Hr.
+      lia.
+    - apply Nat.eqb_neq in Hl.
+      apply Nat.eqb_eq in Hr.
+      exfalso.
+      apply Hl.
+      lia.
+  }
+  rewrite Ht.
+  destruct (x =? m - 1) eqn:HeqT; [reflexivity|].
+  assert (Hn : (x + (n - m) =? n - 2) = (x =? m - 2)).
+  {
+    destruct (x + (n - m) =? n - 2) eqn:Hl;
+    destruct (x =? m - 2) eqn:Hr; try reflexivity.
+    - apply Nat.eqb_eq in Hl.
+      apply Nat.eqb_neq in Hr.
+      exfalso.
+      apply Hr.
+      lia.
+    - apply Nat.eqb_neq in Hl.
+      apply Nat.eqb_eq in Hr.
+      exfalso.
+      apply Hl.
+      lia.
+  }
+  rewrite Hn.
+  reflexivity.
+Qed.
+
+Definition local_step (m : nat) (s : nat * nat) : option (nat * nat) :=
+  let '(u, v) := s in
+  match phi_local m u v with
+  | LowerBound.WA => Some (u, (S v) mod m)
+  | LowerBound.NN => Some ((S u) mod m, (S v) mod m)
+  | LowerBound.TT => None
+  | LowerBound.WB => None
+  end.
+
+Lemma local_step_m1_terminates_immediately :
+  local_step 1 (0, 0) = None.
+Proof.
+  vm_compute.
+  reflexivity.
+Qed.
+
+Lemma local_step_m2_first :
+  local_step 2 (0, 0) = Some (1, 1).
+Proof.
+  vm_compute.
+  reflexivity.
+Qed.
+
+Lemma local_step_m2_second :
+  local_step 2 (1, 1) = Some (1, 0).
+Proof.
+  vm_compute.
+  reflexivity.
+Qed.
+
+Lemma local_step_m2_third_tie :
+  local_step 2 (1, 0) = None.
+Proof.
+  vm_compute.
+  reflexivity.
+Qed.
+
+Theorem local_m2_exact_three_step_trace :
+  exists s1 s2,
+    local_step 2 (0, 0) = Some s1 /\
+    local_step 2 s1 = Some s2 /\
+    local_step 2 s2 = None /\
+    s2 = (1, 0).
+Proof.
+  exists (1, 1), (1, 0).
+  repeat split;
+    try apply local_step_m2_first;
+    try apply local_step_m2_second;
+    try apply local_step_m2_third_tie;
+    reflexivity.
+Qed.
+
+Lemma phi_local_row0_before_boundary_is_WA :
+  forall m v,
+    m > 2 ->
+    v <= m - 3 ->
+    phi_local m 0 v = LowerBound.WA.
+Proof.
+  intros m v Hm Hv.
+  unfold phi_local.
+  simpl.
+  assert (Hv1 : v <> m - 1) by lia.
+  assert (Hv2 : v <> m - 2) by lia.
+  destruct (Nat.eqb_spec v (m - 1)) as [Heq1|Hneq1].
+  - lia.
+  - destruct (Nat.eqb_spec v (m - 2)) as [Heq2|Hneq2].
+    + lia.
+    + reflexivity.
+Qed.
+
+Lemma phi_local_row0_at_boundary_is_NN :
+  forall m,
+    m > 2 ->
+    phi_local m 0 (m - 2) = LowerBound.NN.
+Proof.
+  intros m Hm.
+  unfold phi_local.
+  simpl.
+  destruct (Nat.eqb_spec (m - 2) (m - 1)) as [Heq1|Hneq1].
+  - lia.
+  - destruct (Nat.eqb_spec (m - 2) (m - 2)) as [Heq2|Hneq2].
+    + reflexivity.
+    + contradiction.
+Qed.
+
+Lemma local_step_row0_before_boundary :
+  forall m v,
+    m > 2 ->
+    v <= m - 3 ->
+    local_step m (0, v) = Some (0, S v).
+Proof.
+  intros m v Hm Hv.
+  unfold local_step.
+  rewrite phi_local_row0_before_boundary_is_WA by assumption.
+  rewrite Nat.mod_small by lia.
+  reflexivity.
+Qed.
+
+Lemma local_step_row0_boundary_to_row1 :
+  forall m,
+    m > 2 ->
+    local_step m (0, m - 2) = Some (1, m - 1).
+Proof.
+  intros m Hm.
+  unfold local_step.
+  rewrite phi_local_row0_at_boundary_is_NN by assumption.
+  rewrite Nat.mod_small by lia.
+  rewrite Nat.mod_small by lia.
+  replace (S (m - 2)) with (m - 1) by lia.
+  reflexivity.
+Qed.
+
+Lemma phi_local_intermediate_high_segment_WA :
+  forall m u v,
+    m > 2 ->
+    1 <= u <= m - 2 ->
+    m - u <= v <= m - 1 ->
+    phi_local m u v = LowerBound.WA.
+Proof.
+  intros m u v Hm Hu Hv.
+  unfold phi_local.
+  simpl.
+  destruct (Nat.eqb_spec (u + v) (m - 1)) as [Heq1|Hneq1].
+  - lia.
+  - destruct (Nat.eqb_spec (u + v) (m - 2)) as [Heq2|Hneq2].
+    + lia.
+    + reflexivity.
+Qed.
+
+Lemma phi_local_intermediate_low_segment_WA :
+  forall m u v,
+    m > 2 ->
+    1 <= u <= m - 3 ->
+    0 <= v <= m - 3 - u ->
+    phi_local m u v = LowerBound.WA.
+Proof.
+  intros m u v Hm Hu Hv.
+  unfold phi_local.
+  simpl.
+  destruct (Nat.eqb_spec (u + v) (m - 1)) as [Heq1|Hneq1].
+  - lia.
+  - destruct (Nat.eqb_spec (u + v) (m - 2)) as [Heq2|Hneq2].
+    + lia.
+    + reflexivity.
+Qed.
+
+Lemma phi_local_intermediate_exit_is_NN :
+  forall m u,
+    m > 2 ->
+    1 <= u <= m - 2 ->
+    phi_local m u (m - 2 - u) = LowerBound.NN.
+Proof.
+  intros m u Hm Hu.
+  unfold phi_local.
+  simpl.
+  destruct (Nat.eqb_spec (u + (m - 2 - u)) (m - 1)) as [Heq1|Hneq1].
+  - lia.
+  - destruct (Nat.eqb_spec (u + (m - 2 - u)) (m - 2)) as [Heq2|Hneq2].
+    + reflexivity.
+    + exfalso. apply Hneq2. lia.
+Qed.
+
+Lemma local_step_intermediate_high_segment :
+  forall m u v,
+    m > 2 ->
+    1 <= u <= m - 2 ->
+    m - u <= v <= m - 1 ->
+    local_step m (u, v) = Some (u, (S v) mod m).
+Proof.
+  intros m u v Hm Hu Hv.
+  unfold local_step.
+  rewrite phi_local_intermediate_high_segment_WA by assumption.
+  reflexivity.
+Qed.
+
+Lemma local_step_intermediate_low_segment :
+  forall m u v,
+    m > 2 ->
+    1 <= u <= m - 3 ->
+    0 <= v <= m - 3 - u ->
+    local_step m (u, v) = Some (u, S v).
+Proof.
+  intros m u v Hm Hu Hv.
+  unfold local_step.
+  rewrite phi_local_intermediate_low_segment_WA by assumption.
+  rewrite Nat.mod_small by lia.
+  reflexivity.
+Qed.
+
+Lemma local_step_intermediate_exit_to_next_row :
+  forall m u,
+    m > 2 ->
+    1 <= u <= m - 2 ->
+    local_step m (u, m - 2 - u) = Some (u + 1, m - 1 - u).
+Proof.
+  intros m u Hm Hu.
+  unfold local_step.
+  rewrite phi_local_intermediate_exit_is_NN by assumption.
+  rewrite Nat.mod_small by lia.
+  rewrite Nat.mod_small by lia.
+  replace (S u) with (u + 1) by lia.
+  replace (S (m - 2 - u)) with (m - 1 - u) by lia.
+  reflexivity.
+Qed.
+
+Definition visited_cols_row (m u : nat) : list nat :=
+  match u with
+  | 0 => seq 0 (m - 1)
+  | S u' =>
+      if Nat.eqb u (m - 1)
+      then seq 1 (m - 1) ++ [0]
+      else seq (m - S u') (S u') ++ seq 0 (m - 1 - S u')
+  end.
+
+Lemma visited_cols_row_length_0 :
+  forall m,
+    m > 2 ->
+    length (visited_cols_row m 0) = m - 1.
+Proof.
+  intros m Hm.
+  unfold visited_cols_row.
+  rewrite length_seq.
+  lia.
+Qed.
+
+Lemma visited_cols_row_length_mid :
+  forall m u,
+    m > 2 ->
+    1 <= u <= m - 2 ->
+    length (visited_cols_row m u) = m - 1.
+Proof.
+  intros m u Hm Hu.
+  destruct u as [|u']; [lia|].
+  unfold visited_cols_row.
+  assert (Hneq : S u' <> m - 1) by lia.
+  assert (Heqb : (S u' =? m - 1) = false).
+  { apply Nat.eqb_neq. exact Hneq. }
+  rewrite Heqb.
+  rewrite length_app, !length_seq.
+  simpl.
+  lia.
+Qed.
+
+Lemma visited_cols_row_length_last :
+  forall m,
+    m > 2 ->
+    length (visited_cols_row m (m - 1)) = m.
+Proof.
+  intros m Hm.
+  destruct (m - 1) eqn:Em1.
+  - lia.
+  - unfold visited_cols_row.
+    assert (HmS : m = S (S n)) by lia.
+    subst m.
+    rewrite Nat.eqb_refl.
+    rewrite length_app, length_seq.
+    simpl.
+    lia.
+Qed.
+
+Lemma visited_cols_row_cardinality :
+  forall m u,
+    m > 2 ->
+    (0 <= u <= m - 2 -> length (visited_cols_row m u) = m - 1) /\
+    (u = m - 1 -> length (visited_cols_row m u) = m).
+Proof.
+  intros m u Hm.
+  split.
+  - intros Hu.
+    destruct u as [|u'].
+    + apply visited_cols_row_length_0; assumption.
+    + apply visited_cols_row_length_mid; lia.
+  - intros Hu_last.
+    subst u.
+    apply visited_cols_row_length_last; assumption.
+Qed.
+
+  Lemma visited_cols_row_nonlast_excludes_forbidden_col :
+    forall m u,
+      m > 2 ->
+      0 <= u <= m - 2 ->
+      ~ In (m - 1 - u) (visited_cols_row m u).
+  Proof.
+    intros m u Hm Hu.
+    destruct u as [|u'].
+    - unfold visited_cols_row.
+      intro Hin.
+      apply in_seq in Hin.
+      lia.
+    - unfold visited_cols_row.
+      assert (Hneq : S u' <> m - 1) by lia.
+      assert (Heqb : (S u' =? m - 1) = false).
+      { apply Nat.eqb_neq. exact Hneq. }
+      rewrite Heqb.
+      intro Hin.
+      apply in_app_or in Hin.
+      destruct Hin as [Hin | Hin].
+      + apply in_seq in Hin.
+        lia.
+      + apply in_seq in Hin.
+        lia.
+  Qed.
+
+  Lemma visited_cols_row_last_covers_all_cols :
+    forall m c,
+      m > 2 ->
+      c < m ->
+      In c (visited_cols_row m (m - 1)).
+  Proof.
+    intros m c Hm Hc.
+    unfold visited_cols_row.
+    destruct (m - 1) eqn:Em1.
+    - lia.
+    - rewrite Nat.eqb_refl.
+      destruct c as [|c'].
+      + apply in_or_app.
+        right.
+        simpl.
+        left.
+        reflexivity.
+      + apply in_or_app.
+        left.
+        apply in_seq.
+        lia.
+  Qed.
+
+  Theorem visited_cols_row_phase_coverage :
+    forall m u,
+      m > 2 ->
+      (0 <= u <= m - 2 ->
+        length (visited_cols_row m u) = m - 1 /\
+        ~ In (m - 1 - u) (visited_cols_row m u)) /\
+      (u = m - 1 ->
+        length (visited_cols_row m u) = m /\
+        forall c, c < m -> In c (visited_cols_row m u)).
+  Proof.
+    intros m u Hm.
+    split.
+    - intros Hu.
+      split.
+      + apply (proj1 (visited_cols_row_cardinality m u Hm)).
+        exact Hu.
+      + apply visited_cols_row_nonlast_excludes_forbidden_col; assumption.
+    - intros Hu.
+      subst u.
+      split.
+      + apply visited_cols_row_length_last; assumption.
+      + intros c Hc.
+        apply visited_cols_row_last_covers_all_cols; assumption.
+  Qed.
+
+  Theorem local_step_row0_dynamics_summary :
+    forall m,
+      m > 2 ->
+      (forall v,
+        0 <= v <= m - 3 ->
+        local_step m (0, v) = Some (0, v + 1)) /\
+      local_step m (0, m - 2) = Some (1, m - 1).
+  Proof.
+    intros m Hm.
+    split.
+    - intros v Hv.
+      rewrite local_step_row0_before_boundary by lia.
+      replace (S v) with (v + 1) by lia.
+      reflexivity.
+    - apply local_step_row0_boundary_to_row1.
+      exact Hm.
+  Qed.
+
+  Theorem local_step_intermediate_row_dynamics_summary :
+    forall m u,
+      m > 2 ->
+      1 <= u <= m - 2 ->
+      (forall v,
+        m - u <= v <= m - 1 ->
+        local_step m (u, v) = Some (u, (v + 1) mod m)) /\
+      (1 <= u <= m - 3 ->
+        forall v,
+          0 <= v <= m - 3 - u ->
+          local_step m (u, v) = Some (u, v + 1)) /\
+      local_step m (u, m - 2 - u) = Some (u + 1, m - 1 - u).
+  Proof.
+    intros m u Hm Hu.
+    split.
+    - intros v Hv.
+      rewrite local_step_intermediate_high_segment by assumption.
+      replace (S v) with (v + 1) by lia.
+      reflexivity.
+    - split.
+      + intros Hu_low v Hv.
+        rewrite local_step_intermediate_low_segment by assumption.
+        replace (S v) with (v + 1) by lia.
+        reflexivity.
+      + apply local_step_intermediate_exit_to_next_row; assumption.
+  Qed.
+
+  Theorem local_step_row_phase_interface :
+    forall m u,
+      m > 2 ->
+      (u = 0 ->
+        (forall v,
+          0 <= v <= m - 3 ->
+          local_step m (u, v) = Some (u, v + 1)) /\
+        local_step m (u, m - 2) = Some (1, m - 1)) /\
+      (1 <= u <= m - 2 ->
+        (forall v,
+          m - u <= v <= m - 1 ->
+          local_step m (u, v) = Some (u, (v + 1) mod m)) /\
+        (1 <= u <= m - 3 ->
+          forall v,
+            0 <= v <= m - 3 - u ->
+            local_step m (u, v) = Some (u, v + 1)) /\
+        local_step m (u, m - 2 - u) = Some (u + 1, m - 1 - u)).
+  Proof.
+    intros m u Hm.
+    split.
+    - intro Hu0.
+      subst u.
+      apply local_step_row0_dynamics_summary.
+      exact Hm.
+    - intro Hu.
+      apply local_step_intermediate_row_dynamics_summary; assumption.
+  Qed.
+
+  Lemma phi_local_last_row_nonzero_is_WA :
+    forall m v,
+      m > 2 ->
+      1 <= v <= m - 1 ->
+      phi_local m (m - 1) v = LowerBound.WA.
+  Proof.
+    intros m v Hm Hv.
+    unfold phi_local.
+    destruct (Nat.eqb_spec ((m - 1) + v) (m - 1)) as [Heq1|Hneq1].
+    - lia.
+    - destruct (Nat.eqb_spec ((m - 1) + v) (m - 2)) as [Heq2|Hneq2].
+      + lia.
+      + reflexivity.
+  Qed.
+
+  Lemma phi_local_last_row_zero_is_TT :
+    forall m,
+      m > 2 ->
+      phi_local m (m - 1) 0 = LowerBound.TT.
+  Proof.
+    intros m Hm.
+    unfold phi_local.
+    replace ((m - 1) + 0) with (m - 1) by lia.
+    rewrite Nat.eqb_refl.
+    reflexivity.
+  Qed.
+
+  Lemma local_step_last_row_nonzero :
+    forall m v,
+      m > 2 ->
+      1 <= v <= m - 1 ->
+      local_step m (m - 1, v) = Some (m - 1, (v + 1) mod m).
+  Proof.
+    intros m v Hm Hv.
+    unfold local_step.
+    rewrite phi_local_last_row_nonzero_is_WA by assumption.
+    replace (S v) with (v + 1) by lia.
+    reflexivity.
+  Qed.
+
+  Lemma local_step_last_row_zero_terminates :
+    forall m,
+      m > 2 ->
+      local_step m (m - 1, 0) = None.
+  Proof.
+    intros m Hm.
+    unfold local_step.
+    rewrite phi_local_last_row_zero_is_TT by assumption.
+    reflexivity.
+  Qed.
+
+  Theorem local_step_last_row_dynamics_summary :
+    forall m,
+      m > 2 ->
+      (forall v,
+        1 <= v <= m - 1 ->
+        local_step m (m - 1, v) = Some (m - 1, (v + 1) mod m)) /\
+      local_step m (m - 1, 0) = None.
+  Proof.
+    intros m Hm.
+    split.
+    - intros v Hv.
+      apply local_step_last_row_nonzero; assumption.
+    - apply local_step_last_row_zero_terminates; assumption.
+  Qed.
+
+  Lemma local_phase_base_case_m1 :
+    local_step 1 (0, 0) = None /\ 1 = 1 * 1 - 1 + 1.
+  Proof.
+    split.
+    - apply local_step_m1_terminates_immediately.
+    - lia.
+  Qed.
+
+  Lemma local_phase_base_case_m2 :
+    (exists s1 s2,
+        local_step 2 (0, 0) = Some s1 /\
+        local_step 2 s1 = Some s2 /\
+        local_step 2 s2 = None /\
+        s2 = (1, 0)) /\
+    3 = 2 * 2 - 2 + 1.
+  Proof.
+    split.
+    - apply local_m2_exact_three_step_trace.
+    - lia.
+  Qed.
+
+  Lemma row_model_total_states_count :
+    forall m,
+      m > 2 ->
+      (m - 1) * (m - 1) + m = m * m - m + 1.
+  Proof.
+    intros m Hm.
+    nia.
+  Qed.
+
+  Lemma row_model_non_tie_states_count :
+    forall m,
+      m > 2 ->
+      (m - 1) * (m - 1) + (m - 1) = m * m - m.
+  Proof.
+    intros m Hm.
+    nia.
+  Qed.
+
+  Theorem local_row_model_phase_budget_exact :
+    forall m,
+      m > 2 ->
+      ((m - 1) * (m - 1) + (m - 1) = m * m - m) /\
+      (S ((m - 1) * (m - 1) + (m - 1)) = LowerBound.phase_term m) /\
+      ((m - 1) * (m - 1) + m = LowerBound.phase_term m).
+  Proof.
+    intros m Hm.
+    split.
+    - apply row_model_non_tie_states_count; assumption.
+    - split.
+      + unfold LowerBound.phase_term.
+        nia.
+      + unfold LowerBound.phase_term.
+        apply row_model_total_states_count; assumption.
+  Qed.
+
+Theorem local_phase_budget_complete_all_m :
+  forall m,
+    (m = 1 -> LowerBound.phase_term m = 1) /\
+    (m = 2 -> LowerBound.phase_term m = 3) /\
+    (m > 2 -> LowerBound.phase_term m = (m - 1) * (m - 1) + m).
+Proof.
+  intro m.
+  split.
+  - intro Hm1.
+    subst m.
+    unfold LowerBound.phase_term.
+    lia.
+  - split.
+    + intro Hm2.
+      subst m.
+      unfold LowerBound.phase_term.
+      lia.
+    + intro Hm.
+      destruct (local_row_model_phase_budget_exact m Hm) as [_ [_ Hlast]].
+      symmetry.
+      exact Hlast.
+Qed.
+
+Theorem constructive_budget_matches_global_closed_form :
+  forall n,
+    LowerBound.T n = n * (n * n + 2) / 3.
+Proof.
+  intro n.
+  apply LowerBound.T_closed_form.
 Qed.
 
 (*
