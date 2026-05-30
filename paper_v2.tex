@@ -1,0 +1,1060 @@
+\documentclass[11pt]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{mathtools}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{enumitem}
+\usepackage{tikz}
+\usepackage{hyperref}
+\hypersetup{colorlinks=true,linkcolor=blue,citecolor=blue,urlcolor=blue}
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{lemma}{Lemma}
+\newtheorem{corollary}{Corollary}
+\newtheorem{proposition}{Proposition}
+\newtheorem{conjecture}{Conjecture}
+\theoremstyle{definition}
+\newtheorem{definition}{Definition}
+\newtheorem{assumption}{Assumption}
+\theoremstyle{remark}
+\newtheorem{remark}{Remark}
+
+\DeclareMathOperator{\dur}{dur}
+\newcommand{\WA}{\mathsf{W_A}}
+\newcommand{\WB}{\mathsf{W_B}}
+\newcommand{\TT}{\mathsf{T}}
+\newcommand{\NN}{\mathsf{N}}
+\newcommand{\Term}{\mathrm{Term}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\E}{\mathbb{E}}
+\newcommand{\Tphi}{\mathcal{T}}
+
+\title{On the Maximum Duration of a Deterministic\\ Card-Dueling Process\\[4pt]
+\large A Combinatorial Analysis with Stochastic Generalizations}
+\author{Ali Nehrani\\ Ground Inc.\\ \texttt{nehrani@gmail.com}}
+\date{May 28, 2026 (revised, second revision)}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+We study a deterministic two-player card-dueling process on two decks of $n$ cards each,
+governed by a fixed pairwise outcome table. This process is a strategy-free generalization of the
+classical card game War, in which a global look-up table replaces the linear ranking of cards and
+a fourth ``no-interaction'' outcome is permitted. Our main result determines the exact extremal
+duration: the maximum length of any terminating game is
+\[
+T(n) = \frac{n(n^2 + 2)}{3}.
+\]
+The proof combines a phase decomposition on a shrinking sequence of discrete tori $(\Z/m\Z)^2$
+with the global perfect matching forced on the tie cells by termination; together these yield
+a tight per-phase bound that sums to $T(n)$. The bound is attained by an explicit inductive
+construction --- a Staircase Raster-Scan traversal --- whose induction is closed by a table-restriction
+lemma. We then analyze stochastic generalizations, carefully separating two events
+that an earlier treatment conflated: a random table admits some terminating ordering with
+high probability, whereas for a fixed ordering termination is only a constant-probability event,
+with $p^n \le \Pr(\Term_n) \le p$. Under the uniform model the expected number of \emph{distinct} duels
+is $\Theta(n)$ (proved unconditionally), and the indicator-weighted total duration $\E[D_n\mathbf 1_{\Term_n}]$
+is $O(n)$ \emph{under an explicit torus-coverage hypothesis}, which we reduce to a one-dimensional bound on the
+longest monotone chain in the revealed set; this also yields a sub-quadratic $O(n^{3/2})$ bound under
+a longest-increasing-subsequence-type estimate. The quadratic order $\Theta(n^2)$ lives in the sparse-tie
+regime, where the tie density is $\Theta(1/n)$, and $\Theta(n^3)$ is approached only as the tie density tends to
+$0$. Finally, a reproducible simulation (seeded, with bootstrap confidence intervals, $4\le n\le 18$, tie
+density $p=\tfrac14$) shows that $\Pr(\Term_n)$ decays polynomially (least-squares fit $\approx 0.79\,n^{-2.35}$),
+so that the conditional duration $E[D_n\mid \Term_n]$ grows \emph{super-linearly}, empirically as $\approx n^{1.4}$,
+even though the indicator-weighted duration $\E[D_n\mathbf 1_{\Term_n}]$ is not merely bounded but
+\emph{decreasing} (empirically $\approx n^{-0.95}$). This corrects an earlier claim that the conditional
+duration is $\Theta(n)$; we emphasize that the fitted exponents rest on under one decade of $n$ and a single
+value of $p$, and are reported as indicative rather than established.
+
+\medskip
+\noindent\textbf{Keywords:} deterministic deck dynamics; monovariants; perfect matchings; phase decomposition;
+extremal combinatorics; random outcome tables; permutation statistics; card game of War.
+
+\noindent\textbf{MSC 2020:} 05A05, 05C70, 60C05, 68Q25, 37B15.
+\end{abstract}
+
+\section{Introduction}
+
+\subsection{Motivation}
+Combinatorial processes that couple deterministic local update rules with global memory effects
+recur throughout discrete mathematics and theoretical computer science. Sorting networks, the
+abelian sandpile and chip-firing games, rotor-routing, cyclic cellular automata, and turn-based
+card games all share a single signature: simple, local, memoryless transition rules generate global
+behaviour whose duration, periodicity, or limiting shape is far from obvious and often requires an
+extremal or potential-theoretic argument to pin down. The Card-Duel Process (CDP) studied in this
+paper belongs squarely to this family, and it is most naturally read as a strategy-free generalization
+of the card game War.
+
+In War, two players each hold a face-down deck; each round both reveal a top card and the
+higher-ranked card wins, with the loser (and sometimes both cards, on a tie) reinserted according
+to fixed rules. War is famously deterministic once the initial shuffle is fixed: no player makes a
+choice, yet the dynamics are intricate enough that even the basic question of whether the game must
+terminate is subtle~\cite{LR}. The CDP abstracts War in two ways. First, the total order on card values
+is replaced by an arbitrary outcome table $\phi : A \times B \to \{\WA, \WB, \TT, \NN\}$, decoupling the win relation
+from any ranking and admitting genuinely non-transitive and asymmetric interactions. Second, a
+fourth outcome $\NN$ (``no interaction'') is permitted, in which both cards cycle to the bottom without
+a winner or loser; this is the move that allows the process to mark time on a torus without removing
+mass. Removal happens only through ties, which makes the tie structure --- not the win structure ---
+the carrier of all irreversibility in the process.
+
+The driving question is purely extremal: across all outcome tables and all initial deck orderings,
+how long can a terminating game last? Equivalently, we seek the worst-case running time of the
+process as a function of the deck size $n$. For the concrete value $n = 40$ (one duel per minute) the
+answer turns out to be exactly $356$ hours, a figure we recover as $T(40) = 21{,}360$.
+
+\subsection{The model, informally}
+Two players each hold a face-down deck of $n$ cards. Every step both reveal their top card; the
+outcome of the duel is read off a fixed table $\phi$. On a win the winner stays on top and the loser goes
+to the bottom of its own deck; on a no-interaction both cards go to the bottom of their decks; on a
+tie both cards are permanently removed. No player has any choice at any point. The game ends
+when both decks are empty. A precise statement is given in Section~\ref{sec:model}.
+
+\subsection{Contributions}
+\begin{itemize}[leftmargin=1.4em]
+\item \textbf{An exact extremal duration (Theorem~\ref{thm:main}).} We prove that the maximum duration of any
+terminating CDP on decks of size $n$ is exactly $T(n) = n(n^2 + 2)/3$. To our knowledge this is
+the first sharp worst-case bound for a War-type process with an arbitrary outcome table.
+\item \textbf{A phase decomposition with a tight per-phase bound (Section~\ref{sec:upper}).} We decompose any
+game into $n$ phases delimited by ties and show that the $k$-th phase lives on a torus $(\Z/m_k\Z)^2$
+with $m_k = n - k + 1$. The termination-forced perfect matching reserves $m_k - 1$ cells that the
+phase provably cannot visit, giving $L_k \le m_k^2 - m_k + 1$; summation yields the upper bound.
+\item \textbf{A matching explicit construction (Section~\ref{sec:lower}).} We exhibit, for every $n$, an outcome table
+and initial ordering --- the Staircase Raster-Scan --- that attains $T(n)$. The construction is
+recursive, and we close the induction with a table-restriction lemma (Lemma~\ref{lem:restrict}). The
+general result is a theorem (Theorem~\ref{thm:tight}); we additionally checked the construction by
+exhaustive simulation for $1 \le n \le 8$ as an independent confirmation.
+\item \textbf{A corrected stochastic analysis (Section~\ref{sec:stoch}).} We separate the table-feasibility event $E_n$ (the
+table admits some terminating ordering) from the fixed-ordering termination event $\Term_n$. We
+prove $\Pr(E_n) \to 1$ exponentially fast, but $p^n \le \Pr(\Term_n) \le p$, so a fixed ordering terminates
+only with constant probability. Conditioned on termination, the expected number of distinct
+duels is $\Theta(n)$ (unconditional, Lemma~\ref{lem:fresh}), and the indicator-weighted total duration is $O(n)$
+under an explicit torus-coverage hypothesis (Assumption~\ref{asm:cover}).
+\item \textbf{A reduction of the coverage hypothesis (Section~\ref{sec:reduce}).} We prove (Theorem~\ref{thm:reduce}) that
+Assumption~\ref{asm:cover} follows from a strictly weaker, one-dimensional condition --- that the revealed set
+has no long monotone chain --- and that a longest-increasing-subsequence-type estimate already
+yields a sub-quadratic $O(n^{3/2})$ bound (Proposition~\ref{prop:subquad}).
+\item \textbf{Reproducible numerical findings (Section~\ref{sec:numerics}).} A seeded simulation with bootstrap
+confidence intervals shows $\Pr(\Term_n) \approx 0.79\, n^{-2.35}$ (refuting the earlier sharp-termination
+conjecture, now Conjecture~\ref{conj:poly}); $E[V \mid \Term_n] \approx 2.9\,n$ (linear, as predicted); a \emph{decreasing}
+indicator-weighted duration $\E[D_n\mathbf 1_{\Term_n}] \approx 0.75\,n^{-0.95}$; and consequently a super-linear
+conditional duration $E[D_n \mid \Term_n] \approx 0.95\,n^{1.40}$ --- correcting the earlier $\Theta(n)$ conditional
+claim, but \emph{not} the $n^2$ that a constant-weighted-duration heuristic would predict
+(Section~\ref{sec:numerics}).
+\item \textbf{A map of the open landscape (Section~\ref{sec:open}).} We isolate a single coverage/mixing input ---
+now in its reduced monotone-chain form --- on which several stochastic claims jointly depend,
+and pose enumeration, termination-exponent, and generalization problems.
+\end{itemize}
+
+\subsection{Relation to previous versions}\label{sec:relation}
+This is a revised version. We centralize all corrections here so that the technical sections read cleanly.
+
+An early draft reported the expected duration under the uniform model as $\Theta(n^2)$. That error conflated
+the number of \emph{matching} ties ($m$ per phase, a structural quantity) with the density of \emph{table}
+ties ($\Theta(m^2)$ cells per phase under the uniform model). The first revision corrected this by (i)
+distinguishing the table-feasibility event $E_n$ from the fixed-ordering termination event $\Term_n$;
+(ii) replacing a flawed per-phase hitting-time argument by a global coupling that bounds only the number of
+distinct cells; (iii) isolating the single torus-coverage hypothesis (Assumption~\ref{asm:cover}) on which the
+total-duration order and the sparse-tie scaling both depend; (iv) reducing that hypothesis to a one-dimensional
+monotone-chain bound (Theorem~\ref{thm:reduce}, Proposition~\ref{prop:subquad}); and (v) replacing the earlier
+sharp-termination conjecture with the empirical claim $\Pr(\Term_n)\to 0$.
+
+\emph{The present (second) revision} corrects an internal inconsistency in the numerical section of the first
+revision. The first revision asserted that the indicator-weighted duration $\E[D_n\mathbf 1_{\Term_n}]$ ``stays
+bounded'' and that the conditional duration $E[D_n\mid\Term_n]$ ``tracks $\approx n^2$.'' These two statements
+are mutually inconsistent with the tabulated data and only both hold if $\E[D_n\mathbf 1_{\Term_n}]$ is a positive
+constant. A reproducible simulation (Section~\ref{sec:numerics}) shows instead that $\E[D_n\mathbf 1_{\Term_n}]$ is
+\emph{decreasing} (empirically $\approx n^{-0.95}$, hence $o(1)$, well inside the proven $O(n)$ envelope), and
+consequently that $E[D_n\mid\Term_n]\approx n^{1.40}$ --- super-linear, but markedly sub-quadratic, not $n^2$.
+This revision also (vi) reports bootstrap confidence intervals and a fixed random seed; (vii) re-interprets the
+stale-traversal statistic $S$, whose growth and whose ratio $S/V$ to the fresh count both \emph{increase} with $n$,
+so that the constant-$\kappa$ reading of Assumption~\ref{asm:cover} is not supported by the data and may fail
+asymptotically; and (viii) flags that the fitted exponents rest on under one decade of $n$ and a single value of $p$.
+The deterministic results (Sections~\ref{sec:phase}--\ref{sec:small}) are unchanged.
+
+\subsection{Organization}
+Section~\ref{sec:related} situates the CDP within the literature. Section~\ref{sec:model} fixes the model.
+Section~\ref{sec:phase} develops the phase decomposition and the torus structure. Section~\ref{sec:upper} proves the
+upper bound and Section~\ref{sec:lower} the matching lower bound. Section~\ref{sec:small} works small cases.
+Section~\ref{sec:stoch} treats the stochastic generalizations. Section~\ref{sec:disc} discusses scope and limitations,
+and Section~\ref{sec:open} lists open problems.
+
+\section{Related Work}\label{sec:related}
+The CDP intersects several established lines of research.
+
+\paragraph{Card-game dynamics and the game of War.}
+The closest relative of the CDP is the children's card game War, whose deterministic dynamics have received
+careful attention. Lakshtanov and Roshchina~\cite{LR} showed that, contrary to a natural intuition, War can fail
+to terminate for suitable reinsertion conventions, and characterized finiteness in terms of the reinsertion rule.
+Our CDP replaces the rank order of War by an arbitrary outcome table and studies the orthogonal extremal
+question --- the maximum finite duration. Bulgarian solitaire~\cite{Brandt} is another deterministic single-deck
+card process whose orbit structure is governed by a monovariant.
+
+\paragraph{Chip-firing, sandpiles, and rotor-routing.}
+The abelian sandpile model and the chip-firing game~\cite{Dhar,Bjorner,LevinePeres} are paradigmatic examples
+of deterministic local rules with strong global structure. The CDP shares the ``conserved-until-removed''
+flavour. Rotor-routing~\cite{Holroyd} is closer in spirit: a deterministic rotor derandomizes a random walk yet
+equidistributes, exactly the phenomenon we must invoke (Assumption~\ref{asm:cover}) when passing from the
+deterministic walk on the torus to its stochastic counterpart. We caution, however, that we borrow only the
+analogy: no quantitative coverage estimate is imported from the rotor-routing literature, and our
+Assumption~\ref{asm:cover} is left as a hypothesis.
+
+\paragraph{Cyclic cellular automata and annihilating particle systems.}
+The $\NN$ and win moves act as cyclic rotations of each deck, placing the per-phase dynamics in the world of
+cyclic update rules~\cite{Fisch,Bramson}; ties play the role of annihilation events. The CDP is a clean instance
+in which the annihilation set is forced, by termination, to be a perfect matching.
+
+\paragraph{Sorting and permutation dynamics.}
+The win move ``loser to the bottom'' is the elementary operation underlying several classical sorting
+analyses~\cite{Knuth}. The maximum-duration tables turn out to have non-tie entries arranged as a spiral-type
+permutation pattern on each phase torus (Remark~\ref{rem:spiral}), loosely connecting the extremal construction
+to nonattacking placements such as Costas arrays~\cite{Costas}. Equidistribution of the induced permutation walk
+is governed by representation-theoretic tools in the spirit of~\cite{Diaconis,Stanley}.
+
+\paragraph{Random matchings and termination thresholds.}
+Our feasibility analysis (Proposition~\ref{prop:feas}) is a perfect-matching threshold for a random bipartite
+graph whose edges are the tie cells; the relevant tools are standard~\cite{Bollobas,Janson,AlonSpencer,LP}. What
+is new is the sharp distinction between a table possessing a matching (a graph property, high probability) and a
+fixed ordering realizing a matching (a dynamical property, constant probability). For the empirical power-law
+fitting in Section~\ref{sec:numerics} we follow the methodological cautions of Clauset, Shalizi, and
+Newman~\cite{Clauset}.
+
+\section{Model and Preliminaries}\label{sec:model}
+Let $A = \{a_0, \dots, a_{n-1}\}$ and $B = \{b_0, \dots, b_{n-1}\}$ be disjoint sets of cards of equal size $n > 1$. A
+configuration is a pair of ordered lists (decks) $(D_A, D_B)$ of the currently remaining cards, with $D_A[0]$
+and $D_B[0]$ the respective top cards.
+
+\begin{definition}[Outcome table]
+An outcome table is a function $\phi : A \times B \to \{\WA, \WB, \TT, \NN\}$. Its tie-set is
+$\Tphi(\phi) := \{(a, b) : \phi(a, b) = \TT\}$.
+\end{definition}
+
+\begin{definition}[Card-Duel Process]
+Given an outcome table $\phi$ and an initial configuration $(D^0_A, D^0_B)$, the Card-Duel Process (CDP) evolves as
+follows. At each step $t \ge 1$, let $a = D^{t-1}_A[0]$ and $b = D^{t-1}_B[0]$. According to $\phi(a, b)$:
+\begin{itemize}[leftmargin=2.2em,nosep]
+\item[$\WA$:] ($a$ wins) $a$ stays on top of $D_A$; $b$ moves to the bottom of $D_B$.
+\item[$\WB$:] ($b$ wins) $b$ stays on top of $D_B$; $a$ moves to the bottom of $D_A$.
+\item[$\TT$:] both $a$ and $b$ are permanently removed from their decks.
+\item[$\NN$:] both $a$ and $b$ move to the bottoms of their decks.
+\end{itemize}
+The process terminates when both decks are empty.
+\end{definition}
+
+\begin{definition}[Game, duration]
+A CDP is a \emph{game} if it terminates in finite time. We write $\mathcal G_n$ for the set of all games $(\phi, D^0)$
+with $|A| = |B| = n$. For $G \in \mathcal G_n$, $\dur(G)$ denotes its duration: the total number of duels.
+\end{definition}
+
+\subsection{Basic observations}
+\begin{lemma}[Only ties remove cards]\label{lem:ties}
+In any CDP a card is removed if and only if it participates in a tie. Consequently, any game has exactly $n$ ties.
+\end{lemma}
+\begin{proof}
+Outcomes $\WA, \WB, \NN$ return both involved cards to their decks; only $\TT$ removes cards. There are $2n$ cards and
+each tie removes exactly one from each deck, so termination requires exactly $n$ ties.
+\end{proof}
+
+\begin{lemma}[Tie-matching]\label{lem:match}
+For any game $G \in \mathcal G_n$, the pairs that tie during $G$ form a perfect matching between $A$ and $B$: there is a
+bijection $\mu : A \to B$ with $\phi(a, \mu(a)) = \TT$ for all $a \in A$, and $(a, \mu(a))$ is the unique tie in which
+$a$ participates.
+\end{lemma}
+\begin{proof}
+By Lemma~\ref{lem:ties} each of the $2n$ cards is removed exactly once, namely by the unique tie in which it
+participates. These $n$ ties therefore biject $A$ with $B$.
+\end{proof}
+
+The perfect matching $\mu$ is the single global object that drives the entire analysis: it is forced by termination,
+it constrains every phase, and it is the structure that the stochastic sections randomize.
+
+\section{Phase Decomposition and Torus Structure}\label{sec:phase}
+\begin{definition}[Phase]
+Phase $k$ ($1 \le k \le n$) is the maximal block of consecutive duels ending with the $k$-th tie of the game. Both
+decks contain $m_k := n - k + 1$ cards throughout phase $k$.
+\end{definition}
+
+\begin{lemma}[Cyclic invariance]\label{lem:cyclic}
+During any phase the relative cyclic order of cards within each deck is preserved.
+\end{lemma}
+\begin{proof}
+Within a phase only $\WA, \WB, \NN$ occur, and each moves a top card directly to the bottom of its deck. Moving the
+top element to the bottom is a pure cyclic rotation, so no card overtakes another and the cyclic word is invariant.
+\end{proof}
+
+\begin{definition}[Phase state and coordinate mapping]
+At the start of phase $k$, label the cards currently in $A$ as $a_0, \dots, a_{m_k-1}$ from top to bottom, and likewise
+$b_0, \dots, b_{m_k-1}$ in $B$. The phase state at a step $t$ within phase $k$ is the pair $(i, j) \in (\Z/m_k\Z)^2$
+such that $a_i, b_j$ are the current top cards. By Lemma~\ref{lem:cyclic} the state space of phase $k$ is the discrete
+torus $(\Z/m_k\Z)^2$.
+\end{definition}
+
+\begin{lemma}[Phase transition rule]\label{lem:trans}
+Let $m = m_k$ and let $\phi_k$ denote $\phi$ restricted to the cards active in phase $k$. The state evolves from $(i, j)$ by
+\begin{equation}\label{eq:trans}
+(i, j) \longmapsto
+\begin{cases}
+(i,\; j + 1 \bmod m) & \phi_k(a_i, b_j) = \WA,\\
+(i + 1 \bmod m,\; j) & \phi_k(a_i, b_j) = \WB,\\
+(i + 1 \bmod m,\; j + 1 \bmod m) & \phi_k(a_i, b_j) = \NN,\\
+\{\text{phase ends}\} & \phi_k(a_i, b_j) = \TT.
+\end{cases}
+\end{equation}
+\end{lemma}
+\begin{proof}
+Direct transcription of Definition~2. If $\phi_k(a_i, b_j) = \WA$, card $a_i$ stays on top of $A$ while $b_j$ is sent to
+the bottom of $B$; by Lemma~\ref{lem:cyclic} the card immediately below $b_j$ is $b_{j+1 \bmod m}$, giving $(i, j + 1)$.
+The $\WB$ and $\NN$ cases are symmetric.
+\end{proof}
+
+The duration of phase $k$ is $L_k := \#\{\text{states visited in phase } k\}$, and $\dur(G) = \sum_{k=1}^n L_k$.
+
+\begin{lemma}[No repeated states within a phase]\label{lem:saw}
+For any game $G \in \mathcal G_n$, the trajectory within any phase visits each state at most once.
+\end{lemma}
+\begin{proof}
+The transition rule~\eqref{eq:trans} is deterministic, so each non-tie state has a unique successor and predecessor
+(each of the three non-tie maps is a bijection of $(\Z/m\Z)^2$). If a state were visited twice, the trajectory between
+the two visits would be a directed cycle of non-tie states with no tie, hence repeat forever, contradicting finite
+termination. For the final phase ($m_n = 1$) the torus is a single point, which must carry a tie for the game to end.
+\end{proof}
+
+\begin{remark}[Conceptual picture]
+A game is thus a nested sequence of self-avoiding walks on tori of shrinking radius $m = n, n-1, \dots, 1$. Each walk
+ends the instant it lands on a tie cell, which deletes one row and one column of the next torus. All the difficulty is
+in how long a single walk can postpone hitting a tie.
+\end{remark}
+
+\section{The Upper Bound}\label{sec:upper}
+\subsection{The phasewise bound}
+\begin{theorem}[Phasewise bound]\label{thm:phasewise}
+For every game $G \in \mathcal G_n$ and every phase $k$,
+\begin{equation}\label{eq:phasewise}
+L_k \le m_k^2 - m_k + 1, \qquad m_k = n - k + 1.
+\end{equation}
+\end{theorem}
+\begin{proof}
+Fix $G$ and $k$; write $m = m_k$ and let $S_k \subseteq (\Z/m\Z)^2$ be the set of states visited in phase $k$. By
+Lemma~\ref{lem:saw}, $L_k = |S_k|$.
+
+\emph{Future tie cells.} By Lemma~\ref{lem:match} the game has $n$ ties forming the perfect matching $\mu$. Exactly
+$k - 1$ ties precede phase $k$, so $m = n - k + 1$ matching-ties remain: one ends phase $k$, and the other $m - 1$
+occur in phases $k+1, \dots, n$. The $2(m - 1)$ cards involved in those future ties are all present at the start of
+phase $k$, so each future tie corresponds to a cell $(i^*_\ell, j^*_\ell) \in (\Z/m\Z)^2$ with
+$\phi_k(a_{i^*_\ell}, b_{j^*_\ell}) = \TT$. Because the matching is a bijection, distinct future ties use distinct
+$a$-labels and distinct $b$-labels, hence distinct cells. Set
+\begin{equation}
+F_k := \{(i^*_2, j^*_2), \dots, (i^*_m, j^*_m)\}, \qquad |F_k| = m - 1.
+\end{equation}
+
+\emph{Future tie cells are never visited in phase $k$.} Suppose some $(i^*_\ell, j^*_\ell) \in F_k$ were visited during
+phase $k$. By Lemma~\ref{lem:trans} the phase would end there, making $(a_{i^*_\ell}, b_{j^*_\ell})$ the $k$-th tie and
+removing both cards in phase $k$. But these two cards are required, by the matching, for a tie in a strictly later
+phase --- a contradiction. Hence $S_k \cap F_k = \emptyset$.
+
+\emph{Counting.} Since $|(\Z/m\Z)^2| = m^2$ and $S_k \cap F_k = \emptyset$,
+\[
+L_k = |S_k| \le m^2 - |F_k| = m^2 - (m - 1) = m^2 - m + 1. \qedhere
+\]
+\end{proof}
+
+\begin{remark}
+The table $\phi$ may assign $\TT$ to cells beyond the $m$ matching-ties; such cells are also unvisitable in phase $k$,
+so the bound~\eqref{eq:phasewise} is conservative. Using only the $m - 1$ guaranteed future-matching cells keeps the
+argument purely structural; the extremal table places no surplus ties (Section~\ref{sec:lower}).
+\end{remark}
+
+\subsection{Summing over phases}
+\begin{corollary}[Upper bound]\label{cor:upper}
+For every $n \ge 1$ and every $G \in \mathcal G_n$,
+\begin{equation}\label{eq:upper}
+\dur(G) \le \sum_{k=1}^n \bigl(m_k^2 - m_k + 1\bigr) = \sum_{m=1}^n (m^2 - m + 1) = \frac{n(n^2 + 2)}{3}.
+\end{equation}
+\end{corollary}
+\begin{proof}
+Sum~\eqref{eq:phasewise} over $k$ and reindex by $m = n - k + 1$:
+\[
+\sum_{m=1}^n (m^2 - m + 1) = \frac{n(n+1)(2n+1)}{6} - \frac{n(n+1)}{2} + n
+= \frac{n\bigl[(n+1)(2n+1) - 3(n+1) + 6\bigr]}{6}.
+\]
+Since $(n+1)(2n+1) - 3(n+1) + 6 = 2n^2 + 4$, this equals $\dfrac{n(2n^2 + 4)}{6} = \dfrac{n(n^2 + 2)}{3}$.
+\end{proof}
+
+\section{The Lower Bound: the Staircase Raster-Scan}\label{sec:lower}
+We construct, for each $n$, an explicit table $\phi_n$ and initial configuration whose game attains $T(n)$. The
+construction is recursive and the induction is closed by Lemma~\ref{lem:restrict}; the resulting tightness statement
+(Theorem~\ref{thm:tight}) is a theorem valid for all $n$. As an independent check we verified by exhaustive
+simulation that the construction attains $T(n)$ exactly for all $1 \le n \le 8$.
+
+\subsection{Initial configuration and table}
+Take the linear initial decks $D^{(n)}_A = [a_0, \dots, a_{n-1}]$ and $D^{(n)}_B = [b_0, \dots, b_{n-1}]$, so the phase-1
+trajectory starts at $(0, 0)$. Place all $n$ tie cells on the anti-diagonal of the phase-1 torus:
+\begin{equation}
+\Tphi(\phi_n) = \bigl\{(i, j) \in (\Z/n\Z)^2 : i + j \equiv n - 1 \!\!\pmod n\bigr\}.
+\end{equation}
+The cell $(n-1, 0)$ (pairing $(a_{n-1}, b_0)$) is the active phase-ending tie, and the remaining anti-diagonal cells
+form the forbidden set $F_1 = \{(i, n - 1 - i) : 0 \le i \le n - 2\}$.
+
+The non-tie entries are assigned by a row-by-row staircase. For each row $i$ define
+$c_N(i) = (n - 2 - i) \bmod n$ and $c_T(i) = (n - 1 - i) \bmod n$. Then:
+\begin{itemize}[nosep]
+\item Rows $i \in \{0, \dots, n - 2\}$: $\phi_n(a_i, b_{c_T(i)}) = \TT$, $\phi_n(a_i, b_{c_N(i)}) = \NN$, and
+$\phi_n(a_i, b_j) = \WA$ for all other $j$.
+\item Row $i = n - 1$: $\phi_n(a_{n-1}, b_0) = \TT$ and $\phi_n(a_{n-1}, b_j) = \WA$ for $j \in \{1, \dots, n - 1\}$.
+\end{itemize}
+
+\subsection{Phase-1 traversal}
+Row $i$ ($0 \le i \le n - 2$) is entered at column $j_{\mathrm{start}} \equiv -i \pmod n$. The path scans rightward along
+$\WA$-cells until it reaches $c_N(i) = -2 - i$, where the single $\NN$ outcome sends it diagonally to the next row.
+
+\begin{lemma}[Row handoff]\label{lem:handoff}
+For $0 \le i \le n-2$, the $\NN$ transition at the end of row $i$ maps $(i, -2-i) \mapsto (i + 1, -1 - i)$. Since
+$-1 - i \equiv -(i + 1) \pmod n$, the landing column equals the entry column $j_{\mathrm{start}} = -(i+1)$ of row
+$i+1$, and the forbidden cell $(i, n-1-i) = (i, -1-i)$ is skipped. Consequently row $i$ visits exactly $n - 1$ columns.
+\end{lemma}
+\begin{proof}
+By~\eqref{eq:trans} the $\NN$ outcome at $(i, -2 - i)$ yields $(i + 1, -1 - i)$. The identity $-1 - i \equiv -(i + 1)$ is
+immediate, and $-(i + 1)$ is the entry column of row $i+1$. The forbidden cell of row $i$ sits at column $-1 - i$, which
+the scan jumps over; hence row $i$ visits every column except $-1 - i$.
+\end{proof}
+
+The final row $i = n - 1$ is entered at $j = 1$ and scans all $n$ columns $1, 2, \dots, n - 1, 0$, ending in the active
+tie at $j = 0$. Hence
+\begin{equation}\label{eq:L1}
+L_1 = \underbrace{(n - 1)(n - 1)}_{\text{first } n-1 \text{ rows}} + \underbrace{n}_{\text{final row}}
+= n^2 - n + 1 = m_1^2 - m_1 + 1.
+\end{equation}
+
+\subsection{Residue arithmetic at the phase boundary}
+\paragraph{Deck $A$.} A card of $A$ moves to the bottom only on $\WB$ or $\NN$. Phase 1 uses no $\WB$ and exactly one
+$\NN$ per row for the first $n - 1$ rows, so $A$ undergoes $n - 1$ rotations:
+$[a_0, \dots, a_{n-1}] \mapsto [a_{n-1}, a_0, \dots, a_{n-2}]$. The top card $a_{n-1}$ is removed by the active tie,
+leaving $D^{(n-1)}_A = [a_0, \dots, a_{n-2}]$.
+
+\paragraph{Deck $B$.} A card of $B$ moves to the bottom on $\WA$ or $\NN$, i.e.\ at every non-tie step, of which there
+are $n^2 - n$. Since $n^2 - n \equiv 0 \pmod n$, deck $B$ returns to $[b_0, \dots, b_{n-1}]$ at the tie. The top card
+$b_0$ is removed, leaving $[b_1, \dots, b_{n-1}]$, i.e.\ $[b'_0, \dots, b'_{n-2}]$ under $b'_k := b_{k+1}$.
+
+\subsection{Closing the induction}
+\begin{lemma}[Table restriction]\label{lem:restrict}
+Let $\phi_n$ be the staircase table above. Identify the survivors of phase 1 via $a'_i = a_i$ ($0 \le i \le n-2$) and
+$b'_j = b_{j+1}$ ($0 \le j \le n-2$). Then the restriction of $\phi_n$ to $\{a'_0, \dots, a'_{n-2}\} \times
+\{b'_0, \dots, b'_{n-2}\}$ equals $\phi_{n-1}$ on the $(n-1)$-torus.
+\end{lemma}
+\begin{proof}
+Write a surviving cell as $(i', j')$ with $i' = i \in \{0, \dots, n-2\}$ and $j' = j - 1$, $j \in \{1, \dots, n-1\}$.
+
+\emph{Ties.} In $\phi_n$, ties satisfy $i + j \equiv n - 1 \pmod n$; for $i \le n - 2$, $j \ge 1$ this forces
+$i + j = n - 1$. Thus $j' = n - 2 - i'$, which as $i'$ ranges over $\{0, \dots, n-2\}$ is exactly the anti-diagonal
+$i' + j' \equiv n - 2 \pmod{n-1}$ of $\phi_{n-1}$; row $i' = n-2$ ties at $j' = 0$, matching the active tie of
+$\phi_{n-1}$.
+
+\emph{$\NN$ cells.} In $\phi_n$, row $i \le n - 2$ has its $\NN$ at $j = n - 2 - i$, which survives iff $i \le n - 3$;
+for $i = n - 2$ the $\NN$ sits in the deleted column $0$. For $0 \le i' \le n - 3$ the surviving $\NN$ is at
+$j' = n - 3 - i' = c^{(n-1)}_N(i')$ of $\phi_{n-1}$, and row $i' = n - 2$ carries no $\NN$, matching the final-row rule.
+
+\emph{Remaining cells.} All other surviving cells are $\WA$ in $\phi_n$, and all non-tie non-$\NN$ cells of $\phi_{n-1}$
+are $\WA$. The two tables agree on every cell.
+\end{proof}
+
+\begin{theorem}[Tightness]\label{thm:tight}
+For every $n \ge 1$ the staircase game has duration exactly $T(n)$.
+\end{theorem}
+\begin{proof}
+Induction on $n$. The base $n = 1$ is a single tie, $T(1) = 1$. For $n \ge 2$, phase 1 runs $L_1 = n^2 - n + 1$ duels
+by~\eqref{eq:L1} and leaves the survivors in linear orders $D^{(n-1)}_A, D^{(n-1)}_B$. By Lemma~\ref{lem:restrict} the
+survivors run under a table equal to $\phi_{n-1}$, so the remainder is the optimal $(n-1)$-game, lasting $T(n-1)$. Hence
+\[
+\dur = (n^2 - n + 1) + T(n - 1) = (n^2 - n + 1) + (n - 1)\frac{(n - 1)^2 + 2}{3} = \frac{n(n^2 + 2)}{3}. \qedhere
+\]
+\end{proof}
+
+Corollary~\ref{cor:upper} and Theorem~\ref{thm:tight} together establish the main theorem.
+
+\begin{theorem}[Main theorem]\label{thm:main}
+For every $n \ge 1$, the maximum duration of a game is
+\begin{equation}
+\max_{G \in \mathcal G_n} \dur(G) = T(n) := \frac{n(n^2 + 2)}{3}.
+\end{equation}
+In particular $T(40) = 21{,}360$ duels; at one duel per minute this is $356$ hours.
+\end{theorem}
+
+\section{Small Cases}\label{sec:small}
+\paragraph{$n = 1$.} One duel, a tie; $T(1) = 1$.
+
+\paragraph{$n = 2$.} The table is $\phi_2 = \left(\begin{smallmatrix}\NN & \TT\\ \TT & \WA\end{smallmatrix}\right)$
+(rows $a_0, a_1$; columns $b_0, b_1$). The trajectory is
+$(0, 0) \xrightarrow{\NN} (1, 1) \xrightarrow{\WA} (1, 0) \xrightarrow{\TT}$, so $L_1 = 3$, then $L_2 = 1$; total
+$T(2) = 4$.
+
+\paragraph{$n = 3$.} The staircase table is
+\[
+\phi_3:\quad
+\begin{array}{c|ccc}
+ & b_0 & b_1 & b_2\\\hline
+a_0 & \WA & \NN & \TT\\
+a_1 & \NN & \TT & \WA\\
+a_2 & \TT & \WA & \WA
+\end{array}
+\]
+with tie-matching $\{(a_0, b_2), (a_1, b_1), (a_2, b_0)\}$. Phase 1 avoids $F_1 = \{(0, 2), (1, 1)\}$, visits
+$3^2 - 3 + 1 = 7$ states, and ends at the active tie $(2, 0)$. The full 11-step trace is in Appendix~\ref{app:trace}.
+
+\section{Stochastic Generalizations}\label{sec:stoch}
+We now randomize the table. Throughout, the biased model $(\alpha, \beta, p, q)$ draws each entry of $\phi$
+independently with $\Pr[\WA] = \alpha$, $\Pr[\WB] = \beta$, $\Pr[\TT] = p$, $\Pr[\NN] = q$, and
+$\alpha + \beta + p + q = 1$; the uniform model is $\alpha = \beta = p = q = \tfrac14$.
+
+Two distinct objects must be kept apart, as their conflation caused the error in the early draft (Section~\ref{sec:relation}).
+The matching $\mu$ contributes exactly $m$ ties per phase (forced by termination), whereas the random table contains, in
+expectation, $p\,m^2$ tie cells per phase. The trajectory ends a phase at the first tie cell it meets, so the relevant
+rate is $p$ (the table-tie density), not $1/m$ (the matching density).
+
+\subsection{The random duration}
+Duration depends on both $\phi$ and the initial ordering $D^0$, so we fix the latter to the canonical linear orders
+$D^0_A = [a_0, \dots, a_{n-1}]$, $D^0_B = [b_0, \dots, b_{n-1}]$ (any deterministic ordering behaves identically by
+relabeling symmetry). Let $\Term_n$ be the event that the random game $(\phi, D^0)$ terminates, and let
+$D_n = \dur(\phi, D^0)$ on $\Term_n$.
+
+\subsection{Feasibility and termination probability}
+\begin{definition}
+$E_n$ is the set of tables $\phi$ that admit at least one terminating initial ordering.
+\end{definition}
+
+\begin{lemma}[Alignment sufficiency]\label{lem:align}
+$\phi \in E_n$ iff $\Tphi(\phi)$ contains a perfect matching $A \to B$.
+\end{lemma}
+\begin{proof}
+Necessity: a terminating ordering removes every card via a tie, so the realized ties form a perfect matching contained in
+$\Tphi(\phi)$. Sufficiency: given a matching $\mu$, set $D^0_B = [\mu(a_0), \dots, \mu(a_{n-1})]$; then every duel is an
+immediate tie and the game ends in $n$ steps.
+\end{proof}
+
+\begin{proposition}[Feasibility probability]\label{prop:feas}
+Under the uniform model, $\Pr(E_n) \ge 1 - O\!\bigl(n(3/4)^n\bigr)$; hence $\Pr(E_n) \to 1$ exponentially fast.
+\end{proposition}
+\begin{proof}
+By Lemma~\ref{lem:align}, $E_n^c$ is the event that the random bipartite graph $H = (A, B, E)$ with edges i.i.d.\ of
+probability $p = \tfrac14$ has no perfect matching. By Hall's theorem this requires some $S \subseteq A$ with
+$|S| = k$ and $|N(S)| \le k - 1$, giving $R \subseteq B$ of size $n - k + 1$ with no edges to $S$. With $q := \tfrac34$
+and a union bound,
+\[
+\Pr(E_n^c) \le \sum_{k=1}^n \binom{n}{k}\binom{n}{k - 1} q^{k(n-k+1)}.
+\]
+The boundary terms $k = 1, n$ each equal $n q^n$, contributing $2 n q^n$. For the interior, $k(n - k + 1) = n + (k-1)(n-k)$
+factors out $q^n$; the summand is symmetric under $k \mapsto n + 1 - k$, and using $\binom{n}{k}\binom{n}{k-1} \le n^{2k}$
+one finds the interior contributes $o(n q^n)$. Hence $\Pr(E_n^c) = O\!\bigl(n(3/4)^n\bigr)$. (For constant $p$ the failure
+of a perfect matching is dominated by isolated vertices, which gives the same $\Theta(n q^n)$ order.)
+\end{proof}
+
+A terminating run of $(\phi, D^0)$ realizes a tie-matching contained in $\Tphi(\phi)$, so $\Term_n \subseteq E_n$, and the
+inclusion is strict. Consequently $\Pr(E_n) \to 1$ does \emph{not} imply $\Pr(\Term_n) \to 1$, and we bound
+$\Pr(\Term_n)$ directly.
+
+\begin{lemma}[Termination ceiling]\label{lem:ceiling}
+For every $n \ge 1$, every biased model, and every fixed initial ordering, $\Pr(\Term_n) \le p$. In particular
+$\Pr(\Term_n) \le \tfrac14$ under the uniform model.
+\end{lemma}
+\begin{proof}
+On $\Term_n$ the realized ties form a perfect matching; let $(a^*, b^*)$ be the pair removed in the final phase $k = n$,
+where $m_n = 1$. At the start of phase $n$ each deck holds the single card $a^*$ resp.\ $b^*$, and the state space is the
+one point of $(\Z/1\Z)^2$; each of $\WA, \WB, \NN$ fixes this state, so the process terminates only if
+$\phi(a^*, b^*) = \TT$.
+
+Reveal table entries by deferred decisions as cells are first visited. The pair $(a^*, b^*)$ and the entire history through
+phase $n - 1$ are measurable with respect to the cells visited in phases $1, \dots, n - 1$, and $(a^*, b^*)$ is not among
+them (a prior visit revealing $\TT$ would have removed it earlier; a prior visit revealing a non-tie would freeze the cell
+as a non-tie, precluding termination in phase $n$). Hence on $\Term_n$ the cell $(a^*, b^*)$ is fresh at phase $n$, and its
+entry is independent of the history with $\Pr[\phi(a^*, b^*) = \TT] = p$. Therefore
+$\Pr(\Term_n) \le p \cdot \Pr(\{(a^*, b^*)\text{ reached fresh}\}) \le p$.
+\end{proof}
+
+\begin{lemma}[Termination floor]\label{lem:floor}
+For every $n \ge 1$ and every biased model, $\Pr(\Term_n) \ge p^n$.
+\end{lemma}
+\begin{proof}
+If $\phi(a_i, b_i) = \TT$ for all $0 \le i \le n - 1$ (probability $p^n$), then under the canonical ordering every duel is
+the diagonal tie $(a_i, b_i)$ and the game ends in $n$ steps. This event is contained in $\Term_n$.
+\end{proof}
+
+Thus $p^n \le \Pr(\Term_n) \le p$. The ceiling shows that termination of a fixed ordering is a constant-probability event,
+never a high-probability one. An earlier version conjectured that the floor matches the ceiling in order,
+$\Pr(\Term_n) = \Theta(p)$, bounded below by a positive constant independent of $n$. The supporting heuristic was that a
+phase on the $m$-torus avoids a tie over $\Theta(m^2)$ fresh visits only with probability $(1 - p)^{\Theta(m^2)}$, so every
+phase with $m$ above a constant ties with probability $\to 1$. Direct simulation contradicts this (Section~\ref{sec:numerics}):
+under the uniform model $\Pr(\Term_n)$ decays polynomially. The flaw in the heuristic is that it counts only the per-phase
+tie probability and ignores the $\Theta(n)$ independent opportunities, across the whole run, for the deterministic walk to
+fall into a tie-free cycle (the true non-termination mode); these compound to drive $\Pr(\Term_n) \to 0$. We therefore
+replace the earlier conjecture with the following.
+
+\begin{conjecture}[Polynomial termination decay]\label{conj:poly}
+Under the uniform model there is a constant $c > 0$ with $\Pr(\Term_n) = \Theta(n^{-c})$; in particular
+$\Pr(\Term_n) \to 0$ polynomially. Our simulations suggest $c \approx 2.35$ for $p = \tfrac14$. We state this only for
+$p = \tfrac14$, the single density we simulated; whether $\Pr(\Term_n) = \Theta(n^{-c(p)})$ for all fixed $p \in (0, 1)$,
+and how $c$ depends on $p$, is open (Section~\ref{sec:open}, Q3). We give no theoretical derivation of the polynomial form,
+which remains a numerically motivated guess.
+\end{conjecture}
+
+\subsection{Expected duration: distinct cells versus total duration}
+An early draft bounded the per-phase length by a geometric first-tie time and summed to obtain
+$\E[D_n \mathbf 1_{\Term_n}] \le n/p$. That argument is correct for the number of \emph{distinct} cells visited, but not
+for the total duration, because a cell revealed (as a non-tie) in an earlier phase can be re-entered in a later phase,
+adding a duel without carrying fresh tie-probability. We therefore separate the two quantities. Let $V$ denote the number
+of distinct cells the walk visits over the whole game, and decompose
+\begin{equation}\label{eq:decomp}
+D_n = \sum_{k=1}^n L_k = V + S, \qquad S := \#\{\text{duels landing on an already-revealed cell}\}.
+\end{equation}
+Here $V = \sum_k F_k$ where $F_k$ is the number of cells first revealed in phase $k$, and $S = \sum_k A_k$ where $A_k$
+counts the stale cells re-traversed in phase $k$. That $S$ can be positive is visible already in the deterministic $n = 3$
+run of Appendix~\ref{app:trace}, where phase 2 re-traverses two cells revealed in phase 1.
+
+\begin{lemma}[Fresh-cell coupling]\label{lem:fresh}
+In the biased model with tie-probability $p \in (0, 1)$ and a fixed initial ordering, $\E[V \mathbf 1_{\Term_n}] \le n/p$.
+\end{lemma}
+\begin{proof}
+Couple the table to two independent i.i.d.\ sequences: $(Y_t)_{t\ge1} \sim \mathrm{Bernoulli}(p)$ and $(U_t)_{t\ge1}$ on
+$\{\WA, \WB, \NN\}$ with the conditional non-tie probabilities. Maintaining the set of revealed cells, on entering a
+never-seen cell pop the next $(Y_t, U_t)$ and assign $\TT$ if $Y_t = 1$, else $U_t$; on re-entering a revealed cell reuse
+its stored outcome. This samples $\phi$ with the correct marginals, and the tie indicator of the $t$-th fresh cell is
+$Y_t$, independent of the walk's geometry through step $t - 1$.
+
+Ties occur at fresh cells, so on $\Term_n$ the game ends at the $n$-th tie and $V = G_n$, where
+$G_n := \inf\{t : \sum_{s \le t} Y_s = n\}$ is the $n$-th-success time. Thus $V \mathbf 1_{\Term_n} \le G_n$ pointwise,
+and $\E[G_n] = n/p$ gives $\E[V \mathbf 1_{\Term_n}] \le n/p$.
+\end{proof}
+
+\begin{corollary}[Distinct-duel count]\label{cor:distinct}
+Under the uniform model, $\E[V \mathbf 1_{\Term_n}] \le 4n$ (unconditionally). Conditioned on $\Term_n$ the expected
+number of distinct duels lies between $n$ and $4n/\Pr(\Term_n)$; the upper bound is loose by a factor $\sim 1/\Pr(\Term_n)
+\approx n^{2.35}$, so only the simulation (Section~\ref{sec:numerics}, $E[V \mid \Term_n] \approx 2.9\,n$) pins down the
+constant. The rigorous content is the unconditional linear bound.
+\end{corollary}
+
+To pass from $V$ to the total duration $D_n$ we must control the stale re-traversals $S$. The trivial bound
+$A_k \le |R_{<k}|$ only yields $S = O(nV) = O(n^2/p)$, and bounding the late phases crudely by $L_k \le m_k^2$ yields
+$D_n = O(n^{3/2})$ for the uniform model; neither recovers the linear order. What is needed is:
+
+\begin{assumption}[Bounded re-traversal / torus coverage]\label{asm:cover}
+There is a constant $\kappa$ such that for every $n$ and every phase $k$, conditional on the cells revealed before phase
+$k$, $\E[A_k \mid R_{<k}] \le \kappa\, \E[F_k \mid R_{<k}]$.
+\end{assumption}
+
+Assumption~\ref{asm:cover} holds whenever the phase walk equidistributes over its torus, so that the chance a step lands on
+a stale cell is at most the stale density. In Section~\ref{sec:reduce} we reduce it to a strictly weaker one-dimensional
+statement. \emph{We caution at the outset that the simulation of Section~\ref{sec:numerics} does not support the
+constant-$\kappa$ form: both $\E[S \mid \Term_n]$ and the ratio $S/V$ \emph{increase} with $n$ over the accessible range,
+so $\kappa$ is empirically not constant and may diverge.} All duration-order results below are therefore explicitly
+conditional on Assumption~\ref{asm:cover}.
+
+\begin{theorem}[Expected duration]\label{thm:dur}
+Fix the canonical initial ordering and a biased model with tie-probability $p \in (0, 1)$.
+\begin{enumerate}[label=(\roman*),nosep]
+\item \emph{(Unconditional.)} The expected number of distinct cells visited satisfies $\E[V \mathbf 1_{\Term_n}] \le n/p$.
+\item \emph{(Under Assumption~\ref{asm:cover}.)} The total expected duration satisfies
+$\E[D_n \mathbf 1_{\Term_n}] \le (1 + \kappa)\dfrac{n}{p} = O\!\left(\dfrac{n}{p}\right)$. In particular, under the uniform
+model $\E[D_n \mathbf 1_{\Term_n}] = O(n)$.
+\end{enumerate}
+\end{theorem}
+\begin{proof}
+(i) is Lemma~\ref{lem:fresh}. For (ii), summing Assumption~\ref{asm:cover} over phases gives
+$\E[S \mathbf 1_{\Term_n}] \le \kappa\, \E[V \mathbf 1_{\Term_n}]$, whence by~\eqref{eq:decomp}
+$\E[D_n \mathbf 1_{\Term_n}] \le (1 + \kappa)\,\E[V \mathbf 1_{\Term_n}] \le (1 + \kappa) n/p$.
+\end{proof}
+
+Combining with $D_n \ge n$ on $\Term_n$,
+\[
+n \Pr(\Term_n) \le \E[D_n \mathbf 1_{\Term_n}] \le (1 + \kappa)\,n/p \quad \text{(under Assumption~\ref{asm:cover})}.
+\]
+The conditional expectation $E[D_n \mid \Term_n] = \E[D_n \mathbf 1_{\Term_n}] / \Pr(\Term_n)$ is a different matter. An
+earlier version asserted $E[D_n \mid \Term_n] = \Theta(n)$, but that conclusion silently assumed $\Pr(\Term_n) = \Theta(p)$,
+which we now believe false (Conjecture~\ref{conj:poly}). With $\Pr(\Term_n) \to 0$ polynomially, the conditional duration is
+super-linear; the empirical exponent (Section~\ref{sec:numerics}) is $\approx 1.40$, \emph{not} the $2$ that a constant
+$\E[D_n\mathbf 1_{\Term_n}]$ would force, because the indicator-weighted duration is itself decreasing in $n$
+(empirically $\approx n^{-0.95}$). Combined with the deterministic ceiling $T(n) = \Theta(n^3)$ we obtain, under
+Assumption~\ref{asm:cover},
+\begin{equation}\label{eq:interp}
+\E[D_n \mathbf 1_{\Term_n}] = O\!\bigl(\min\{n/p, T(n)\}\bigr),
+\end{equation}
+as summarized in Table~\ref{tab:orders}.
+
+\begin{table}[t]
+\centering
+\begin{tabular}{lll}
+\toprule
+tie density $p$ & order of $\E[D_n \mathbf 1_{\Term_n}]$ & comment\\
+\midrule
+$\Theta(1)$ (incl.\ uniform) & $O(n)$; empirically decreasing & each phase ties in $O(1)$ steps\\
+$\Theta(1/n)$ & $O(n^2)$ (Conj.~\ref{conj:quad}) & the quadratic regime\\
+$\Theta(1/n^2)$ & $O(n^3)$ & saturates the deterministic maximum\\
+$p \to 1$ & $\to n$ & almost every duel is a tie\\
+\bottomrule
+\end{tabular}
+\caption{Orders of $\E[D_n \mathbf 1_{\Term_n}]$ as the tie density $p$ varies, as upper bounds under
+Assumption~\ref{asm:cover}; we claim no matching lower bounds. In the constant-$p$ row, simulation shows
+$\E[D_n \mathbf 1_{\Term_n}]$ \emph{decreasing} ($\approx n^{-0.95}$), comfortably inside the $O(n)$ bound. The conditional
+expectation $E[D_n \mid \Term_n]$ is obtained by dividing by $\Pr(\Term_n)$ and is therefore much larger when termination is
+rare (Conjecture~\ref{conj:poly}). The distinct-cell bound $\E[V \mathbf 1_{\Term_n}] \le n/p$ is unconditional
+(Lemma~\ref{lem:fresh}).}
+\label{tab:orders}
+\end{table}
+
+\subsection{A reduction of the coverage hypothesis}\label{sec:reduce}
+Assumption~\ref{asm:cover} is a two-dimensional equidistribution statement. We show it follows from a strictly weaker,
+one-dimensional extremal condition: that the revealed set contains no long monotone chain.
+
+\begin{lemma}[Geometric fresh budget]\label{lem:geom}
+In the coupling of Lemma~\ref{lem:fresh}, the per-phase fresh counts $(F_k)$ are i.i.d.\ $\mathrm{Geometric}(p)$, so
+$\E[F_k \mid R_{<k}] = 1/p$ for every phase whose torus $m_k$ exceeds a fixed constant; the remaining $O(1)$ small-torus
+phases contribute $O(1)$ in total.
+\end{lemma}
+\begin{proof}
+List the cells in order of first visit; their tie indicators are i.i.d.\ $\mathrm{Bernoulli}(p)$, independent of the walk's
+geometry. A tie occurs only at a fresh cell, so the phase boundaries are the successes of this Bernoulli process and $F_k$
+is the $k$-th inter-success gap. This requires fresh cells to remain available, which holds on every torus of size above a
+constant since at most $O(k/p)$ cells have been revealed. For the $O(1)$ terminal phases of bounded torus size $m_k = O(1)$
+the available fresh cells may be exhausted; there at least the surviving tie cell is fresh (revealing it earlier would have
+removed the pair), so each such phase still ends, and the total contribution of these phases to both $V$ and $S$ is $O(1)$.
+\end{proof}
+
+Recall from Lemma~\ref{lem:trans} that consecutive visited cells differ by exactly one of $(0,1), (1,0), (1,1) \bmod m_k$;
+call any such sequence a \emph{monotone chain}.
+
+\begin{definition}[Stale set, longest monotone chain]
+Let $\mathcal S_k$ be the set of card-pairs revealed before phase $k$ that survive into phase $k$, viewed on the phase-$k$
+torus. Let $\Lambda(\mathcal S_k)$ be the length of the longest self-avoiding monotone chain contained in $\mathcal S_k$.
+\end{definition}
+
+\begin{lemma}[Run bound]\label{lem:run}
+For every phase $k$, $A_k \le (F_k + 1)\,\Lambda(\mathcal S_k)$.
+\end{lemma}
+\begin{proof}
+A maximal block of consecutive stale visits is, by the monotone-step rule and within-phase self-avoidance
+(Lemma~\ref{lem:saw}), a self-avoiding monotone chain in $\mathcal S_k$, hence of length at most
+$\Lambda(\mathcal S_k)$. Stale-runs are separated by fresh visits, of which there are $F_k$, so there are at most
+$F_k + 1$ runs.
+\end{proof}
+
+\begin{theorem}[Coverage reduction]\label{thm:reduce}
+Suppose there is a constant $C$ with $\E[\Lambda(\mathcal S_k) \mid R_{<k}] \le C$ for all $n$ and all $k$. Then
+Assumption~\ref{asm:cover} holds with $\kappa = (1 + p)C$, and $\E[D_n \mathbf 1_{\Term_n}] \le \bigl(1 + (1 + p)C\bigr) n/p$.
+\end{theorem}
+\begin{proof}
+$\Lambda(\mathcal S_k)$ is measurable w.r.t.\ $R_{<k}$, and by Lemma~\ref{lem:geom} $F_k$ is conditionally independent with
+mean $1/p$. By Lemma~\ref{lem:run},
+\[
+\E[A_k \mid R_{<k}] \le \bigl(\E[F_k \mid R_{<k}] + 1\bigr)\E[\Lambda(\mathcal S_k) \mid R_{<k}]
+\le \Bigl(\tfrac1p + 1\Bigr) C = (1 + p) C \cdot \tfrac1p = \kappa\, \E[F_k \mid R_{<k}].
+\]
+Summing over phases and adding $V$ gives the bound as in Theorem~\ref{thm:dur}(ii).
+\end{proof}
+
+The monotone-chain order is the coordinatewise partial order, so $\Lambda(\mathcal S_k)$ is a longest-chain
+(Ulam--Hammersley) statistic; for a set behaving like $|\mathcal S_k|$ uniform points on the torus the longest chain has
+order $2\sqrt{|\mathcal S_k|}$~\cite{AldousDiaconis,Romik}. This motivates a quantitative form.
+
+\begin{proposition}[Sub-quadratic bound under a chain hypothesis]\label{prop:subquad}
+If $\E[\Lambda(\mathcal S_k) \mid R_{<k}] \le c\sqrt{|\mathcal S_k|}$ for a constant $c$, then
+$\E[D_n \mathbf 1_{\Term_n}] = O\!\bigl(n^{3/2} p^{-3/2}\bigr)$, which for the uniform model is $O(n^{3/2})$ --- strictly
+better than the trivial $O(n^2)$.
+\end{proposition}
+\begin{proof}
+Since $|\mathcal S_k| \le V$ and $\sqrt\cdot$ is concave,
+$\E[\Lambda(\mathcal S_k)\mathbf 1_{\Term_n}] \le c\,\E[\sqrt V \mathbf 1_{\Term_n}] \le c\sqrt{\E[V \mathbf 1_{\Term_n}]}
+\le c\sqrt{n/p}$. By Lemmas~\ref{lem:run} and~\ref{lem:geom}, $\E[A_k \mathbf 1_{\Term_n}] \le (1 + \tfrac1p) c \sqrt{n/p}$;
+summing $n$ phases gives $\E[S \mathbf 1_{\Term_n}] = O(n^{3/2} p^{-3/2})$, and adding $\E[V \mathbf 1_{\Term_n}] \le n/p$
+completes the bound.
+\end{proof}
+
+We do not prove the chain hypothesis: each earlier walk was monotone in a different modulus $m_j$, and re-reading it on the
+phase-$k$ torus generically destroys monotonicity, so one expects $\Lambda(\mathcal S_k)$ to be small --- but establishing
+this requires controlling the correlation between $\mathcal S_k$ and the phase-$k$ geometry, the residual content of Q2.
+Notably, the simulation (Section~\ref{sec:numerics}) is consistent with $\Lambda(\mathcal S_k) = O(\sqrt{|\mathcal S_k|})$
+(the longest stale-run grows slowly) yet shows $\E[S]$ growing super-linearly, which is exactly the regime in which
+Proposition~\ref{prop:subquad} --- not the constant-$\kappa$ Assumption~\ref{asm:cover} --- is the relevant guarantee.
+
+\subsection{Numerical findings}\label{sec:numerics}
+
+\paragraph{Methodology and reproducibility.}
+We simulated the uniform random-field CDP ($p = \tfrac14$) from the canonical ordering with a fixed pseudo-random seed
+(\texttt{20260528}). Non-termination is detected \emph{exactly} rather than by a length cap: within a phase the relative
+cyclic order is preserved (Lemma~\ref{lem:cyclic}), so the pair of top cards determines the phase state, and a repeat of
+that pair since the last tie certifies a tie-free cycle (Lemma~\ref{lem:saw}), hence non-termination. This detection is
+lossless; it is moreover \emph{independently} consistent with the deterministic ceiling, since by
+Theorem~\ref{thm:main} no terminating run can exceed $T(n)$ steps, so a cap at $T(n)$ would yield identical statistics.
+Each row of Table~\ref{tab:sim} pools the terminating runs from $2$--$6 \times 10^5$ trials (more for larger $n$ to keep
+sample sizes up). Reported intervals are $95\%$ confidence intervals: Wilson for $\Pr(\Term_n)$, and $2000$-resample
+bootstrap for the conditional means. The simulation code is included as supplementary material.
+
+\begin{table}[t]
+\centering
+\footnotesize
+\setlength{\tabcolsep}{4pt}
+\begin{tabular}{rrrlllr}
+\toprule
+$n$ & trials & \#term & $\Pr(\Term_n)$ [95\% CI] & $E[D \mid \Term]$ [CI] & $E[V \mid \Term]$ [CI] & $E[S \mid \Term]$ [CI]\\
+\midrule
+4  & 200{,}000 & 5868 & 0.02934 [.0286,.0301] & 6.557 [6.50,6.61]  & 6.400 [6.36,6.44]  & 0.157 [.14,.17]\\
+6  & 250{,}000 & 3025 & 0.01210 [.0117,.0125] & 11.693 [11.6,11.8] & 11.117 [11.0,11.2] & 0.576 [.53,.62]\\
+8  & 300{,}000 & 1845 & 0.00615 [.0059,.0064] & 17.733 [17.5,18.0] & 16.548 [16.4,16.7] & 1.185 [1.1,1.3]\\
+10 & 350{,}000 & 1313 & 0.00375 [.0036,.0040] & 24.381 [24.0,24.8] & 22.296 [22.0,22.6] & 2.085 [1.9,2.3]\\
+12 & 400{,}000 & 881  & 0.00220 [.0021,.0024] & 31.722 [31.2,32.3] & 28.597 [28.2,29.0] & 3.125 [2.9,3.4]\\
+14 & 450{,}000 & 750  & 0.00167 [.0016,.0018] & 37.844 [37.2,38.5] & 34.013 [33.6,34.5] & 3.831 [3.5,4.2]\\
+16 & 500{,}000 & 589  & 0.00118 [.0011,.0013] & 45.902 [45.0,46.9] & 40.628 [40.0,41.2] & 5.273 [4.8,5.8]\\
+18 & 600{,}000 & 521  & 0.00087 [.0008,.0010] & 54.015 [52.9,55.1] & 47.451 [46.7,48.1] & 6.564 [6.0,7.2]\\
+\bottomrule
+\end{tabular}
+\caption{Uniform model ($p = \tfrac14$), conditioned on termination, fixed seed. $E[S \mid \Term]$ is the mean stale
+re-traversal count ($S = D - V$). The decreasing indicator-weighted duration is $\E[D \mathbf 1_{\Term}] = E[D \mid \Term]
+\cdot \Pr(\Term)$: $0.192, 0.142, 0.109, 0.092, 0.070, 0.063, 0.054, 0.047$ for $n = 4, \dots, 18$. The longest observed
+stale-run over all runs at each $n$ is $5, 8, 9, 13, 12, 15, 17, 17$.}
+\label{tab:sim}
+\end{table}
+
+\paragraph{Fitted scalings (log-log least squares over $4 \le n \le 18$).}
+\begin{align*}
+\Pr(\Term_n) &\approx 0.79\, n^{-2.35\,(\pm 0.03)}, &
+E[D \mid \Term_n] &\approx 0.95\, n^{1.40\,(\pm 0.01)},\\
+E[V \mid \Term_n] &\approx 2.94\, n - 6.4 \;\;(\text{affine; linear}), &
+E[S \mid \Term_n] &\approx n^{2.43\,(\pm 0.11)},\\
+\E[D_n \mathbf 1_{\Term_n}] &\approx 0.75\, n^{-0.95\,(\pm 0.03)}. & &
+\end{align*}
+The parenthesized values are regression standard errors on the exponent. We stress that $4 \le n \le 18$ spans under one
+decade, so following~\cite{Clauset} these exponents should be read as indicative of order and sign, not as precisely
+identified; in particular a slowly-decaying non-power form for $\Pr(\Term_n)$ cannot be excluded on this range, and only a
+single tie density $p = \tfrac14$ was simulated.
+
+Four observations emerge.
+\begin{enumerate}[leftmargin=1.6em]
+\item \textbf{Termination decays polynomially.} $\Pr(\Term_n) \approx 0.79\, n^{-2.35}$, inside the proven window
+$p^n \le \Pr(\Term_n) \le p$ but \emph{not} bounded below; this is the basis for replacing the old sharp-termination
+conjecture by Conjecture~\ref{conj:poly}. (The qualitative conclusion --- not bounded below --- is robust on this range;
+the exponent $2.35$ is not.)
+
+\item \textbf{Distinct duels are linear.} $E[V \mid \Term_n] \approx 2.9\, n$, comfortably inside the unconditional bound
+$\E[V \mathbf 1_{\Term_n}] \le 4n$ of Lemma~\ref{lem:fresh} and confirming Corollary~\ref{cor:distinct}. This is the one
+average-case order that is both proved (in the unconditional, indicator-weighted form) and observed.
+
+\item \textbf{Re-traversals are \emph{not} negligible, and the constant-$\kappa$ assumption is unsupported.} The longest
+\emph{single} stale-run grows slowly (reaching only $17$ at $n = 18$), consistent with
+$\Lambda(\mathcal S_k) = O(\sqrt{|\mathcal S_k|})$ and hence with Proposition~\ref{prop:subquad}. But the \emph{total}
+stale count $E[S \mid \Term_n]$ grows \emph{super-linearly} ($\approx n^{2.43}$), and the ratio $S/V$ rises
+monotonically with $n$ (from $0.025$ at $n = 4$ to $0.138$ at $n = 18$, roughly $\propto n^{1.1}$). The strict
+$\kappa = O(1)$ reading of Assumption~\ref{asm:cover} is therefore \emph{not} supported by the data and, extrapolated,
+appears to fail: were $S/V$ to continue growing, stale traversals would eventually dominate and the total duration would
+exceed linear order. (We caution that the largest-$n$ rows rest on $\sim 500$ terminating runs, so the precise exponent of
+$E[S]$ is noisy; but the upward trend in $S/V$ is consistent across all rows.) The honest reading is that the linear total
+duration of Theorem~\ref{thm:dur}(ii) has neither a proof nor clear empirical support at accessible sizes; the
+$O(n^{3/2})$ guarantee of Proposition~\ref{prop:subquad} is the safer claim.
+
+\item \textbf{Decreasing weighted duration; super-linear but sub-quadratic conditional duration.} The indicator-weighted
+expectation $\E[D_n \mathbf 1_{\Term_n}]$ is not merely bounded but \emph{decreasing} ($\approx n^{-0.95}$, i.e.\ $o(1)$,
+falling from $0.19$ to $0.05$ across the table), comfortably inside the $O(n)$ bound. The conditional duration
+$E[D_n \mid \Term_n] = \E[D_n \mathbf 1_{\Term_n}] / \Pr(\Term_n)$ then grows like $n^{-0.95} / n^{-2.35} \approx n^{1.40}$,
+matching the direct fit. This is super-linear --- correcting the earlier $\Theta(n)$ conditional claim --- but it is
+\emph{markedly sub-quadratic}; the $\approx n^2$ that the first revision reported would follow only if
+$\E[D_n \mathbf 1_{\Term_n}]$ were a positive constant, which the data refutes. The growth of the conditional duration is
+driven almost entirely by the rarity of termination, not by long runs.
+\end{enumerate}
+
+\subsection{Where $\Theta(n^2)$ lives: the sparse-tie model}
+By~\eqref{eq:interp} the quadratic order corresponds to $p = \Theta(1/n)$. A natural model realizing this is the
+minimal-tie (sparse) model: the tie-set is exactly a uniformly random perfect matching $\mu$ (precisely $n$ ties), and
+every non-tie cell is independent uniform on $\{\WA, \WB, \NN\}$. In phase $k$ the $m = n - k + 1$ survivors then expose
+exactly $m$ tie cells on the $m \times m$ torus, an effective density $1/m$.
+
+\begin{conjecture}[Quadratic scaling in the sparse-tie model]\label{conj:quad}
+Under the minimal-tie model, conditioned on termination, $E[D_n] = \Theta(n^2)$, with $E[L_k] = \Theta(m)$ per phase.
+\end{conjecture}
+\begin{proof}[Heuristic]
+A phase must locate one of $m$ targets among $m^2$ cells; if the walk equidistributes, the hitting time is $\Theta(m)$, and
+$\sum_{m=1}^n \Theta(m) = \Theta(n^2)$. We state this as a conjecture because (i) the per-phase argument requires the same
+coverage property as Assumption~\ref{asm:cover}, which we do not establish and which the uniform-model data calls into
+question; and (ii) the phases are not independent. A rigorous proof must control both effects.
+\end{proof}
+
+\subsection{Low tie density}
+\begin{remark}[$p \to 0$]
+As $p \to 0$ the upper bound degrades and the duration is governed by the deterministic ceiling $T(n) = \Theta(n^3)$. We
+caution against the stronger claim, made in an early draft, that the conditional duration converges to the exact extremal
+value $T(n)$ as $p \to 0$: a generic sparse table produces a deterministic walk that typically enters a tie-free cycle
+(hence non-termination) rather than the unique Hamiltonian staircase that realizes $T(n)$. Only the order $\Theta(n^3)$
+(not the constant $1/3$) is plausibly recovered.
+\end{remark}
+
+\subsection{Combinatorial connections}
+\begin{conjecture}[Count of extremal tables]\label{conj:count}
+The number of extremal (maximum-duration) tables of size $n$ is $n! \cdot 2^{\Theta(n^2)}$.
+\end{conjecture}
+\noindent\emph{Status.} This is a heuristic. The factor $n!$ counts perfect tie-matchings; for each, the $n^2 - n$ non-tie
+cells must produce a single self-avoiding phase-filling path, and a crude count of the directional degrees of freedom
+suggests an exponent of order $n^2$. We have neither a lower nor an upper bound on the exponent constant, and it is
+possible that the path constraints are restrictive enough to change the $2^{\Theta(n^2)}$ form; we record this as an open
+problem (Q1), not a supported claim.
+
+\begin{remark}[Spiral structure --- heuristic]\label{rem:spiral}
+The staircase construction's non-tie entries trace a single Hamiltonian-type path that winds around each phase torus,
+visually a spiral. We do not formalize a precise ``spiral permutation'' statistic here, and the resemblance to Costas
+arrays~\cite{Costas} and to longest paths in de Bruijn graphs~\cite{Knuth} is offered only as informal motivation, not as a
+theorem.
+\end{remark}
+
+\section{Discussion}\label{sec:disc}
+\paragraph{What is proved, and what is assumed.}
+The deterministic theory is complete and unconditional: Theorem~\ref{thm:main} pins down the exact extremal duration, with
+a structural upper bound and an explicit, simulation-verified construction. The probabilistic theory is deliberately
+stratified. \emph{Three statements are unconditional:} feasibility $\Pr(E_n) \to 1$ (Proposition~\ref{prop:feas}), the
+termination window $p^n \le \Pr(\Term_n) \le p$ (Lemmas~\ref{lem:ceiling}--\ref{lem:floor}), and the linear bound on the
+number of distinct duels (Lemma~\ref{lem:fresh}, Corollary~\ref{cor:distinct}). \emph{Everything concerning the total
+duration order} --- the linear regime, the quadratic sparse-tie regime --- rests on the single torus-coverage input
+(Assumption~\ref{asm:cover}). Section~\ref{sec:reduce} sharpens this: Assumption~\ref{asm:cover} reduces to bounding the
+longest monotone chain (Theorem~\ref{thm:reduce}), and an $O(\sqrt\cdot)$ chain bound already gives the sub-quadratic
+$O(n^{3/2})$ total. Simulation (Section~\ref{sec:numerics}) is the appropriate place to temper expectations: while the
+longest single stale-run stays short (consistent with the $O(\sqrt\cdot)$ chain bound), the \emph{total} stale count and
+the ratio $S/V$ both grow with $n$, so the constant-$\kappa$ Assumption~\ref{asm:cover} is not supported and the linear
+total-duration claim should be regarded as conjectural; the $O(n^{3/2})$ bound is the conservative guarantee.
+
+\paragraph{Why the distinction $E_n$ vs.\ $\Term_n$ matters.}
+The early draft's error was conceptual: it implicitly assumed that a high probability of \emph{some} terminating ordering (a
+graph property of the tie-set) transfers to a high probability that a \emph{fixed} ordering terminates (a dynamical
+property of the walk). The ceiling $\Pr(\Term_n) \le p$ shows these are genuinely different: terminating from a fixed
+shuffle is a constant-probability event because the final single-card phase must, against an independent fresh entry, land
+on a tie. This is the same phenomenon that makes War's finiteness depend so delicately on the reinsertion rule~\cite{LR}.
+
+\paragraph{Robustness.}
+The phase decomposition uses only (i) that ties are the sole removal mechanism, (ii) that all other moves are cyclic
+rotations, and (iii) finite termination. It is therefore robust to local changes in the win/no-interaction rules so long as
+these preserve cyclic order within a phase, which makes the asymmetric-deck and higher-rank generalizations (Q5, Q6)
+plausible targets.
+
+\section{Open Problems}\label{sec:open}
+\begin{description}[leftmargin=2.2em,style=nextline]
+\item[Q1 (Enumeration).] Determine the exact number of extremal tables and the exponential generating function; settle
+Conjecture~\ref{conj:count}, in particular the constant in the exponent.
+\item[Q2 (Coverage, reduced form).] By Theorem~\ref{thm:reduce} it suffices to bound the longest monotone chain in the
+revealed set: prove $\E[\Lambda(\mathcal S_k) \mid R_{<k}] = O(1)$ for Assumption~\ref{asm:cover}, $O(\sqrt{|\mathcal S_k|})$
+for the sub-quadratic bound, or $o(|\mathcal S_k|)$ to beat $O(n^2)$. The obstruction is the correlation between
+$\mathcal S_k$ and the phase-$k$ geometry. The simulation's growing $S/V$ ratio suggests the $O(1)$ form may be false;
+clarifying which of these regimes holds is the central open question.
+\item[Q3 (Termination exponent).] Prove $\Pr(\Term_n) = \Theta(n^{-c})$ for fixed $p$ (Conjecture~\ref{conj:poly}), identify
+$c = c(p)$ (simulations suggest $c \approx 2.35$ at $p = \tfrac14$, on a single density and under one decade of $n$), and
+characterize the tie-free-cycle mechanism that forces non-termination.
+\item[Q4 (Average-case constants).] For the uniform model determine the constants in $E[V \mid \Term_n] = c_1 n + O(1)$
+(simulations give $c_1 \approx 2.9$) and the exponent of $E[D_n \mid \Term_n]$ (simulations give $\approx 1.40$);
+establish concentration.
+\item[Q5 (Asymmetric decks).] Generalize to decks of sizes $n \ne m$ under modified one-sided removal rules; find
+$\max \dur$ in terms of $n, m$.
+\item[Q6 (Higher-rank duels).] Replace pairwise duels by $r$-wise interactions among $r \ge 3$ decks; find the analogue of
+$T(n)$.
+\end{description}
+
+\section{Conclusion}
+The maximum duration of the deterministic Card-Duel Process on two decks of $n$ cards is exactly $T(n) = n(n^2 + 2)/3$,
+e.g.\ $21{,}360$ minutes ($356$ hours) for $n = 40$. The upper bound follows from a phase decomposition and the global
+tie-matching forced by termination; the matching lower bound is realized by an explicit Staircase Raster-Scan construction
+whose induction is closed by the table-restriction lemma. On the stochastic side, a random table admits some terminating
+ordering with high probability ($\Pr(E_n) \to 1$), but for a fixed ordering termination is only a constant-probability
+event, $p^n \le \Pr(\Term_n) \le p$ --- and in fact $\Pr(\Term_n)$ decays polynomially ($\approx 0.79\, n^{-2.35}$ in
+simulation for $p = \tfrac14$), refuting an earlier constant-lower-bound conjecture. Conditioned on termination, the
+expected number of distinct duels is $\Theta(n)$ under the uniform model (unconditionally), and the indicator-weighted
+total duration is $O(n)$ under an explicit torus-coverage hypothesis --- which we reduce to a one-dimensional monotone-chain
+bound and which already yields a sub-quadratic $O(n^{3/2})$ total under an Ulam--Hammersley-type estimate, and which the
+simulation suggests may not hold in its strict constant-$\kappa$ form. Because $\Pr(\Term_n) \to 0$ while the
+indicator-weighted duration is itself \emph{decreasing}, the conditional duration $E[D_n \mid \Term_n]$ is super-linear but
+sub-quadratic, empirically $\approx n^{1.40}$ --- not the $\Theta(n)$ of an earlier draft, and not the $n^2$ that a
+constant-weighted-duration heuristic would suggest. The most central remaining question is the reduced coverage estimate Q2
+--- bounding the longest monotone chain in the revealed set --- on which several stochastic claims jointly depend.
+
+\section*{Acknowledgments}
+The author thanks the readers of previous drafts, whose questions exposed first the conflation of table-tie density with
+matching density and then the inconsistency between the reported conditional-duration order and the simulation data, both of
+which this revision corrects.
+
+\begin{thebibliography}{99}
+\bibitem{AldousDiaconis} D.~Aldous and P.~Diaconis. Hammersley's interacting particle process and longest increasing
+subsequences. \emph{Probab. Theory Related Fields} 103(2):199--213, 1995.
+\bibitem{AlonSpencer} N.~Alon and J.~H.~Spencer. \emph{The Probabilistic Method}, 4th ed. Wiley, 2016.
+\bibitem{Bjorner} A.~Bj\"orner, L.~Lov\'asz, and P.~W.~Shor. Chip-firing games on graphs. \emph{European J. Combin.}
+12(4):283--291, 1991.
+\bibitem{Bollobas} B.~Bollob\'as. \emph{Random Graphs}, 2nd ed. Cambridge University Press, 2001.
+\bibitem{Bramson} M.~Bramson and D.~Griffeath. Flux and fixation in cyclic particle systems. \emph{Ann. Probab.}
+17(1):26--45, 1989.
+\bibitem{Brandt} A.~Brandt. Cycles of partitions. \emph{Proc. Amer. Math. Soc.} 85(3):483--486, 1982.
+\bibitem{Clauset} A.~Clauset, C.~R.~Shalizi, and M.~E.~J.~Newman. Power-law distributions in empirical data.
+\emph{SIAM Review} 51(4):661--703, 2009.
+\bibitem{Costas} J.~P.~Costas. A study of a class of detection waveforms having nearly ideal range--Doppler ambiguity
+properties. \emph{Proc. IEEE} 72(8):996--1009, 1984.
+\bibitem{Dhar} D.~Dhar. Self-organized critical state of sandpile automaton models. \emph{Phys. Rev. Lett.}
+64(14):1613--1616, 1990.
+\bibitem{Diaconis} P.~Diaconis. \emph{Group Representations in Probability and Statistics}. IMS Lecture Notes 11, 1988.
+\bibitem{Fisch} R.~Fisch, J.~Gravner, and D.~Griffeath. Cyclic cellular automata in two dimensions. In \emph{Spatial
+Stochastic Processes}, Progr. Probab. 19, pp.~171--185. Birkh\"auser, 1991.
+\bibitem{Holroyd} A.~E.~Holroyd, L.~Levine, K.~M\'esz\'aros, Y.~Peres, J.~Propp, and D.~B.~Wilson. Chip-firing and
+rotor-routing on directed graphs. In \emph{In and Out of Equilibrium 2}, Progr. Probab. 60, pp.~331--364. Birkh\"auser,
+2008.
+\bibitem{Janson} S.~Janson, T.~\L uczak, and A.~Ruci\'nski. \emph{Random Graphs}. Wiley-Interscience, 2000.
+\bibitem{Knuth} D.~E.~Knuth. \emph{The Art of Computer Programming, Vol.~3: Sorting and Searching}, 2nd ed.
+Addison-Wesley, 1998.
+\bibitem{LR} E.~Lakshtanov and V.~Roshchina. On finiteness in the card game of War. \emph{Amer. Math. Monthly}
+119(4):318--323, 2012.
+\bibitem{LevinePeres} L.~Levine and Y.~Peres. Laplacian growth, sandpiles, and scaling limits. \emph{Bull. Amer. Math.
+Soc.} 54(3):355--382, 2017.
+\bibitem{LP} L.~Lov\'asz and M.~D.~Plummer. \emph{Matching Theory}. North-Holland, 1986.
+\bibitem{Romik} D.~Romik. \emph{The Surprising Mathematics of Longest Increasing Subsequences}. Cambridge University
+Press, 2015.
+\bibitem{Stanley} R.~P.~Stanley. \emph{Enumerative Combinatorics, Vol.~1}, 2nd ed. Cambridge University Press, 2012.
+\end{thebibliography}
+
+\appendix
+\section{Numerical Values of $T(n)$}\label{app:tn}
+From $T(n) = n(n^2 + 2)/3$ (one duel per minute):
+\begin{center}
+\begin{tabular}{rrrr}
+\toprule
+$n$ & $T(n)$ (duels) & minutes & hours\\
+\midrule
+1 & 1 & 1 & 0.017\\
+2 & 4 & 4 & 0.067\\
+3 & 11 & 11 & 0.183\\
+4 & 24 & 24 & 0.400\\
+5 & 45 & 45 & 0.750\\
+10 & 340 & 340 & 5.667\\
+20 & 2{,}680 & 2{,}680 & 44.67\\
+30 & 9{,}010 & 9{,}010 & 150.2\\
+40 & 21{,}360 & 21{,}360 & 356.0\\
+50 & 41{,}700 & 41{,}700 & 695.0\\
+100 & 333{,}400 & 333{,}400 & 5{,}557.0\\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\section{Full Trace for the $n = 3$ Staircase Game}\label{app:trace}
+Initial $D^0_A = [a_0, a_1, a_2]$, $D^0_B = [b_0, b_1, b_2]$, table $\phi_3$ as in Section~\ref{sec:small}.
+\begin{center}
+\footnotesize
+\begin{tabular}{rlllll}
+\toprule
+Duel & $D_A$ & $D_B$ & Top & Outcome & Action\\
+\midrule
+\multicolumn{6}{l}{\emph{Phase 1 ($m = 3$)}}\\
+1 & $[a_0,a_1,a_2]$ & $[b_0,b_1,b_2]$ & $(a_0,b_0)$ & $\WA$ & $b_0 \to$ bottom\\
+2 & $[a_0,a_1,a_2]$ & $[b_1,b_2,b_0]$ & $(a_0,b_1)$ & $\NN$ & both $\to$ bottom\\
+3 & $[a_1,a_2,a_0]$ & $[b_2,b_0,b_1]$ & $(a_1,b_2)$ & $\WA$ & $b_2 \to$ bottom\\
+4 & $[a_1,a_2,a_0]$ & $[b_0,b_1,b_2]$ & $(a_1,b_0)$ & $\NN$ & both $\to$ bottom\\
+5 & $[a_2,a_0,a_1]$ & $[b_1,b_2,b_0]$ & $(a_2,b_1)$ & $\WA$ & $b_1 \to$ bottom\\
+6 & $[a_2,a_0,a_1]$ & $[b_2,b_0,b_1]$ & $(a_2,b_2)$ & $\WA$ & $b_2 \to$ bottom\\
+7 & $[a_2,a_0,a_1]$ & $[b_0,b_1,b_2]$ & $(a_2,b_0)$ & $\TT$ & remove $a_2,b_0$\\
+\multicolumn{6}{l}{\emph{Phase 2 ($m = 2$)}}\\
+8 & $[a_0,a_1]$ & $[b_1,b_2]$ & $(a_0,b_1)$ & $\NN$ & both $\to$ bottom\\
+9 & $[a_1,a_0]$ & $[b_2,b_1]$ & $(a_1,b_2)$ & $\WA$ & $b_2 \to$ bottom\\
+10 & $[a_1,a_0]$ & $[b_1,b_2]$ & $(a_1,b_1)$ & $\TT$ & remove $a_1,b_1$\\
+\multicolumn{6}{l}{\emph{Phase 3 ($m = 1$)}}\\
+11 & $[a_0]$ & $[b_2]$ & $(a_0,b_2)$ & $\TT$ & game over\\
+\bottomrule
+\end{tabular}
+\end{center}
+The run lasts $7 + 3 + 1 = 11 = T(3)$ duels, visiting no coordinate twice within a phase. Note, however, that cells
+$(0, 1)$ and $(1, 2)$ are visited in both phase 1 and phase 2: these cross-phase re-traversals are the stale visits $S$
+of~\eqref{eq:decomp}, present even in the deterministic optimum.
+
+\end{document}

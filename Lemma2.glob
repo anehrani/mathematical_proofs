@@ -1,0 +1,618 @@
+DIGEST 467455783700e10636bdf2343c307b3e
+FLemma2
+R27:30 Stdlib.Lists.List <> <> lib
+R32:34 Stdlib.micromega.Lia <> <> lib
+R36:46 Stdlib.Sorting.Permutation <> <> lib
+R64:69 Lemma1 <> <> lib
+R79:91 Stdlib.Lists.List ListNotations <> mod
+sec 103:113 <> TieMatching
+var  126:126 TieMatching A
+var  128:128 TieMatching B
+def 151:154 <> duel
+R165:167 Corelib.Init.Datatypes <> ::type_scope:x_'*'_x not
+R161:163 Corelib.Init.Datatypes <> ::type_scope:x_'*'_x not
+R160:160 Lemma2 <> TieMatching.A var
+R164:164 Lemma2 <> TieMatching.B var
+R168:174 Lemma1 <> outcome ind
+ind 194:197 <> play
+constr 270:276 <> PlayNil
+constr 312:317 <> PlayWA
+constr 512:517 <> PlayWB
+constr 712:717 <> PlayTT
+constr 900:905 <> PlayNN
+R207:210 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R206:206 Lemma2 <> TieMatching.A var
+R212:215 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R211:211 Lemma2 <> TieMatching.B var
+R216:222 Lemma1 <> outcome ind
+binder 200:202 <> phi:3
+R233:236 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R227:232 Lemma1 <> config rec
+R246:249 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R237:240 Corelib.Init.Datatypes <> list ind
+R242:245 Lemma2 <> duel def
+R256:259 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R250:255 Lemma1 <> config rec
+binder 287:287 <> c:6
+R294:297 Lemma2 <> play:4 ind
+R308:308 Lemma2 <> c:6 var
+R305:306 Stdlib.Lists.List ListNotations ::list_scope:'['_']' not
+R303:303 Lemma2 <> c:6 var
+R299:301 Lemma2 <> phi:3 var
+binder 328:328 <> a:7
+binder 330:332 <> as_:8
+binder 334:334 <> b:9
+binder 336:337 <> bs:10
+binder 339:340 <> tr:11
+binder 342:342 <> c:12
+R361:368 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R356:358 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R349:351 Lemma2 <> phi:3 var
+R355:355 Lemma2 <> b:9 var
+R353:353 Lemma2 <> a:7 var
+R359:360 Lemma1 <> WA constr
+R428:435 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R369:372 Lemma2 <> play:4 ind
+R427:427 Lemma2 <> c:12 var
+R424:425 Lemma2 <> tr:11 var
+R381:386 Lemma1 <> deck_A proj
+R381:386 Lemma1 <> deck_A proj
+R381:386 Lemma1 <> deck_A proj
+R401:406 Lemma1 <> deck_B proj
+R401:406 Lemma1 <> deck_B proj
+R392:395 Corelib.Init.Datatypes <> ::list_scope:x_'::'_x not
+R391:391 Lemma2 <> a:7 var
+R396:398 Lemma2 <> as_:8 var
+R413:416 Corelib.Init.Datatypes <> ::list_scope:x_'++'_x not
+R411:412 Lemma2 <> bs:10 var
+R417:417 Stdlib.Lists.List ListNotations ::list_scope:'['_x_']' not
+R419:419 Stdlib.Lists.List ListNotations ::list_scope:'['_x_']' not
+R418:418 Lemma2 <> b:9 var
+R374:376 Lemma2 <> phi:3 var
+R436:439 Lemma2 <> play:4 ind
+R508:508 Lemma2 <> c:12 var
+R500:503 Corelib.Init.Datatypes <> ::list_scope:x_'::'_x not
+R490:490 Corelib.Init.Datatypes <> ::core_scope:'('_x_','_x_','_'..'_','_x_')' not
+R492:493 Corelib.Init.Datatypes <> ::core_scope:'('_x_','_x_','_'..'_','_x_')' not
+R495:496 Corelib.Init.Datatypes <> ::core_scope:'('_x_','_x_','_'..'_','_x_')' not
+R499:499 Corelib.Init.Datatypes <> ::core_scope:'('_x_','_x_','_'..'_','_x_')' not
+R491:491 Lemma2 <> a:7 var
+R494:494 Lemma2 <> b:9 var
+R497:498 Lemma1 <> WA constr
+R504:505 Lemma2 <> tr:11 var
+R448:453 Lemma1 <> deck_A proj
+R448:453 Lemma1 <> deck_A proj
+R448:453 Lemma1 <> deck_A proj
+R468:473 Lemma1 <> deck_B proj
+R468:473 Lemma1 <> deck_B proj
+R459:462 Corelib.Init.Datatypes <> ::list_scope:x_'::'_x not
+R458:458 Lemma2 <> a:7 var
+R463:465 Lemma2 <> as_:8 var
+R479:482 Corelib.Init.Datatypes <> ::list_scope:x_'::'_x not
+R478:478 Lemma2 <> b:9 var
+R483:484 Lemma2 <> bs:10 var
+R441:443 Lemma2 <> phi:3 var
+binder 528:528 <> a:13
+binder 530:532 <> as_:14
+binder 534:534 <> b:15
+binder 536:537 <> bs:16
+binder 539:540 <> tr:17
+binder 542:542 <> c:18
+R561:568 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R556:558 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R549:551 Lemma2 <> phi:3 var
+R555:555 Lemma2 <> b:15 var
+R553:553 Lemma2 <> a:13 var
+R559:560 Lemma1 <> WB constr
+R628:635 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R569:572 Lemma2 <> play:4 ind
+R627:627 Lemma2 <> c:18 var
+R624:625 Lemma2 <> tr:17 var
+R581:586 Lemma1 <> deck_A proj
+R581:586 Lemma1 <> deck_A proj
+R581:586 Lemma1 <> deck_A proj
+R603:608 Lemma1 <> deck_B proj
+R603:608 Lemma1 <> deck_B proj
+R594:597 Corelib.Init.Datatypes <> ::list_scope:x_'++'_x not
+R591:593 Lemma2 <> as_:14 var
+R598:598 Stdlib.Lists.List ListNotations ::list_scope:'['_x_']' not
+R600:600 Stdlib.Lists.List ListNotations ::list_scope:'['_x_']' not
+R599:599 Lemma2 <> a:13 var
+R614:617 Corelib.Init.Datatypes <> ::list_scope:x_'::'_x not
+R613:613 Lemma2 <> b:15 var
+R618:619 Lemma2 <> bs:16 var
+R574:576 Lemma2 <> phi:3 var
+R636:639 Lemma2 <> play:4 ind
+R708:708 Lemma2 <> c:18 var
+R700:703 Corelib.Init.Datatypes <> ::list_scope:x_'::'_x not
+R690:690 Corelib.Init.Datatypes <> ::core_scope:'('_x_','_x_','_'..'_','_x_')' not
+R692:693 Corelib.Init.Datatypes <> ::core_scope:'('_x_','_x_','_'..'_','_x_')' not
+R695:696 Corelib.Init.Datatypes <> ::core_scope:'('_x_','_x_','_'..'_','_x_')' not
+R699:699 Corelib.Init.Datatypes <> ::core_scope:'('_x_','_x_','_'..'_','_x_')' not
+R691:691 Lemma2 <> a:13 var
+R694:694 Lemma2 <> b:15 var
+R697:698 Lemma1 <> WB constr
+R704:705 Lemma2 <> tr:17 var
+R648:653 Lemma1 <> deck_A proj
+R648:653 Lemma1 <> deck_A proj
+R648:653 Lemma1 <> deck_A proj
+R668:673 Lemma1 <> deck_B proj
+R668:673 Lemma1 <> deck_B proj
+R659:662 Corelib.Init.Datatypes <> ::list_scope:x_'::'_x not
+R658:658 Lemma2 <> a:13 var
+R663:665 Lemma2 <> as_:14 var
+R679:682 Corelib.Init.Datatypes <> ::list_scope:x_'::'_x not
+R678:678 Lemma2 <> b:15 var
+R683:684 Lemma2 <> bs:16 var
+R641:643 Lemma2 <> phi:3 var
+binder 728:728 <> a:19
+binder 730:732 <> as_:20
+binder 734:734 <> b:21
+binder 736:737 <> bs:22
+binder 739:740 <> tr:23
+binder 742:742 <> c:24
+R761:768 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R756:758 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R749:751 Lemma2 <> phi:3 var
+R755:755 Lemma2 <> b:21 var
+R753:753 Lemma2 <> a:19 var
+R759:760 Lemma1 <> TT constr
+R816:823 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R769:772 Lemma2 <> play:4 ind
+R815:815 Lemma2 <> c:24 var
+R812:813 Lemma2 <> tr:23 var
+R781:786 Lemma1 <> deck_A proj
+R781:786 Lemma1 <> deck_A proj
+R781:786 Lemma1 <> deck_A proj
+R796:801 Lemma1 <> deck_B proj
+R796:801 Lemma1 <> deck_B proj
+R791:793 Lemma2 <> as_:20 var
+R806:807 Lemma2 <> bs:22 var
+R774:776 Lemma2 <> phi:3 var
+R824:827 Lemma2 <> play:4 ind
+R896:896 Lemma2 <> c:24 var
+R888:891 Corelib.Init.Datatypes <> ::list_scope:x_'::'_x not
+R878:878 Corelib.Init.Datatypes <> ::core_scope:'('_x_','_x_','_'..'_','_x_')' not
+R880:881 Corelib.Init.Datatypes <> ::core_scope:'('_x_','_x_','_'..'_','_x_')' not
+R883:884 Corelib.Init.Datatypes <> ::core_scope:'('_x_','_x_','_'..'_','_x_')' not
+R887:887 Corelib.Init.Datatypes <> ::core_scope:'('_x_','_x_','_'..'_','_x_')' not
+R879:879 Lemma2 <> a:19 var
+R882:882 Lemma2 <> b:21 var
+R885:886 Lemma1 <> TT constr
+R892:893 Lemma2 <> tr:23 var
+R836:841 Lemma1 <> deck_A proj
+R836:841 Lemma1 <> deck_A proj
+R836:841 Lemma1 <> deck_A proj
+R856:861 Lemma1 <> deck_B proj
+R856:861 Lemma1 <> deck_B proj
+R847:850 Corelib.Init.Datatypes <> ::list_scope:x_'::'_x not
+R846:846 Lemma2 <> a:19 var
+R851:853 Lemma2 <> as_:20 var
+R867:870 Corelib.Init.Datatypes <> ::list_scope:x_'::'_x not
+R866:866 Lemma2 <> b:21 var
+R871:872 Lemma2 <> bs:22 var
+R829:831 Lemma2 <> phi:3 var
+binder 916:916 <> a:25
+binder 918:920 <> as_:26
+binder 922:922 <> b:27
+binder 924:925 <> bs:28
+binder 927:928 <> tr:29
+binder 930:930 <> c:30
+R949:956 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R944:946 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R937:939 Lemma2 <> phi:3 var
+R943:943 Lemma2 <> b:27 var
+R941:941 Lemma2 <> a:25 var
+R947:948 Lemma1 <> NN constr
+R1018:1025 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R957:960 Lemma2 <> play:4 ind
+R1017:1017 Lemma2 <> c:30 var
+R1014:1015 Lemma2 <> tr:29 var
+R969:974 Lemma1 <> deck_A proj
+R969:974 Lemma1 <> deck_A proj
+R969:974 Lemma1 <> deck_A proj
+R991:996 Lemma1 <> deck_B proj
+R991:996 Lemma1 <> deck_B proj
+R982:985 Corelib.Init.Datatypes <> ::list_scope:x_'++'_x not
+R979:981 Lemma2 <> as_:26 var
+R986:986 Stdlib.Lists.List ListNotations ::list_scope:'['_x_']' not
+R988:988 Stdlib.Lists.List ListNotations ::list_scope:'['_x_']' not
+R987:987 Lemma2 <> a:25 var
+R1003:1006 Corelib.Init.Datatypes <> ::list_scope:x_'++'_x not
+R1001:1002 Lemma2 <> bs:28 var
+R1007:1007 Stdlib.Lists.List ListNotations ::list_scope:'['_x_']' not
+R1009:1009 Stdlib.Lists.List ListNotations ::list_scope:'['_x_']' not
+R1008:1008 Lemma2 <> b:27 var
+R962:964 Lemma2 <> phi:3 var
+R1026:1029 Lemma2 <> play:4 ind
+R1098:1098 Lemma2 <> c:30 var
+R1090:1093 Corelib.Init.Datatypes <> ::list_scope:x_'::'_x not
+R1080:1080 Corelib.Init.Datatypes <> ::core_scope:'('_x_','_x_','_'..'_','_x_')' not
+R1082:1083 Corelib.Init.Datatypes <> ::core_scope:'('_x_','_x_','_'..'_','_x_')' not
+R1085:1086 Corelib.Init.Datatypes <> ::core_scope:'('_x_','_x_','_'..'_','_x_')' not
+R1089:1089 Corelib.Init.Datatypes <> ::core_scope:'('_x_','_x_','_'..'_','_x_')' not
+R1081:1081 Lemma2 <> a:25 var
+R1084:1084 Lemma2 <> b:27 var
+R1087:1088 Lemma1 <> NN constr
+R1094:1095 Lemma2 <> tr:29 var
+R1038:1043 Lemma1 <> deck_A proj
+R1038:1043 Lemma1 <> deck_A proj
+R1038:1043 Lemma1 <> deck_A proj
+R1058:1063 Lemma1 <> deck_B proj
+R1058:1063 Lemma1 <> deck_B proj
+R1049:1052 Corelib.Init.Datatypes <> ::list_scope:x_'::'_x not
+R1048:1048 Lemma2 <> a:25 var
+R1053:1055 Lemma2 <> as_:26 var
+R1069:1072 Corelib.Init.Datatypes <> ::list_scope:x_'::'_x not
+R1068:1068 Lemma2 <> b:27 var
+R1073:1074 Lemma2 <> bs:28 var
+R1031:1033 Lemma2 <> phi:3 var
+scheme 194:197 <> play_ind
+scheme 194:197 <> play_sind
+def 1111:1119 <> tie_pairs
+R1127:1130 Corelib.Init.Datatypes <> list ind
+R1132:1135 Lemma2 <> duel def
+binder 1122:1123 <> tr:31
+R1140:1143 Corelib.Init.Datatypes <> list ind
+R1147:1149 Corelib.Init.Datatypes <> ::type_scope:x_'*'_x not
+R1146:1146 Lemma2 <> TieMatching.A var
+R1150:1150 Lemma2 <> TieMatching.B var
+R1164:1165 Lemma2 <> tr:31 var
+R1176:1177 Stdlib.Lists.List ListNotations ::list_scope:'['_']' not
+R1182:1183 Stdlib.Lists.List ListNotations ::list_scope:'['_']' not
+R1199:1202 Corelib.Init.Datatypes <> ::list_scope:x_'::'_x not
+R1189:1189 Corelib.Init.Datatypes <> ::core_scope:'('_x_','_x_','_'..'_','_x_')' not
+R1191:1192 Corelib.Init.Datatypes <> ::core_scope:'('_x_','_x_','_'..'_','_x_')' not
+R1194:1195 Corelib.Init.Datatypes <> ::core_scope:'('_x_','_x_','_'..'_','_x_')' not
+R1198:1198 Corelib.Init.Datatypes <> ::core_scope:'('_x_','_x_','_'..'_','_x_')' not
+R1196:1197 Lemma1 <> TT constr
+R1216:1219 Corelib.Init.Datatypes <> ::list_scope:x_'::'_x not
+R1210:1210 Corelib.Init.Datatypes <> ::core_scope:'('_x_','_x_','_'..'_','_x_')' not
+R1212:1213 Corelib.Init.Datatypes <> ::core_scope:'('_x_','_x_','_'..'_','_x_')' not
+R1215:1215 Corelib.Init.Datatypes <> ::core_scope:'('_x_','_x_','_'..'_','_x_')' not
+R1220:1228 Lemma2 <> tie_pairs:32 def
+R1239:1242 Corelib.Init.Datatypes <> ::list_scope:x_'::'_x not
+R1250:1258 Lemma2 <> tie_pairs:32 def
+def 1283:1292 <> game_trace
+R1302:1305 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R1301:1301 Lemma2 <> TieMatching.A var
+R1307:1310 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R1306:1306 Lemma2 <> TieMatching.B var
+R1311:1317 Lemma1 <> outcome ind
+binder 1295:1297 <> phi:34
+R1329:1334 Lemma1 <> config rec
+binder 1321:1325 <> start:35
+R1343:1346 Corelib.Init.Datatypes <> list ind
+R1348:1351 Lemma2 <> duel def
+binder 1338:1339 <> tr:36
+R1366:1369 Lemma2 <> play ind
+R1371:1373 Lemma2 <> phi:34 var
+R1375:1379 Lemma2 <> start:35 var
+R1381:1382 Lemma2 <> tr:36 var
+R1387:1392 Lemma1 <> deck_A proj
+R1387:1392 Lemma1 <> deck_A proj
+R1387:1392 Lemma1 <> deck_A proj
+R1401:1406 Lemma1 <> deck_B proj
+R1401:1406 Lemma1 <> deck_B proj
+R1397:1398 Stdlib.Lists.List ListNotations ::list_scope:'['_']' not
+R1411:1412 Stdlib.Lists.List ListNotations ::list_scope:'['_']' not
+def 1430:1448 <> perfect_matching_on
+R1462:1465 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R1461:1461 Lemma2 <> TieMatching.A var
+R1467:1470 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R1466:1466 Lemma2 <> TieMatching.B var
+R1471:1477 Lemma1 <> outcome ind
+binder 1455:1457 <> phi:37
+R1491:1494 Corelib.Init.Datatypes <> list ind
+R1496:1496 Lemma2 <> TieMatching.A var
+binder 1485:1487 <> as_:38
+R1509:1512 Corelib.Init.Datatypes <> list ind
+R1514:1514 Lemma2 <> TieMatching.B var
+binder 1504:1505 <> bs:39
+R1527:1530 Corelib.Init.Datatypes <> list ind
+R1534:1536 Corelib.Init.Datatypes <> ::type_scope:x_'*'_x not
+R1533:1533 Lemma2 <> TieMatching.A var
+R1537:1537 Lemma2 <> TieMatching.B var
+binder 1522:1523 <> ps:40
+R1598:1603 Corelib.Init.Logic <> ::type_scope:x_'/\'_x not
+R1553:1558 Corelib.Lists.ListDef <> Forall ind
+R1596:1597 Lemma2 <> ps:40 var
+binder 1565:1565 <> p:41
+R1589:1591 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R1570:1572 Lemma2 <> phi:37 var
+R1583:1585 Corelib.Init.Datatypes <> snd def
+R1587:1587 Lemma2 <> p:41 var
+R1575:1577 Corelib.Init.Datatypes <> fst def
+R1579:1579 Lemma2 <> p:41 var
+R1592:1593 Lemma1 <> TT constr
+R1632:1637 Corelib.Init.Logic <> ::type_scope:x_'/\'_x not
+R1604:1614 Stdlib.Sorting.Permutation <> Permutation ind
+R1621:1623 Corelib.Lists.ListDef <> map def
+R1629:1630 Lemma2 <> ps:40 var
+R1625:1627 Corelib.Init.Datatypes <> fst def
+R1616:1618 Lemma2 <> as_:38 var
+R1665:1670 Corelib.Init.Logic <> ::type_scope:x_'/\'_x not
+R1638:1648 Stdlib.Sorting.Permutation <> Permutation ind
+R1654:1656 Corelib.Lists.ListDef <> map def
+R1662:1663 Lemma2 <> ps:40 var
+R1658:1660 Corelib.Init.Datatypes <> snd def
+R1650:1651 Lemma2 <> bs:39 var
+R1689:1694 Corelib.Init.Logic <> ::type_scope:x_'/\'_x not
+R1671:1675 Stdlib.Lists.List <> NoDup ind
+R1678:1680 Corelib.Lists.ListDef <> map def
+R1686:1687 Lemma2 <> ps:40 var
+R1682:1684 Corelib.Init.Datatypes <> fst def
+R1695:1699 Stdlib.Lists.List <> NoDup ind
+R1702:1704 Corelib.Lists.ListDef <> map def
+R1710:1711 Lemma2 <> ps:40 var
+R1706:1708 Corelib.Init.Datatypes <> snd def
+prf 1722:1743 <> perm_move_head_to_tail
+binder 1756:1756 <> X:42
+R1763:1763 Lemma2 <> X:42 var
+binder 1759:1759 <> x:43
+binder 1766:1767 <> xs:44
+R1774:1784 Stdlib.Sorting.Permutation <> Permutation ind
+R1799:1802 Corelib.Init.Datatypes <> ::list_scope:x_'++'_x not
+R1797:1798 Lemma2 <> xs:44 var
+R1803:1803 Stdlib.Lists.List ListNotations ::list_scope:'['_x_']' not
+R1805:1805 Stdlib.Lists.List ListNotations ::list_scope:'['_x_']' not
+R1804:1804 Lemma2 <> x:43 var
+R1788:1791 Corelib.Init.Datatypes <> ::list_scope:x_'::'_x not
+R1787:1787 Lemma2 <> x:43 var
+R1792:1793 Lemma2 <> xs:44 var
+R1846:1849 Corelib.Init.Datatypes <> ::list_scope:x_'++'_x not
+R1850:1850 Stdlib.Lists.List ListNotations ::list_scope:'['_x_']' not
+R1852:1852 Stdlib.Lists.List ListNotations ::list_scope:'['_x_']' not
+R1863:1866 Corelib.Init.Datatypes <> ::list_scope:x_'++'_x not
+R1868:1871 Corelib.Init.Datatypes <> ::list_scope:x_'::'_x not
+R1872:1873 Stdlib.Lists.List ListNotations ::list_scope:'['_']' not
+R1846:1849 Corelib.Init.Datatypes <> ::list_scope:x_'++'_x not
+R1850:1850 Stdlib.Lists.List ListNotations ::list_scope:'['_x_']' not
+R1852:1852 Stdlib.Lists.List ListNotations ::list_scope:'['_x_']' not
+R1863:1866 Corelib.Init.Datatypes <> ::list_scope:x_'++'_x not
+R1868:1871 Corelib.Init.Datatypes <> ::list_scope:x_'::'_x not
+R1872:1873 Stdlib.Lists.List ListNotations ::list_scope:'['_']' not
+R1904:1907 Corelib.Init.Datatypes <> ::list_scope:x_'::'_x not
+R1919:1922 Corelib.Init.Datatypes <> ::list_scope:x_'::'_x not
+R1925:1928 Corelib.Init.Datatypes <> ::list_scope:x_'++'_x not
+R1929:1930 Stdlib.Lists.List ListNotations ::list_scope:'['_']' not
+R1945:1953 Stdlib.Lists.List <> app_nil_r thm
+R1904:1907 Corelib.Init.Datatypes <> ::list_scope:x_'::'_x not
+R1919:1922 Corelib.Init.Datatypes <> ::list_scope:x_'::'_x not
+R1925:1928 Corelib.Init.Datatypes <> ::list_scope:x_'++'_x not
+R1929:1930 Stdlib.Lists.List ListNotations ::list_scope:'['_']' not
+R1945:1953 Stdlib.Lists.List <> app_nil_r thm
+R1945:1953 Stdlib.Lists.List <> app_nil_r thm
+R1978:1995 Stdlib.Sorting.Permutation <> Permutation_middle thm
+R1978:1995 Stdlib.Sorting.Permutation <> Permutation_middle thm
+prf 2010:2029 <> play_tie_permutation
+binder 2042:2044 <> phi:45
+binder 2046:2047 <> c1:46
+binder 2049:2050 <> tr:47
+binder 2052:2053 <> c2:48
+R2077:2084 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R2060:2063 Lemma2 <> play ind
+R2065:2067 Lemma2 <> phi:45 var
+R2069:2070 Lemma2 <> c1:46 var
+R2072:2073 Lemma2 <> tr:47 var
+R2075:2076 Lemma2 <> c2:48 var
+R2146:2153 Corelib.Init.Logic <> ::type_scope:x_'/\'_x not
+R2085:2095 Stdlib.Sorting.Permutation <> Permutation ind
+R2119:2122 Corelib.Init.Datatypes <> ::list_scope:x_'++'_x not
+R2110:2115 Lemma1 <> deck_A proj
+R2117:2118 Lemma2 <> c2:48 var
+R2123:2125 Corelib.Lists.ListDef <> map def
+R2132:2140 Lemma2 <> tie_pairs def
+R2142:2143 Lemma2 <> tr:47 var
+R2127:2129 Corelib.Init.Datatypes <> fst def
+R2098:2103 Lemma1 <> deck_A proj
+R2105:2106 Lemma2 <> c1:46 var
+R2154:2164 Stdlib.Sorting.Permutation <> Permutation ind
+R2188:2191 Corelib.Init.Datatypes <> ::list_scope:x_'++'_x not
+R2179:2184 Lemma1 <> deck_B proj
+R2186:2187 Lemma2 <> c2:48 var
+R2192:2194 Corelib.Lists.ListDef <> map def
+R2201:2209 Lemma2 <> tie_pairs def
+R2211:2212 Lemma2 <> tr:47 var
+R2196:2198 Corelib.Init.Datatypes <> snd def
+R2167:2172 Lemma1 <> deck_B proj
+R2174:2175 Lemma2 <> c1:46 var
+R2447:2455 Stdlib.Lists.List <> app_nil_r thm
+R2447:2455 Stdlib.Lists.List <> app_nil_r thm
+R2447:2455 Stdlib.Lists.List <> app_nil_r thm
+R2447:2455 Stdlib.Lists.List <> app_nil_r thm
+R2447:2455 Stdlib.Lists.List <> app_nil_r thm
+R2471:2486 Stdlib.Sorting.Permutation <> Permutation_refl thm
+R2471:2486 Stdlib.Sorting.Permutation <> Permutation_refl thm
+R2471:2486 Stdlib.Sorting.Permutation <> Permutation_refl thm
+R2571:2587 Stdlib.Sorting.Permutation <> Permutation_trans thm
+R2571:2587 Stdlib.Sorting.Permutation <> Permutation_trans thm
+R2604:2625 Lemma2 <> perm_move_head_to_tail thm
+R2604:2625 Lemma2 <> perm_move_head_to_tail thm
+R2712:2728 Stdlib.Sorting.Permutation <> Permutation_trans thm
+R2712:2728 Stdlib.Sorting.Permutation <> Permutation_trans thm
+R2745:2766 Lemma2 <> perm_move_head_to_tail thm
+R2745:2766 Lemma2 <> perm_move_head_to_tail thm
+R2870:2886 Stdlib.Sorting.Permutation <> Permutation_trans thm
+R2870:2886 Stdlib.Sorting.Permutation <> Permutation_trans thm
+R2903:2911 Stdlib.Sorting.Permutation <> perm_skip constr
+R2903:2911 Stdlib.Sorting.Permutation <> perm_skip constr
+R2939:2956 Stdlib.Sorting.Permutation <> Permutation_middle thm
+R2939:2956 Stdlib.Sorting.Permutation <> Permutation_middle thm
+R2972:2988 Stdlib.Sorting.Permutation <> Permutation_trans thm
+R2972:2988 Stdlib.Sorting.Permutation <> Permutation_trans thm
+R3005:3013 Stdlib.Sorting.Permutation <> perm_skip constr
+R3005:3013 Stdlib.Sorting.Permutation <> perm_skip constr
+R3041:3058 Stdlib.Sorting.Permutation <> Permutation_middle thm
+R3041:3058 Stdlib.Sorting.Permutation <> Permutation_middle thm
+R3126:3142 Stdlib.Sorting.Permutation <> Permutation_trans thm
+R3126:3142 Stdlib.Sorting.Permutation <> Permutation_trans thm
+R3159:3180 Lemma2 <> perm_move_head_to_tail thm
+R3159:3180 Lemma2 <> perm_move_head_to_tail thm
+R3215:3231 Stdlib.Sorting.Permutation <> Permutation_trans thm
+R3215:3231 Stdlib.Sorting.Permutation <> Permutation_trans thm
+R3248:3269 Lemma2 <> perm_move_head_to_tail thm
+R3248:3269 Lemma2 <> perm_move_head_to_tail thm
+prf 3303:3320 <> tie_pairs_are_ties
+binder 3333:3335 <> phi:49
+binder 3337:3338 <> c1:50
+binder 3340:3341 <> tr:51
+binder 3343:3344 <> c2:52
+R3368:3375 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R3351:3354 Lemma2 <> play ind
+R3356:3358 Lemma2 <> phi:49 var
+R3360:3361 Lemma2 <> c1:50 var
+R3363:3364 Lemma2 <> tr:51 var
+R3366:3367 Lemma2 <> c2:52 var
+R3376:3381 Corelib.Lists.ListDef <> Forall ind
+R3420:3428 Lemma2 <> tie_pairs def
+R3430:3431 Lemma2 <> tr:51 var
+binder 3388:3388 <> p:53
+R3412:3414 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R3393:3395 Lemma2 <> phi:49 var
+R3398:3400 Corelib.Init.Datatypes <> fst def
+R3402:3402 Lemma2 <> p:53 var
+R3406:3408 Corelib.Init.Datatypes <> snd def
+R3410:3410 Lemma2 <> p:53 var
+R3415:3416 Lemma1 <> TT constr
+prf 3786:3806 <> nodup_tie_left_unique
+R3825:3828 Corelib.Init.Datatypes <> list ind
+R3832:3834 Corelib.Init.Datatypes <> ::type_scope:x_'*'_x not
+R3831:3831 Lemma2 <> TieMatching.A var
+R3835:3835 Lemma2 <> TieMatching.B var
+binder 3820:3821 <> ps:54
+R3844:3844 Lemma2 <> TieMatching.A var
+binder 3840:3840 <> a:55
+R3856:3856 Lemma2 <> TieMatching.B var
+binder 3848:3849 <> b1:56
+binder 3851:3852 <> b2:57
+R3882:3889 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R3864:3868 Stdlib.Lists.List <> NoDup ind
+R3871:3873 Corelib.Lists.ListDef <> map def
+R3879:3880 Lemma2 <> ps:54 var
+R3875:3877 Corelib.Init.Datatypes <> fst def
+R3903:3910 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R3890:3891 Stdlib.Lists.List <> In def
+R3901:3902 Lemma2 <> ps:54 var
+R3893:3893 Corelib.Init.Datatypes <> ::core_scope:'('_x_','_x_','_'..'_','_x_')' not
+R3895:3896 Corelib.Init.Datatypes <> ::core_scope:'('_x_','_x_','_'..'_','_x_')' not
+R3899:3899 Corelib.Init.Datatypes <> ::core_scope:'('_x_','_x_','_'..'_','_x_')' not
+R3894:3894 Lemma2 <> a:55 var
+R3897:3898 Lemma2 <> b1:56 var
+R3924:3931 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R3911:3912 Stdlib.Lists.List <> In def
+R3922:3923 Lemma2 <> ps:54 var
+R3914:3914 Corelib.Init.Datatypes <> ::core_scope:'('_x_','_x_','_'..'_','_x_')' not
+R3916:3917 Corelib.Init.Datatypes <> ::core_scope:'('_x_','_x_','_'..'_','_x_')' not
+R3920:3920 Corelib.Init.Datatypes <> ::core_scope:'('_x_','_x_','_'..'_','_x_')' not
+R3915:3915 Lemma2 <> a:55 var
+R3918:3919 Lemma2 <> b2:57 var
+R3934:3936 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R3932:3933 Lemma2 <> b1:56 var
+R3937:3938 Lemma2 <> b2:57 var
+R4360:4365 Stdlib.Lists.List <> in_map thm
+R4374:4374 Corelib.Init.Datatypes <> ::core_scope:'('_x_','_x_','_'..'_','_x_')' not
+R4376:4377 Corelib.Init.Datatypes <> ::core_scope:'('_x_','_x_','_'..'_','_x_')' not
+R4380:4380 Corelib.Init.Datatypes <> ::core_scope:'('_x_','_x_','_'..'_','_x_')' not
+R4367:4369 Corelib.Init.Datatypes <> fst def
+R4360:4365 Stdlib.Lists.List <> in_map thm
+R4374:4374 Corelib.Init.Datatypes <> ::core_scope:'('_x_','_x_','_'..'_','_x_')' not
+R4376:4377 Corelib.Init.Datatypes <> ::core_scope:'('_x_','_x_','_'..'_','_x_')' not
+R4380:4380 Corelib.Init.Datatypes <> ::core_scope:'('_x_','_x_','_'..'_','_x_')' not
+R4367:4369 Corelib.Init.Datatypes <> fst def
+R4518:4523 Stdlib.Lists.List <> in_map thm
+R4532:4532 Corelib.Init.Datatypes <> ::core_scope:'('_x_','_x_','_'..'_','_x_')' not
+R4534:4535 Corelib.Init.Datatypes <> ::core_scope:'('_x_','_x_','_'..'_','_x_')' not
+R4538:4538 Corelib.Init.Datatypes <> ::core_scope:'('_x_','_x_','_'..'_','_x_')' not
+R4525:4527 Corelib.Init.Datatypes <> fst def
+R4518:4523 Stdlib.Lists.List <> in_map thm
+R4532:4532 Corelib.Init.Datatypes <> ::core_scope:'('_x_','_x_','_'..'_','_x_')' not
+R4534:4535 Corelib.Init.Datatypes <> ::core_scope:'('_x_','_x_','_'..'_','_x_')' not
+R4538:4538 Corelib.Init.Datatypes <> ::core_scope:'('_x_','_x_','_'..'_','_x_')' not
+R4525:4527 Corelib.Init.Datatypes <> fst def
+prf 4591:4609 <> lemma2_tie_matching
+binder 4622:4624 <> phi:58
+binder 4626:4630 <> start:59
+binder 4632:4633 <> tr:60
+R4660:4667 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R4640:4644 Stdlib.Lists.List <> NoDup ind
+R4647:4652 Lemma1 <> deck_A proj
+R4654:4658 Lemma2 <> start:59 var
+R4688:4695 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R4668:4672 Stdlib.Lists.List <> NoDup ind
+R4675:4680 Lemma1 <> deck_B proj
+R4682:4686 Lemma2 <> start:59 var
+R4719:4726 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R4696:4705 Lemma2 <> game_trace def
+R4707:4709 Lemma2 <> phi:58 var
+R4711:4715 Lemma2 <> start:59 var
+R4717:4718 Lemma2 <> tr:60 var
+R4727:4745 Lemma2 <> perfect_matching_on def
+R4747:4749 Lemma2 <> phi:58 var
+R4752:4757 Lemma1 <> deck_A proj
+R4759:4763 Lemma2 <> start:59 var
+R4767:4772 Lemma1 <> deck_B proj
+R4774:4778 Lemma2 <> start:59 var
+R4782:4790 Lemma2 <> tie_pairs def
+R4792:4793 Lemma2 <> tr:60 var
+R4858:4867 Lemma2 <> game_trace def
+R4888:4906 Lemma2 <> perfect_matching_on def
+R4921:4940 Lemma2 <> play_tie_permutation thm
+R4921:4940 Lemma2 <> play_tie_permutation thm
+R4997:5014 Lemma2 <> tie_pairs_are_ties thm
+R4997:5014 Lemma2 <> tie_pairs_are_ties thm
+R5143:5159 Stdlib.Sorting.Permutation <> Permutation_NoDup thm
+R5143:5159 Stdlib.Sorting.Permutation <> Permutation_NoDup thm
+R5220:5236 Stdlib.Sorting.Permutation <> Permutation_NoDup thm
+R5220:5236 Stdlib.Sorting.Permutation <> Permutation_NoDup thm
+prf 5300:5322 <> lemma2_unique_tie_for_A
+binder 5335:5337 <> phi:61
+binder 5339:5343 <> start:62
+binder 5345:5346 <> tr:63
+binder 5348:5348 <> a:64
+R5375:5382 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R5355:5359 Stdlib.Lists.List <> NoDup ind
+R5362:5367 Lemma1 <> deck_A proj
+R5369:5373 Lemma2 <> start:62 var
+R5403:5410 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R5383:5387 Stdlib.Lists.List <> NoDup ind
+R5390:5395 Lemma1 <> deck_B proj
+R5397:5401 Lemma2 <> start:62 var
+R5434:5441 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R5411:5420 Lemma2 <> game_trace def
+R5422:5424 Lemma2 <> phi:61 var
+R5426:5430 Lemma2 <> start:62 var
+R5432:5433 Lemma2 <> tr:63 var
+R5461:5468 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R5442:5443 Stdlib.Lists.List <> In def
+R5448:5453 Lemma1 <> deck_A proj
+R5455:5459 Lemma2 <> start:62 var
+R5445:5445 Lemma2 <> a:64 var
+R5469:5476 Corelib.Init.Logic <> ::type_scope:'exists'_'!'_x_'..'_x_','_x not
+R5478:5479 Corelib.Init.Logic <> ::type_scope:'exists'_'!'_x_'..'_x_','_x not
+binder 5477:5477 <> b:65
+R5480:5481 Stdlib.Lists.List <> In def
+R5491:5499 Lemma2 <> tie_pairs def
+R5501:5502 Lemma2 <> tr:63 var
+R5483:5483 Corelib.Init.Datatypes <> ::core_scope:'('_x_','_x_','_'..'_','_x_')' not
+R5485:5486 Corelib.Init.Datatypes <> ::core_scope:'('_x_','_x_','_'..'_','_x_')' not
+R5488:5488 Corelib.Init.Datatypes <> ::core_scope:'('_x_','_x_','_'..'_','_x_')' not
+R5484:5484 Lemma2 <> a:64 var
+R5487:5487 Lemma2 <> b:65 var
+R5577:5595 Lemma2 <> lemma2_tie_matching thm
+R5577:5595 Lemma2 <> lemma2_tie_matching thm
+R5681:5682 Stdlib.Lists.List <> In def
+R5687:5689 Corelib.Lists.ListDef <> map def
+R5696:5704 Lemma2 <> tie_pairs def
+R5691:5693 Corelib.Init.Datatypes <> fst def
+R5681:5682 Stdlib.Lists.List <> In def
+R5687:5689 Corelib.Lists.ListDef <> map def
+R5696:5704 Lemma2 <> tie_pairs def
+R5691:5693 Corelib.Init.Datatypes <> fst def
+R5728:5741 Stdlib.Sorting.Permutation <> Permutation_in thm
+R5728:5741 Stdlib.Sorting.Permutation <> Permutation_in thm
+R5794:5803 Stdlib.Lists.List <> in_map_iff thm
+R5794:5803 Stdlib.Lists.List <> in_map_iff thm
+R5966:5986 Lemma2 <> nodup_tie_left_unique thm
+R5966:5986 Lemma2 <> nodup_tie_left_unique thm
+R6006:6016 Lemma2 TieMatching <> sec
