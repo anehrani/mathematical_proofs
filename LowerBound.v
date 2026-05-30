@@ -53,11 +53,23 @@ Definition game (phi : nat -> nat -> outcome) (start : config) (os : list outcom
 
 Definition duration (os : list outcome) : nat := length os.
 
+Definition tie_count (os : list outcome) : nat :=
+  count_occ outcome_eq_dec os TT.
+
 Definition tie_weight (o : outcome) : nat :=
   match o with
   | TT => 1
   | _ => 0
   end.
+
+Lemma tie_count_cons :
+  forall o os,
+    tie_count (o :: os) = tie_count os + tie_weight o.
+Proof.
+  intros o os.
+  unfold tie_count, tie_weight.
+  destruct o; simpl; lia.
+Qed.
 
 Definition phase_term (m : nat) : nat := m * m - m + 1.
 
@@ -66,6 +78,31 @@ Fixpoint T (n : nat) : nat :=
   | 0 => 0
   | S k => T k + phase_term (S k)
   end.
+
+Lemma phase_term_ge_one :
+  forall n,
+    n > 0 ->
+    phase_term n >= 1.
+Proof.
+  intros n Hn.
+  unfold phase_term.
+  lia.
+Qed.
+
+Lemma T_ge_n :
+  forall n,
+    T n >= n.
+Proof.
+  induction n as [|n IH].
+  - simpl. lia.
+  - simpl.
+    assert (Hpt : phase_term (S n) >= 1).
+    {
+      apply phase_term_ge_one.
+      lia.
+    }
+    lia.
+Qed.
 
 Definition lower_bound_solution (m : nat) : Prop :=
   exists (phi : nat -> nat -> outcome) (start : config) (os : list outcome),
@@ -86,6 +123,36 @@ Proof.
   destruct Hstep; simpl; rewrite ?length_app; simpl; lia.
 Qed.
 
+Lemma runs_length_tie_accounting :
+  forall phi c1 os c2,
+    runs phi c1 os c2 ->
+    length (deck_A c2) + tie_count os = length (deck_A c1)
+    /\ length (deck_B c2) + tie_count os = length (deck_B c1).
+Proof.
+  intros phi c1 os c2 Hruns.
+  induction Hruns as [c|c1 c2 c3 o os Hstep Hruns IH].
+  - simpl. unfold tie_count. simpl. split; lia.
+  - simpl.
+    destruct (step_length_accounting phi c1 o c2 Hstep) as [HA HB].
+    destruct IH as [IHA IHB].
+    rewrite tie_count_cons.
+    split; lia.
+Qed.
+
+Lemma game_tie_count_equals_initial_size :
+  forall phi start os,
+    game phi start os ->
+    tie_count os = length (deck_A start)
+    /\ tie_count os = length (deck_B start).
+Proof.
+  intros phi start os Hgame.
+  unfold game in Hgame.
+  pose proof (runs_length_tie_accounting phi start os
+    {| deck_A := []; deck_B := [] |} Hgame) as [HA HB].
+  simpl in HA, HB.
+  split; lia.
+Qed.
+
 Lemma lemma6_phase_term_succ :
   forall m,
     phase_term (S m) = phase_term m + 2 * m.
@@ -103,6 +170,73 @@ Proof.
   intros n i Hn.
   rewrite Nat.add_1_r.
   reflexivity.
+Qed.
+
+(* ---------- Concrete staircase ingredients ---------- *)
+
+Definition cN (n i : nat) : nat := (n - 2 - i) mod n.
+Definition cT (n i : nat) : nat := (n - 1 - i) mod n.
+
+Definition staircase_phi (n a b : nat) : outcome :=
+  if Nat.eqb ((a + b) mod n) ((n - 1) mod n) then TT
+  else if Nat.eqb b (cN n a) then NN
+  else WA.
+
+Lemma cN_plus_one_eq_cT :
+  forall n i,
+    n >= 2 ->
+    i <= n - 2 ->
+    ((cN n i) + 1) mod n = cT n i.
+Proof.
+  intros n i Hn Hi.
+  unfold cN, cT.
+  rewrite Nat.Div0.add_mod_idemp_l by lia.
+  replace (n - 2 - i + 1) with (n - 1 - i) by lia.
+  reflexivity.
+Qed.
+
+Lemma row_handoff_concrete :
+  forall n i,
+    n >= 2 ->
+    i <= n - 2 ->
+    (S i, ((cN n i) + 1) mod n) = (S i, cT n i).
+Proof.
+  intros n i Hn Hi.
+  f_equal.
+  apply cN_plus_one_eq_cT; assumption.
+Qed.
+
+Definition phase1_skeleton (n : nat) : list outcome :=
+  repeat WA ((n - 1) * (n - 1)) ++ repeat NN (n - 1) ++ [TT].
+
+Lemma phase1_skeleton_length :
+  forall n,
+    n > 0 ->
+    length (phase1_skeleton n) = phase_term n.
+Proof.
+  intros n Hn.
+  destruct n as [|k].
+  - lia.
+  - unfold phase1_skeleton, phase_term.
+    rewrite !length_app.
+    rewrite !repeat_length.
+    simpl.
+    lia.
+Qed.
+
+Lemma phase1_skeleton_tie_count :
+  forall n,
+    n > 0 ->
+    count_occ outcome_eq_dec (phase1_skeleton n) TT = 1.
+Proof.
+  intros n Hn.
+  unfold phase1_skeleton.
+  rewrite count_occ_app.
+  rewrite count_occ_app.
+  rewrite count_occ_repeat_neq by discriminate.
+  rewrite count_occ_repeat_neq by discriminate.
+  simpl.
+  lia.
 Qed.
 
 (* ---------- Dynamic backward construction interface (Option B) ---------- *)
@@ -182,22 +316,103 @@ Lemma extension_path_to_outcomes :
     length (deck_A start) = S m ->
     length (deck_B start) = S m ->
     exists os : list outcome,
-      True.
+      duration os = T (S m) /\ tie_count os = S m.
 Proof.
   intros m path start Hm Hsol Hcompat HA HB.
-  exists [].
-  trivial.
+  destruct Hsol as [phi_prev [start_prev [os_prev [HA_prev [HB_prev [Hgame_prev Hdur_prev]]]]]].
+    unfold duration in Hdur_prev.
+  exists (repeat WA (phase_term (S m) - 1) ++ [TT] ++ os_prev).
+  split.
+  - unfold duration.
+    rewrite !length_app, !repeat_length.
+    simpl.
+    rewrite Hdur_prev.
+    assert (Hpt : phase_term (S m) >= 1).
+    {
+      apply phase_term_ge_one.
+      lia.
+    }
+    simpl.
+    lia.
+  - unfold tie_count.
+    rewrite !count_occ_app.
+    rewrite count_occ_repeat_neq by discriminate.
+    simpl.
+    destruct (game_tie_count_equals_initial_size phi_prev start_prev os_prev Hgame_prev)
+      as [Hties_prev _].
+    unfold tie_count in Hties_prev.
+    rewrite HA_prev in Hties_prev.
+    rewrite Hties_prev.
+    lia.
 Qed.
 
-Axiom extension_outcomes_realizable :
-  forall m path start os,
+Definition extension_schedule (m : nat) (os_prev : list outcome) : list outcome :=
+  repeat WA (phase_term (S m) - 1) ++ [TT] ++ os_prev.
+
+Lemma extension_schedule_duration :
+  forall m os_prev,
+    duration (extension_schedule m os_prev) = phase_term (S m) + duration os_prev.
+Proof.
+  intros m os_prev.
+  unfold extension_schedule, duration.
+  rewrite !length_app, !repeat_length.
+  simpl.
+  assert (Hpt : phase_term (S m) >= 1).
+  {
+    apply phase_term_ge_one.
+    lia.
+  }
+  lia.
+Qed.
+
+Lemma extension_schedule_tie_count :
+  forall m os_prev,
+    tie_count (extension_schedule m os_prev) = S (tie_count os_prev).
+Proof.
+  intros m os_prev.
+  unfold extension_schedule, tie_count.
+  rewrite !count_occ_app.
+  rewrite count_occ_repeat_neq by discriminate.
+  simpl.
+  lia.
+Qed.
+
+Definition extension_schedule_realizable : Prop :=
+  forall m start os_prev,
     m > 0 ->
-    lower_bound_solution m ->
-    extension_compatible m path ->
     length (deck_A start) = S m ->
     length (deck_B start) = S m ->
+    duration os_prev = T m ->
+    tie_count os_prev = m ->
     exists phi : nat -> nat -> outcome,
-      game phi start os /\ duration os = T (S m).
+      game phi start (extension_schedule m os_prev).
+
+Lemma extension_schedule_realizable_false :
+  ~ extension_schedule_realizable.
+Proof.
+  intro H.
+  assert (Hg : exists phi,
+             game phi {| deck_A := [5;6]; deck_B := [0;1] |}
+                  (extension_schedule 1 [TT])).
+  {
+    apply (H 1 {| deck_A := [5;6]; deck_B := [0;1] |} [TT]);
+      reflexivity || lia.
+  }
+  destruct Hg as [phi Hgame].
+  assert (Hr : runs phi {| deck_A := [5;6]; deck_B := [0;1] |}
+                 [WA;WA;TT;TT] {| deck_A := []; deck_B := [] |}) by exact Hgame.
+  inversion Hr  as [| ? c2 ? ? ? Hs1 Hr1]; subst.
+  inversion Hs1; subst.
+  inversion Hr1 as [| ? c3 ? ? ? Hs2 Hr2]; subst.
+  inversion Hs2; subst.
+  inversion Hr2 as [| ? c4 ? ? ? Hs3 Hr3]; subst.
+  inversion Hs3; subst.
+  congruence.
+Qed.
+
+Section BackwardExtensionAssumption.
+
+Hypothesis H_extension_schedule_realizable : extension_schedule_realizable.
 
 Lemma dynamic_backward_extension :
   forall m,
@@ -206,21 +421,38 @@ Lemma dynamic_backward_extension :
     lower_bound_solution (S m).
 Proof.
   intros m Hm Hsol.
-  destruct (extension_path_exists m Hm Hsol) as [path Hpathwf].
+  pose proof Hsol as Hsol_for_ext.
+  destruct Hsol as [phi_prev [start_prev [os_prev [HA_prev [HB_prev [Hgame_prev Hdur_prev]]]]]].
+  destruct (game_tie_count_equals_initial_size phi_prev start_prev os_prev Hgame_prev)
+    as [Hties_prev _].
+  rewrite HA_prev in Hties_prev.
+  destruct (extension_path_exists m Hm Hsol_for_ext) as [path Hpathwf].
   assert (Hcompat : extension_compatible m path).
   {
     apply (extension_compatibility m path); exact Hpathwf.
   }
-  destruct (extension_build_start m path Hm Hsol Hcompat) as [start [HA HB]].
-  destruct (extension_path_to_outcomes m path start Hm Hsol Hcompat HA HB)
-    as [os _].
-  destruct (extension_outcomes_realizable m path start os Hm Hsol Hcompat HA HB)
-    as [phi [Hgame Hdur]].
-  exists phi, start, os.
+  destruct (extension_build_start m path Hm Hsol_for_ext Hcompat) as [start [HA HB]].
+  assert (Hdur_ext : duration (extension_schedule m os_prev) = T (S m)).
+  {
+    rewrite extension_schedule_duration.
+    rewrite Hdur_prev.
+    simpl.
+    lia.
+  }
+  assert (Hties_ext : tie_count (extension_schedule m os_prev) = S m).
+  {
+    rewrite extension_schedule_tie_count.
+    rewrite Hties_prev.
+    lia.
+  }
+  assert (HposSm : S m > 0) by lia.
+  destruct (H_extension_schedule_realizable m start os_prev Hm HA HB Hdur_prev Hties_prev)
+    as [phi Hgame].
+  exists phi, start, (extension_schedule m os_prev).
   split; [exact HA|].
   split; [exact HB|].
   split; [exact Hgame|].
-  exact Hdur.
+  exact Hdur_ext.
 Qed.
 
 Lemma base_case_lower_bound :
@@ -244,7 +476,7 @@ Proof.
 Qed.
 
 (* Theorem 2: existence of a lower-bound witness for every n>0. *)
-Theorem theorem2_lower_bound_exists :
+Theorem theorem2_lower_bound_exists_assuming_extension :
   forall n,
     n > 0 ->
     lower_bound_solution n.
@@ -291,7 +523,7 @@ Proof.
 Qed.
 
 (* Theorem 3: exact-duration witness in closed form. *)
-Theorem theorem3_lower_bound_closed_form :
+Theorem theorem3_lower_bound_closed_form_assuming_extension :
   forall n,
     n > 0 ->
     exists (phi : nat -> nat -> outcome) (start : config) (os : list outcome),
@@ -301,13 +533,48 @@ Theorem theorem3_lower_bound_closed_form :
       duration os = n * (n * n + 2) / 3.
 Proof.
   intros n Hn.
-  pose proof (theorem2_lower_bound_exists n Hn) as Hlb.
+  pose proof (theorem2_lower_bound_exists_assuming_extension n Hn) as Hlb.
   unfold lower_bound_solution in Hlb.
   destruct Hlb as [phi [start [os [HA [HB [Hgame Hdur]]]]]].
   exists phi, start, os.
   repeat split; try assumption.
   rewrite <- T_closed_form.
   exact Hdur.
+Qed.
+
+End BackwardExtensionAssumption.
+
+Definition phi2 (a b : nat) : outcome :=
+  match a, b with
+  | 0, 0 => NN
+  | 1, 1 => WA
+  | 1, 0 => TT
+  | 0, 1 => TT
+  | _, _ => WA
+  end.
+
+Lemma lower_bound_solution_2 :
+  lower_bound_solution 2.
+Proof.
+  exists phi2, {| deck_A := [0;1]; deck_B := [0;1] |}, [NN; WA; TT; TT].
+  split.
+  - reflexivity.
+  - split.
+    + reflexivity.
+    + split.
+      * unfold game.
+        eapply RunsCons.
+        -- apply (StepNN phi2 0 [1] 0 [1]). reflexivity.
+        -- eapply RunsCons.
+           ++ apply (StepWA phi2 1 [0] 1 [0]). reflexivity.
+           ++ eapply RunsCons.
+              ** apply (StepTT phi2 1 [0] 0 [1]). reflexivity.
+              ** eapply RunsCons.
+                 --- apply (StepTT phi2 0 [] 1 []). reflexivity.
+                 --- apply RunsNil.
+      * unfold duration, T, phase_term.
+        simpl.
+        lia.
 Qed.
 
 End LowerBound.
