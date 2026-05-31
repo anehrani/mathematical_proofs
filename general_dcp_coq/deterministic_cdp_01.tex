@@ -1,0 +1,550 @@
+\documentclass[11pt]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{mathtools}
+\usepackage{booktabs}
+\usepackage{enumitem}
+\usepackage{hyperref}
+\hypersetup{colorlinks=true,linkcolor=blue,citecolor=blue,urlcolor=blue}
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{lemma}{Lemma}
+\newtheorem{corollary}{Corollary}
+\newtheorem{proposition}{Proposition}
+\theoremstyle{definition}
+\newtheorem{definition}{Definition}
+\theoremstyle{remark}
+\newtheorem{remark}{Remark}
+
+\DeclareMathOperator{\dur}{dur}
+\newcommand{\WA}{\mathsf{W_A}}
+\newcommand{\WB}{\mathsf{W_B}}
+\newcommand{\TT}{\mathsf{T}}
+\newcommand{\NN}{\mathsf{N}}
+\newcommand{\Term}{\mathsf{Term}}
+
+\title{On the Maximum Duration of a Deterministic\\ Card-Dueling Process\\[4pt]
+\large A Combinatorial Analysis}
+\author{Ali Nehrani\\ Ground Inc.\\ \texttt{nehrani@gmail.com}}
+\date{May 31, 2026 (revised, third revision)}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+We study a deterministic two-player card-dueling process on two decks of $n$ cards each,
+governed by a fixed pairwise outcome table. This process is a strategy-free generalization
+of the classical card game War, in which a global look-up table replaces the linear ranking of
+cards and a fourth ``no-interaction'' outcome is permitted. Our main result determines
+the exact extremal duration: the maximum length of any terminating game is
+\[
+T(n) = \frac{n(n^2+2)}{3}.
+\]
+The proof combines a phase decomposition on a shrinking sequence of discrete tori $(\mathbb{Z}/m\mathbb{Z})^2$
+with the global perfect matching forced on the tie cells by termination; together these
+yield a tight per-phase bound that sums to $T(n)$. The bound is attained by an explicit
+inductive construction---a Staircase Raster-Scan traversal---whose induction is closed by a
+table-restriction lemma and a phase-reset lemma.
+
+\medskip
+\noindent\textbf{Keywords:} deterministic deck dynamics; monovariants; perfect matchings; phase decomposition; extremal combinatorics; card game of War.\\
+\noindent\textbf{MSC 2020:} 05A05, 05C70, 68Q25, 37B15.
+\end{abstract}
+
+\section{Introduction}
+
+\subsection{Motivation}
+Combinatorial processes that couple deterministic local update rules with global memory effects recur throughout discrete mathematics and theoretical computer science. Sorting networks,
+the abelian sandpile and chip-firing games, rotor-routing, cyclic cellular automata, and turn-based
+card games all share a single signature: simple, local, memoryless transition rules generate global
+behaviour whose duration, periodicity, or limiting shape is far from obvious and often requires
+an extremal or potential-theoretic argument to pin down. The Card-Duel Process (CDP)
+studied in this paper belongs squarely to this family, and it is most naturally read as a strategy-free
+generalization of the card game War. 
+
+In War, two players each hold a face-down deck; each round both reveal a top card and the higher-ranked card wins, with the loser (and sometimes both cards, on a tie) reinserted according to fixed rules. War is famously deterministic once the initial shuffle is fixed: no player makes a choice, yet the dynamics are intricate enough that even the basic question of whether the game must terminate is subtle \cite{LR}. 
+
+The CDP abstracts War in two ways. First, the total order on card values is replaced by an arbitrary outcome table $\phi:A\times B\rightarrow\{\WA,\WB,\TT,\NN\}$ decoupling the win relation from any ranking and admitting genuinely non-transitive and asymmetric interactions. Second, a fourth outcome $\NN$ (``no interaction'') is permitted, in which both cards cycle to the bottom without a winner or loser; this is the move that allows the process to mark time on a torus without removing mass. Removal happens only through ties, which makes the tie structure---not the win structure---the carrier of all irreversibility in the process. 
+
+The driving question is purely extremal: across all outcome tables and all initial deck orderings, how long can a terminating game last? Equivalently, we seek the worst-case running time of the process as a function of the deck size $n$. For the concrete value $n=40$ (one duel per minute) the answer turns out to be exactly 356 hours, a figure we recover as $T(40) = 21,360$.
+
+\subsection{The model, informally}
+Two players each hold a face-down deck of $n$ cards. Every step both reveal their top card; the outcome of the duel is read off a fixed table. On a win the winner stays on top and the loser goes to the bottom of its own deck; on a no-interaction both cards go to the bottom of their decks; on a tie both cards are permanently removed. No player has any choice at any point. The game ends when both decks are empty. A precise statement is given in Section \ref{sec:model}.
+
+\subsection{Contributions}
+\begin{itemize}[leftmargin=1.4em]
+    \item \textbf{An exact extremal duration (Theorem \ref{thm:main}).} We prove that the maximum duration of any terminating CDP on decks of size $n$ is exactly $T(n)=n(n^2+2)/3$. To our knowledge this is the first sharp worst-case bound for a War-type process with an arbitrary outcome table.
+    
+    \item \textbf{A phase decomposition with a tight per-phase bound (Section \ref{sec:upper}).} We decompose any game into $n$ phases delimited by ties and show that the $k$-th phase lives on a torus $(\mathbb{Z}/m_k\mathbb{Z})^2$ with $m_k=n-k+1$. The termination-forced perfect matching reserves $m_k-1$ cells that the phase provably cannot visit, giving $L_k \le m_k^2-m_k+1$; summation yields the upper bound.
+    
+    \item \textbf{A matching explicit construction (Section \ref{sec:lower}).} We exhibit, for every $n$, an outcome table and initial ordering---the Staircase Raster-Scan---that attains $T(n)$. The construction is recursive, and we close the induction with a table-restriction lemma and a phase-reset lemma (Lemmas \ref{lem:restrict} and \ref{lem:phase-reset}). The general result is a theorem (Theorem \ref{thm:tight}); we additionally checked the construction by exhaustive simulation for $1 < n < 8$ as an independent confirmation.
+\end{itemize}
+
+\subsection{Organization}
+Section \ref{sec:related} situates the CDP within the literature. Section \ref{sec:model} fixes the model. Section \ref{sec:phase} develops the phase decomposition and the torus structure. Section \ref{sec:upper} proves the upper bound and Section \ref{sec:lower} the matching lower bound. Section \ref{sec:small_cases} works small cases.
+
+\section{Related Work}\label{sec:related}
+The CDP intersects several established lines of research.
+
+\paragraph{Card-game dynamics and the game of War.} The closest relative of the CDP is the children's card game War, whose deterministic dynamics have received careful attention. Lakshtanov and Roshchina \cite{LR} showed that, contrary to a natural intuition, War can fail to terminate for suitable reinsertion conventions, and characterized finiteness in terms of the reinsertion rule. Our CDP replaces the rank order of War by an arbitrary outcome table and studies the orthogonal extremal question---the maximum finite duration. Mechanisms like Bulgarian solitaire \cite{Brandt} form another single-deck card process whose orbit structure is governed by a monovariant.
+
+\paragraph{Chip-firing, sandpiles, and rotor-routing.} The abelian sandpile model and the chip-firing game \cite{Dhar, Bjorner, LevinePeres} are paradigmatic examples of deterministic local rules with strong global structure. The CDP shares the ``conserved-until-removed'' flavour. Rotor-routing \cite{Holroyd} is closer in spirit: a deterministic rotor derandomizes a random walk yet equidistributes.
+
+\paragraph{Cyclic cellular automata and annihilating particle systems.} The $\NN$ and win moves act as cyclic rotations of each deck, placing the per-phase dynamics in the world of cyclic update rules \cite{Fisch, Bramson}; ties play the role of annihilation events. The CDP is a clean instance in which the annihilation set is forced, by termination, to be a perfect matching.
+
+\paragraph{Sorting and permutation dynamics.} The win move ``loser to the bottom'' is the elementary operation underlying several classical sorting analyses \cite{Knuth}. The maximum-duration tables turn out to have non-tie entries arranged as a spiral-type permutation pattern on each phase torus (Remark \ref{rem:spiral}), loosely connecting the extremal construction to nonattacking placements such as Costas arrays \cite{Golomb}. Equidistribution of the induced permutation walk is governed by representation-theoretic tools in the spirit of \cite{Diaconis, Stanley}.
+
+\section{Model and Preliminaries}\label{sec:model}
+Let $A=\{a_0,\dots,a_{n-1}\}$ and $B=\{b_0,\dots,b_{n-1}\}$ be disjoint sets of cards of equal size $n > 1$. A configuration is a pair of ordered lists (decks) $(D_A,D_B)$ of the currently remaining cards, with $D_A[0]$ and $D_B[0]$ the respective top cards.
+
+\begin{definition}[Outcome table] An outcome table is a function $\phi:A\times B\rightarrow\{\WA,\WB,\TT,\NN\}$. Its tie-set is $\mathcal{T}(\phi):=\{(a,b):\phi(a,b)=\TT\}$.
+\end{definition}
+
+\begin{definition}[Card-Duel Process] Given an outcome table $\phi$ and an initial configuration $(D_A^0,D_B^0)$, the Card-Duel Process (CDP) evolves as follows. At each step $t\ge 1$, let $a=D_A^{t-1}[0]$ and $b=D_B^{t-1}[0]$. According to $\phi(a,b)$:
+\begin{itemize}[nosep]
+    \item $\WA$ (a wins): $a$ stays on top of $D_A$; $b$ moves to the bottom of $D_B$.
+    \item $\WB$ (b wins): $b$ stays on top of $D_B$; $a$ moves to the bottom of $D_A$.
+    \item $\TT$: both $a$ and $b$ are permanently removed from their decks.
+    \item $\NN$: both $a$ and $b$ move to the bottoms of their decks.
+\end{itemize}
+The process terminates when both decks are empty.
+\end{definition}
+
+\begin{definition}[Game, duration] A CDP is a \emph{game} if it terminates in finite time. We write $\mathcal{G}_n$ for the set of all games $(\phi,D^0)$ with $|A|=|B|=n$. For $G\in\mathcal{G}_n$, $\dur(G)$ denotes its duration: the total number of duels.
+\end{definition}
+
+\subsection{Basic observations}
+\begin{lemma}[Only ties remove cards] In any CDP a card is removed if and only if it participates in a tie. Consequently, any game has exactly $n$ ties.
+\end{lemma}
+\begin{proof}
+Outcomes $\WA$, $\WB$, $\NN$ return both involved cards to their decks; only $\TT$ removes cards. There are $2n$ cards and each tie removes exactly one from each deck, so termination requires exactly $n$ ties.
+\end{proof}
+
+\begin{lemma}[Tie-matching]
+For any game $G\in\mathcal{G}_n$, the pairs that tie during $G$ form a perfect matching between $A$ and $B$: there is a bijection $\mu:A\rightarrow B$ with $\phi(a,\mu(a))=\TT$ for all $a\in A$, and $(a,\mu(a))$ is the unique tie in which $a$ participates.
+\end{lemma}
+\begin{proof}
+By Lemma 1 each of the $2n$ cards is removed exactly once, namely by the unique tie in which it participates. These $n$ ties therefore biject $A$ with $B$.
+\end{proof}
+
+The perfect matching $\mu$ is the single global object that drives the entire analysis: it is forced by termination, it constrains every phase, and it drives the entire structural bound.
+
+\section{Phase Decomposition and Torus Structure}\label{sec:phase}
+\begin{definition}[Phase] Phase $k$ ($1\le k\le n$) is the maximal block of consecutive duels ending with the $k$-th tie of the game. Both decks contain $m_k:=n-k+1$ cards throughout phase $k$.
+\end{definition}
+
+\begin{lemma}[Cyclic invariance] During any phase the relative cyclic order of cards within each deck is preserved.
+\end{lemma}
+\begin{proof}
+Within a phase only $\WA$, $\WB$, $\NN$ occur, and each moves a top card directly to the bottom of its deck. Moving the top element to the bottom is a pure cyclic rotation, so no card overtakes another and the cyclic word is invariant.
+\end{proof}
+
+\begin{definition}[Phase state and coordinate mapping] At the start of phase $k$, label the cards currently in $A$ as $a_0,\dots,a_{m_k-1}$ from top to bottom, and likewise $b_0,\dots,b_{m_k-1}$ in $B$. The phase state at a step $t$ within phase $k$ is the pair $(i,j)\in(\mathbb{Z}/m_k\mathbb{Z})^2$ such that $a_i, b_j$ are the current top cards. By Lemma 3 the state space of phase $k$ is the discrete torus $(\mathbb{Z}/m_k\mathbb{Z})^2$.
+\end{definition}
+
+\begin{lemma}[Phase transition rule] Let $m=m_k$ and let $\phi_k$ denote $\phi$ restricted to the cards active in phase $k$. The state evolves from $(i,j)$ by
+\begin{equation}\label{eq:trans}
+(i,j)\mapsto
+\begin{cases}
+(i, j + 1 \bmod m) & \phi_k(a_i,b_j)=\WA, \\
+(i + 1 \bmod m, j) & \phi_k(a_i,b_j)=\WB, \\
+(i + 1 \bmod m, j + 1 \bmod m) & \phi_k(a_i,b_j)=\NN, \\
+\{\text{phase ends}\} & \phi_k(a_i,b_j)=\TT.
+\end{cases}
+\end{equation}
+\end{lemma}
+\begin{proof}
+Direct transcription of Definition 2. If $\phi_k(a_i,b_j)=\WA$, card $a_i$ stays on top of $A$ while $b_j$ is sent to the bottom of $B$; by Lemma 3 the card immediately below $b_j$ is $b_{j+1 \bmod m}$, giving $(i, j+1)$. The $\WB$ and $\NN$ cases are symmetric.
+\end{proof}
+
+The duration of phase $k$ is $L_k:=\#\{\text{states visited in phase } k\}$, and $\dur(G)=\sum_{k=1}^n L_k$.
+
+\begin{lemma}[No repeated states within a phase] For any game $G\in\mathcal{G}_n$, the trajectory within any phase visits each state at most once.
+\end{lemma}
+\begin{proof}
+The transition rule (\ref{eq:trans}) is deterministic, so each non-tie state has a unique successor and predecessor (each of the three non-tie maps is a bijection of $(\mathbb{Z}/m\mathbb{Z})^2$). If a state were visited twice, the trajectory between the two visits would be a directed cycle of non-tie states with no tie, hence repeat forever, contradicting finite termination. For the final phase ($m_n=1$) the torus is a single point, which must carry a tie for the game to end.
+\end{proof}
+
+\begin{remark}[Conceptual picture] A game is thus a nested sequence of self-avoiding walks on tori of shrinking radius $m=n,n-1,\dots,1$. Each walk ends the instant it lands on a tie cell, which deletes one row and one column of the next torus. All the difficulty is in how long a single walk can postpone hitting a tie.
+\end{remark}
+
+\section{The Upper Bound}\label{sec:upper}
+\subsection{The phasewise bound}
+\begin{theorem}[Phasewise bound]\label{thm:phasewise}
+For every game $G\in\mathcal{G}_n$ and every phase $k$,
+\begin{equation}\label{eq:phasewise}
+L_k\le m_k^2-m_k+1, \quad m_k=n-k+1.
+\end{equation}
+\end{theorem}
+\begin{proof}
+Fix $G$ and $k$; write $m=m_k$ and let $S_k\subseteq(\mathbb{Z}/m\mathbb{Z})^2$ be the set of states visited in phase $k$. By Lemma 5, $L_k=|S_k|$.
+
+\emph{Future tie cells.} By Lemma 2 the game has $n$ ties forming the perfect matching $\mu$. Exactly $k-1$ ties precede phase $k$, so $m=n-k+1$ matching-ties remain: one ends phase $k$, and the other $m-1$ occur in phases $k+1,\dots,n$. The $2(m-1)$ cards involved in those future ties are all present at the start of phase $k$, so each future tie corresponds to a cell $(i_l^*,j_l^*)\in(\mathbb{Z}/m\mathbb{Z})^2$ with $\phi_k(a_{i_l^*},b_{j_l^*})=\TT$. Because the matching is a bijection, distinct future ties use distinct $a$-labels and distinct $b$-labels, hence distinct cells. Set
+\begin{equation}
+F_k:=\{(i_2^*,j_2^*),\dots,(i_m^*,j_m^*)\}, \quad |F_k|=m-1.
+\end{equation}
+
+\emph{Future tie cells are never visited in phase $k$.} Suppose some $(i_l^*,j_l^*)\in F_k$ were visited during phase $k$. By Lemma 4 the phase would end there, making $(a_{i_l^*},b_{j_l^*})$ the $k$-th tie and removing both cards in phase $k$. But these two cards are required, by the matching, for a tie in a strictly later phase---a contradiction. Hence $S_k\cap F_k=\emptyset$.
+
+\emph{Counting.} Since $|(\mathbb{Z}/m\mathbb{Z})^2|=m^2$ and $S_k\cap F_k=\emptyset$,
+\[
+L_k = |S_k| \le m^2 - |F_k| = m^2 - (m-1) = m^2 - m + 1. \qedhere
+\]
+\end{proof}
+
+\begin{remark} The table $\phi$ may assign $\TT$ to cells beyond the $m$ matching-ties; such cells are also unvisitable in phase $k$, so the bound (\ref{eq:phasewise}) is conservative. Using only the $m-1$ guaranteed future-matching cells keeps the argument purely structural; the extremal table places no surplus ties.
+\end{remark}
+
+\subsection{Summing over phases}
+\begin{corollary}[Upper bound]\label{cor:upper}
+For every $n\ge 1$ and every $G\in\mathcal{G}_n$,
+\begin{equation}\label{eq:upper}
+\dur(G) \le \sum_{k=1}^n (m_k^2-m_k+1) = \sum_{m=1}^n (m^2-m+1) = \frac{n(n^2+2)}{3}.
+\end{equation}
+\end{corollary}
+\begin{proof}
+Sum (\ref{eq:phasewise}) over $k$ and reindex by $m=n-k+1$:
+\[
+\sum_{m=1}^n (m^2-m+1) = \frac{n(n+1)(2n+1)}{6} - \frac{n(n+1)}{2} + n = \frac{n[(n+1)(2n+1)-3(n+1)+6]}{6}.
+\]
+Since $(n+1)(2n+1)-3(n+1)+6=2n^2+4$, this equals $\frac{n(2n^2+4)}{6}=\frac{n(n^2+2)}{3}$.
+\end{proof}
+
+
+\section{The Lower Bound: the Staircase Raster-Scan}\label{sec:lower}
+We now construct, for each $n$, an explicit outcome table and initial configuration whose duration attains the upper bound. The proof is deliberately separated into a local traversal statement and a global phase-reset statement. This separation is useful because the local traversal alone does not prove tightness: one must also show that after each terminal tie the remaining decks re-enter the next smaller phase in the required canonical order.
+
+\subsection{Initial configuration and table}
+For $n=1$ the construction consists of the single table entry $\phi_1(a_0,b_0)=\TT$. Assume henceforth that $n\ge 2$. Take the initial decks
+\[
+D_A^{(n)}=[a_0,\dots,a_{n-1}],\qquad D_B^{(n)}=[b_0,\dots,b_{n-1}].
+\]
+Define $\phi_n$ as follows. The realized tie cells will lie on the anti-diagonal
+\begin{equation}\label{eq:global-ties}
+ i+j\equiv n-1 \pmod n.
+\end{equation}
+For rows $0\le i\le n-2$, put
+\[
+\phi_n(a_i,b_{n-1-i})=\TT,\qquad \phi_n(a_i,b_{n-2-i})=\NN,
+\]
+where the displayed column indices are ordinary integers in the indicated range, and set all other entries in those rows to $\WA$. In the final row, put
+\[
+\phi_n(a_{n-1},b_0)=\TT,
+\]
+and set $\phi_n(a_{n-1},b_j)=\WA$ for $1\le j\le n-1$. Thus the table has exactly the $n$ tie entries in \eqref{eq:global-ties}; it has one $\NN$ entry in each row $0,\dots,n-2$ and no $\NN$ entry in the last row.
+
+\subsection{Canonical phase restriction}
+For $1\le m\le n$, let the canonical active decks of size $m$ be
+\[
+A_m=[a_0,\dots,a_{m-1}],\qquad B_m=[b_{n-m},\dots,b_{n-1}].
+\]
+If a phase begins with these decks, write local coordinates as
+\[
+u=i,
+\qquad
+v=j-(n-m),
+\qquad 0\le u,v\le m-1,
+\]
+so that the local cell $(u,v)$ corresponds to the global pair $(a_u,b_{n-m+v})$. Define the local table
+\[
+\Phi_m(u,v)=
+\begin{cases}
+\TT & \text{if } u+v=m-1, \\
+\NN & \text{if } u+v=m-2, \\
+\WA & \text{otherwise}.
+\end{cases}
+\]
+For $m=1$ this means the unique cell is a tie.
+
+\begin{lemma}[Table restriction]\label{lem:restrict}
+Assume phase size $m$ begins with the canonical active decks $A_m,B_m$. For every $0\le u,v\le m-1$,
+\[
+\phi_n(a_u,b_{n-m+v})=\Phi_m(u,v).
+\]
+\end{lemma}
+\begin{proof}
+Let $j=n-m+v$. First suppose $0\le u\le m-2$. The global tie in row $u$ is at column $n-1-u$. This column lies in the active interval $\{n-m,\dots,n-1\}$, and
+\[
+j=n-1-u \quad\Longleftrightarrow\quad v=m-1-u \quad\Longleftrightarrow\quad u+v=m-1.
+\]
+Similarly, the global $\NN$ entry in row $u$ is at column $n-2-u$, which also lies in the active interval, and
+\[
+j=n-2-u \quad\Longleftrightarrow\quad v=m-2-u \quad\Longleftrightarrow\quad u+v=m-2.
+\]
+Every other active column in row $u$ is assigned $\WA$ by definition of the staircase table.
+
+It remains to consider the final local row $u=m-1$. Its global tie column is
+\[
+n-1-u=n-1-(m-1)=n-m,
+\]
+which corresponds to $v=0$. Thus the active tie cell on this row is precisely $(m-1,0)$, and it satisfies $u+v=m-1$. There is no active $\NN$ cell on this row. If $m<n$, the row's global $\NN$ column would be $n-2-(m-1)=n-m-1$, which lies just outside the active interval. If $m=n$, this is the final global row $u=n-1$, and by construction that row has no $\NN$ entry. Hence all other cells on the final local row are $\WA$, exactly as in $\Phi_m$.
+\end{proof}
+
+The non-tie local transition rules are therefore
+\begin{align*}
+\Phi_m(u,v)=\WA &: (u,v)\mapsto (u,v+1\bmod m),\\
+\Phi_m(u,v)=\NN &: (u,v)\mapsto (u+1\bmod m,v+1\bmod m).
+\end{align*}
+The construction uses no $\WB$ entries.
+
+\subsection{De-circularized row dynamics}
+\begin{lemma}[Intermediate row dynamics]\label{lem:row-dynamics}
+Let $m>2$. Starting from $(0,0)$, for every row index $u\in\{0,\dots,m-2\}$:
+\begin{enumerate}[label=(\roman*),nosep]
+    \item row $u$ is entered at $v_{\mathrm{start}}(u)=(m-u)\bmod m$;
+    \item row $u$ has $m-2$ consecutive $\WA$ duels and then one $\NN$ duel at $(u,m-2-u)$;
+    \item that $\NN$ transition lands at $(u+1,(m-(u+1))\bmod m)$, the entry coordinate of row $u+1$.
+\end{enumerate}
+\end{lemma}
+\begin{proof}
+By induction on $u$. For $u=0$, the entry is $(0,0)$ since $(m-0)\bmod m=0$. The cells $(0,v)$ with $0\le v\le m-3$ satisfy $u+v\le m-3$, so their outcomes are $\WA$. The next cell is $(0,m-2)$, whose outcome is $\NN$, and its transition sends the trajectory to $(1,m-1)$, the claimed entry point for row $1$.
+
+Assume the statement for row $u-1$, where $1\le u\le m-2$. The inductive handoff enters row $u$ at $(u,m-u)$. On columns $v=m-u,\dots,m-1$, the sum $u+v$ is at least $m$, so the outcome is $\WA$. After wrap-around, on columns $v=0,\dots,m-3-u$, the sum is at most $m-3$, so the outcome is again $\WA$. These two blocks contain $u+(m-2-u)=m-2$ $\WA$ duels. The next column is $m-2-u$, where $u+v=m-2$, so the unique exit is an $\NN$ duel. Its transition gives $(u+1,m-1-u)=(u+1,(m-(u+1))\bmod m)$.
+\end{proof}
+
+\begin{lemma}[Final row dynamics]\label{lem:final-row}
+For $m>2$, after the intermediate rows the trajectory enters row $u=m-1$ at column $v=1$, then visits the columns $1,2,\dots,m-1,0$ in that order, terminating at $(m-1,0)$ by a tie.
+\end{lemma}
+\begin{proof}
+Lemma \ref{lem:row-dynamics} applied to $u=m-2$ gives entry to row $m-1$ at column $1$. For $1\le v\le m-1$, the sum $(m-1)+v$ is at least $m$, so the outcome is $\WA$. These moves advance the column cyclically until $v=0$. At $(m-1,0)$ we have $u+v=m-1$, so the outcome is $\TT$ and the phase terminates.
+\end{proof}
+
+\begin{lemma}[Monotonic row development]\label{lem:monotone-row}
+For $m>2$, the local trajectory starting from $(0,0)$ progresses through rows $0,1,\dots,m-1$ in order and terminates on row $m-1$ before any row wrap-around occurs.
+\end{lemma}
+\begin{proof}
+Each intermediate row exits exactly once by the $\NN$ move described in Lemma \ref{lem:row-dynamics}, and this move goes from row $u$ to row $u+1$. Lemma \ref{lem:final-row} shows that row $m-1$ ends at a tie. Thus no transition from row $m-1$ to row $0$ is ever taken.
+\end{proof}
+
+\begin{lemma}[Local injectivity]\label{lem:local-injective}
+For $m>2$, the local trajectory from $(0,0)$ visits no state twice before termination.
+\end{lemma}
+\begin{proof}
+If two visited states occur in different rows, they are distinct by Lemma \ref{lem:monotone-row}. Within an intermediate row, the visited columns are a cyclic interval of length $m-1$ and hence are distinct. Within the final row, Lemma \ref{lem:final-row} visits the columns $1,2,\dots,m-1,0$, again all distinct. Hence no state repeats.
+\end{proof}
+
+\begin{definition}[Visited columns per row]
+For $m>2$ and $0\le u\le m-1$, define
+\[
+V_u=
+\begin{cases}
+\{0,1,\dots,m-2\}, & u=0,\\
+\{m-u,\dots,m-1\}\cup\{0,\dots,m-2-u\}, & 1\le u\le m-2,\\
+\{1,2,\dots,m-1,0\}, & u=m-1.
+\end{cases}
+\]
+\end{definition}
+
+\begin{lemma}[Exact cardinality of row sets]\label{lem:row-cardinality}
+For $m>2$,
+\[
+|V_u|=
+\begin{cases}
+m-1, & 0\le u\le m-2,\\
+m, & u=m-1.
+\end{cases}
+\]
+\end{lemma}
+\begin{proof}
+The case $u=0$ is immediate. For $1\le u\le m-2$, the two displayed intervals are disjoint and have sizes $u$ and $m-1-u$, totaling $m-1$. The final row list contains all $m$ residues modulo $m$.
+\end{proof}
+
+\begin{theorem}[Local staircase traversal]\label{thm:local-staircase}
+For any phase size $m>2$ initialized at local state $(0,0)$, the staircase trajectory visits exactly the cells $(u,v)$ with $v\in V_u$, skips all non-terminal tie cells, and terminates at $(m-1,0)$ after exactly $m^2-m+1$ duels.
+\end{theorem}
+\begin{proof}
+By Lemma \ref{lem:local-injective}, all listed visits are distinct. Lemmas \ref{lem:row-dynamics} and \ref{lem:final-row} identify precisely the visited columns in each row. Hence the number of duels is
+\[
+\sum_{u=0}^{m-1}|V_u|=(m-1)(m-1)+m=m^2-m+1.
+\]
+The only tie cell visited is $(m-1,0)$. Indeed, the tie cells of the local table are the cells $u+v=m-1$; the trajectory visits $(m-1,0)$ and, in rows $u\le m-2$, stops at the $\NN$ cell $u+v=m-2$ before reaching the tie cell in that row.
+\end{proof}
+
+\subsection{Small local phases}
+\begin{lemma}[Small phase checks]\label{lem:small-local}
+The staircase phase has length $m^2-m+1$ and terminates at $(m-1,0)$ for $m=1$ and $m=2$.
+\end{lemma}
+\begin{proof}
+For $m=1$, the only local cell is $(0,0)$ and it is a tie, so the phase has length $1=1^2-1+1$.
+
+For $m=2$, the local trajectory is
+\[
+(0,0)\xrightarrow{\NN}(1,1)\xrightarrow{\WA}(1,0)\xrightarrow{\TT}\text{end}.
+\]
+Thus the length is $3=2^2-2+1$, and the terminal tie is $(1,0)$.
+\end{proof}
+
+\subsection{The phase-reset induction}
+\begin{lemma}[Phase reset]\label{lem:phase-reset}
+Suppose a phase of active size $m\ge 2$ begins with the canonical decks
+\[
+A_m=[a_0,\dots,a_{m-1}],\qquad B_m=[b_{n-m},\dots,b_{n-1}].
+\]
+Then the staircase phase lasts $m^2-m+1$ duels, terminates by tying the pair $(a_{m-1},b_{n-m})$, and the next phase begins with the canonical decks
+\[
+A_{m-1}=[a_0,\dots,a_{m-2}],\qquad B_{m-1}=[b_{n-m+1},\dots,b_{n-1}].
+\]
+For $m=1$, the unique phase lasts one duel and empties both decks.
+\end{lemma}
+\begin{proof}
+The table restriction lemma identifies the active phase with the local table $\Phi_m$. If $m>2$, Theorem \ref{thm:local-staircase} gives length $m^2-m+1$ and terminal local state $(m-1,0)$. If $m=2$, the same conclusion follows from Lemma \ref{lem:small-local}. In both cases the terminal local state corresponds to the global pair $(a_{m-1},b_{n-m})$.
+
+It remains only to check the order of the remaining decks. Cyclic order is preserved during a phase. Therefore, immediately before the terminal tie at local state $(m-1,0)$, the $A$-deck is the cyclic rotation
+\[
+[a_{m-1},a_0,\dots,a_{m-2}],
+\]
+and the $B$-deck is
+\[
+[b_{n-m},b_{n-m+1},\dots,b_{n-1}].
+\]
+The tie removes the two top cards, leaving exactly
+\[
+[a_0,\dots,a_{m-2}],\qquad [b_{n-m+1},\dots,b_{n-1}],
+\]
+which are the canonical decks for active size $m-1$. The case $m=1$ is the single tie cell already checked in Lemma \ref{lem:small-local}.
+\end{proof}
+
+\begin{theorem}[Tightness]\label{thm:tight}
+For every $n\ge 1$, the staircase game terminates and has duration
+\[
+T(n)=\sum_{m=1}^n(m^2-m+1)=\frac{n(n^2+2)}{3}.
+\]
+\end{theorem}
+\begin{proof}
+For $n=1$, the sole duel is a tie, and the formula gives $T(1)=1$.
+
+Assume $n\ge2$. The initial decks are canonical for active size $n$. Applying Lemma \ref{lem:phase-reset} successively for $m=n,n-1,\dots,2$ shows that each phase terminates, has length $m^2-m+1$, and resets the game to the canonical decks of the next smaller active size. The final phase $m=1$ lasts one duel. Therefore the total duration is
+\[
+\sum_{m=1}^n(m^2-m+1).
+\]
+The closed form was computed in Corollary \ref{cor:upper}, namely $n(n^2+2)/3$.
+\end{proof}
+
+\begin{theorem}[Main Theorem]\label{thm:main}
+For every $n\ge 1$,
+\[
+\max_{G\in\mathcal G_n}\dur(G)=\frac{n(n^2+2)}{3}.
+\]
+\end{theorem}
+\begin{proof}
+Corollary \ref{cor:upper} gives the upper bound for every terminating game. The staircase construction of Theorem \ref{thm:tight} attains the same value. Hence the displayed value is the maximum.
+\end{proof}
+
+\begin{remark}[Spiral structure]\label{rem:spiral}
+The staircase construction gives a maximal self-avoiding trajectory on each phase torus after removing the $m-1$ future tie cells. It is therefore ``Hamiltonian'' only on the structurally available cells, not on the full $m^2$-cell torus.
+\end{remark}
+
+\section{Small Cases}\label{sec:small_cases}
+The first cases illustrate the formula. For $n=1$, the only possible terminating construction has one tie, and $T(1)=1$. For $n=2$, the staircase trajectory is
+\[
+(0,0)\xrightarrow{\NN}(1,1)\xrightarrow{\WA}(1,0)\xrightarrow{\TT}\text{phase }2\text{ ends},
+\]
+followed by the final one-cell tie phase. Thus the total duration is $3+1=4=T(2)$. For $n=3$, the phase lengths are $7,3,1$, totaling $11=T(3)$.
+
+\section{Formalization Status}\label{sec:formalization}
+The accompanying Coq development formalizes the basic length accounting, the fact that only ties remove cards, the perfect matching formed by realized ties, cyclic invariance inside a non-tie block, the deterministic no-cycle principle behind the no-repeated-states lemma, the finite phasewise counting bound, and the closed-form summation. It also verifies small lower-bound witnesses such as the $n=2$ case. The constructive lower-bound proof in this paper is intentionally written as the direct staircase phase-reset induction above: the Coq scaffolding shows that a more general ``extension schedule'' interface is false, so the lower bound should not be phrased as an arbitrary backward extension principle.
+
+\section{Conclusion and Discussion}
+We have determined the exact extremal duration of the deterministic Card-Duel Process. The upper bound follows from a termination-forced perfect matching of realized tie cells: at phase size $m$, the $m-1$ future matching ties are present but cannot be visited, so a self-avoiding phase trajectory has length at most $m^2-m+1$. The staircase construction attains this bound at every phase. The key point in the lower bound is not merely the local raster-scan trajectory, but the phase-reset property: after the terminal tie at active size $m$, the remaining decks are again in canonical order for active size $m-1$.
+
+\section{Open Problems}
+Several deterministic extensions remain natural.
+\begin{enumerate}[label=\arabic*.]
+    \item \textbf{Characterize all extremizers.} Determine whether every table and initial configuration attaining $T(n)$ is equivalent, up to relabeling and cyclic shifts, to a staircase-type construction.
+    \item \textbf{Asymmetric decks.} Determine the exact extremal duration when $|A|\ne |B|$ and termination means that at least one deck, or both decks, become empty under a specified convention.
+    \item \textbf{Alternative reinsertion rules.} Extend the extremal analysis to War-like rules in which one or both revealed cards are transferred to the winner's deck in a fixed order.
+    \item \textbf{Full mechanization.} Complete a single end-to-end mechanized proof of the staircase lower bound, including the table-restriction and phase-reset induction.
+\end{enumerate}
+
+\paragraph{Acknowledgments.} The author thanks the reviewers and readers who identified gaps in earlier versions of the lower-bound argument.
+
+\begin{thebibliography}{10}
+
+\bibitem{AlonSpencer}
+N.~Alon and J.~H. Spencer.
+\newblock {\em The Probabilistic Method}.
+\newblock John Wiley \& Sons, 4th edition, 2016.
+
+\bibitem{Bjorner}
+A.~Bj\"{o}rner, L.~Lov\'{a}sz, and P.~W. Shor.
+\newblock Chip-firing games on graphs.
+\newblock {\em European Journal of Combinatorics}, 13(3):169--184, 1992.
+
+\bibitem{Bollobas}
+B.~Bollob\'{a}s.
+\newblock {\em Random Graphs}.
+\newblock Cambridge University Press, 2nd edition, 2001.
+
+\bibitem{Bramson}
+M.~Bramson and D.~Griffeath.
+\newblock Fluxes in the sandpile model.
+\newblock {\em Annals of Probability}, 21(1):26--41, 1993.
+
+\bibitem{Brandt}
+J.~Brandt.
+\newblock Cycles of Bulgarian solitaire.
+\newblock {\em Proceedings of the American Mathematical Society}, 85(3):483--486, 1982.
+
+\bibitem{Clauset}
+A.~Clauset, C.~R. Shalizi, and M.~E.~J. Newman.
+\newblock Power-law distributions in empirical data.
+\newblock {\em SIAM Review}, 51(4):661--703, 2009.
+
+\bibitem{Dhar}
+D.~Dhar.
+\newblock Self-organized critical state of sandpile automaton models.
+\newblock {\em Physical Review Letters}, 64(14):1613, 1990.
+
+\bibitem{Diaconis}
+P.~Diaconis.
+\newblock {\em Group Representations in Probability and Statistics}.
+\newblock Institute of Mathematical Statistics, 1988.
+
+\bibitem{Fisch}
+R.~Fisch.
+\newblock Cyclic cellular automata and related processes.
+\newblock {\em Physica D: Nonlinear Phenomena}, 45(1-3):19--25, 1990.
+
+\bibitem{Golomb}
+S.~S. Golomb and H.~Taylor.
+\newblock Two-dimensional synchronization patterns for minimum ambiguity.
+\newblock {\em IEEE Transactions on Information Theory}, 28(1):46--49, 1982.
+
+\bibitem{Holroyd}
+A.~E. Holroyd, L.~Levine, K.~M\'{e}sz\'{a}ros, Y.~Peres, J.~Propp, and D.~B. Wilson.
+\newblock Chip-firing and rotor-routing on directed graphs.
+\newblock {\em In and Out of Equilibrium 2}, pages 331--364. Springer, 2008.
+
+\bibitem{Janson}
+S.~Janson, \L.~\L uczak, and A.~Rucinski.
+\newblock {\em Random Graphs}.
+\newblock John Wiley \& Sons, 2000.
+
+\bibitem{Knuth}
+D.~E. Knuth.
+\newblock {\em The Art of Computer Programming, Volume 3: Sorting and Searching}.
+\newblock Addison-Wesley, 2nd edition, 1998.
+
+\bibitem{LR}
+E.~Lakshtanov and V.~Roshchina.
+\newblock Finiteness in the card game of War.
+\newblock {\em American Mathematical Monthly}, 119(4):318--323, 2012.
+
+\bibitem{LevinePeres}
+L.~Levine and Y.~Peres.
+\newblock Strong localization and Rieman-Stieltjes integrals for rotor router aggregation.
+\newblock {\em Journal of Fractal Geometry}, 1(2):105--156, 2014.
+
+\bibitem{LP}
+L.~Lov\'{a}sz and M.~D. Plummer.
+\newblock {\em Matching Theory}.
+\newblock American Mathematical Society, 2009.
+
+\bibitem{Stanley}
+R.~P. Stanley.
+\newblock {\em Enumerative Combinatorics, Volume 1}.
+\newblock Cambridge University Press, 2nd edition, 2011.
+
+\end{thebibliography}
+
+\end{document}
