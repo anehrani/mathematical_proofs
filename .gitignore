@@ -5,3 +5,16 @@
 *.vok.gz
 *.vok.bz2
 *.vok.xz
+
+# Coq generated artifacts
+*.glob
+*.aux
+.*.aux
+*.vio
+.coq-native/
+
+# Common local/editor noise
+.DS_Store
+*~
+*.swp
+*.swo
