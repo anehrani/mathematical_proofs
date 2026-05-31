@@ -1,0 +1,156 @@
+DIGEST 8f51c623d4d3e460a4c74dc3a00675d5
+FRandomTableUniform
+R27:30 Stdlib.Lists.List <> <> lib
+R32:36 Stdlib.Arith.Arith <> <> lib
+R38:42 Stdlib.Reals.Reals <> <> lib
+R60:65 Lemma1 <> <> lib
+R67:78 Proposition1 <> <> lib
+R80:96 FiniteProbability <> <> lib
+R98:113 RandomTableModel <> <> lib
+R123:135 Stdlib.Lists.List ListNotations <> mod
+sec 168:185 <> RandomTableUniform
+def 200:212 <> failure_event
+R219:221 Corelib.Init.Datatypes <> nat ind
+binder 215:215 <> n:1
+R229:250 RandomTableModel <> table def
+binder 225:225 <> w:2
+R265:266 Corelib.Init.Logic <> ::type_scope:'~'_x not
+R267:286 Proposition1 <> E_event def
+R341:341 RandomTableUniform <> n:1 var
+R343:343 RandomTableUniform <> w:2 var
+R311:339 RandomTableModel <> phi_of_table def
+R288:309 RandomTableModel <> table def
+def 358:370 <> failure_ratio
+R377:379 Corelib.Init.Datatypes <> nat ind
+binder 373:373 <> n:3
+R394:397 Corelib.Init.Datatypes <> list ind
+R399:420 RandomTableModel <> table def
+binder 383:390 <> universe:4
+R425:425 Stdlib.Reals.Rdefinitions RbaseSymbolsImpl R defax
+R517:521 Stdlib.Reals.Rdefinitions <> ::R_scope:x_'/'_x not
+R432:434 Stdlib.Reals.Raxioms <> INR def
+R437:465 FiniteProbability <> count_event def
+R491:503 RandomTableUniform <> failure_event def
+R505:505 RandomTableUniform <> n:3 var
+R508:515 RandomTableUniform <> universe:4 var
+R467:488 RandomTableModel <> table def
+R522:524 Stdlib.Reals.Raxioms <> INR def
+R527:532 Corelib.Init.Datatypes <> length def
+R534:541 RandomTableUniform <> universe:4 var
+prf 552:579 <> failure_ratio_eq_probability
+binder 592:592 <> n:5
+binder 594:601 <> universe:6
+R632:638 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R608:620 RandomTableUniform <> failure_ratio def
+R622:622 RandomTableUniform <> n:5 var
+R624:631 RandomTableUniform <> universe:6 var
+R639:658 FiniteProbability <> Pr def
+R693:705 RandomTableUniform <> failure_event def
+R707:707 RandomTableUniform <> n:5 var
+R683:690 RandomTableUniform <> universe:6 var
+R660:681 RandomTableModel <> table def
+R748:760 RandomTableUniform <> failure_ratio def
+R763:782 FiniteProbability <> Pr def
+prf 814:850 <> proposition1_table_from_failure_ratio
+R875:878 Corelib.Init.Datatypes <> list ind
+R880:901 RandomTableModel <> table def
+binder 864:871 <> universe:7
+R916:919 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R913:915 Corelib.Init.Datatypes <> nat ind
+R923:926 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R920:922 Corelib.Init.Datatypes <> nat ind
+R927:929 Corelib.Init.Datatypes <> nat ind
+binder 905:909 <> binom:8
+R951:958 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R945:948 Corelib.Init.Logic <> ::type_scope:x_'<>'_x not
+R937:944 RandomTableUniform <> universe:7 var
+R949:950 Stdlib.Lists.List ListNotations ::list_scope:'['_']' not
+binder 966:966 <> n:9
+R1048:1057 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R999:1002 Stdlib.Reals.Rdefinitions <> ::R_scope:x_'<='_x not
+R975:987 RandomTableUniform <> failure_ratio def
+R989:989 RandomTableUniform <> n:9 var
+R991:998 RandomTableUniform <> universe:7 var
+R1003:1031 Proposition1 <> hall_union_bound def
+R1039:1039 RandomTableUniform <> n:9 var
+R1043:1045 Stdlib.Reals.Rdefinitions <> ::R_scope:x_'/'_x not
+R1033:1037 RandomTableUniform <> binom:8 var
+R1107:1116 Stdlib.Reals.Rdefinitions <> ::R_scope:x_'<='_x not
+R1059:1061 Stdlib.Reals.Rdefinitions <> ::R_scope:x_'-'_x not
+R1062:1090 Proposition1 <> hall_union_bound def
+R1098:1098 RandomTableUniform <> n:9 var
+R1102:1104 Stdlib.Reals.Rdefinitions <> ::R_scope:x_'/'_x not
+R1092:1096 RandomTableUniform <> binom:8 var
+R1117:1136 FiniteProbability <> Pr def
+R1182:1201 Proposition1 <> E_event def
+R1256:1256 RandomTableUniform <> n:9 var
+R1226:1254 RandomTableModel <> phi_of_table def
+R1203:1224 RandomTableModel <> table def
+R1161:1168 RandomTableUniform <> universe:7 var
+R1138:1159 RandomTableModel <> table def
+R1315:1368 RandomTableModel <> proposition1_table_from_failure_bound thm
+R1315:1368 RandomTableModel <> proposition1_table_from_failure_bound thm
+R1492:1501 Stdlib.Reals.Rdefinitions <> ::R_scope:x_'<='_x not
+R1422:1441 FiniteProbability <> Pr def
+R1476:1488 RandomTableUniform <> failure_event def
+R1443:1464 RandomTableModel <> table def
+R1502:1530 Proposition1 <> hall_union_bound def
+R1542:1544 Stdlib.Reals.Rdefinitions <> ::R_scope:x_'/'_x not
+R1492:1501 Stdlib.Reals.Rdefinitions <> ::R_scope:x_'<='_x not
+R1422:1441 FiniteProbability <> Pr def
+R1476:1488 RandomTableUniform <> failure_event def
+R1443:1464 RandomTableModel <> table def
+R1502:1530 Proposition1 <> hall_union_bound def
+R1542:1544 Stdlib.Reals.Rdefinitions <> ::R_scope:x_'/'_x not
+R1565:1592 RandomTableUniform <> failure_ratio_eq_probability thm
+R1565:1592 RandomTableUniform <> failure_ratio_eq_probability thm
+R1565:1592 RandomTableUniform <> failure_ratio_eq_probability thm
+prf 1627:1669 <> proposition1_table_from_failure_count_ratio
+R1694:1697 Corelib.Init.Datatypes <> list ind
+R1699:1720 RandomTableModel <> table def
+binder 1683:1690 <> universe:10
+R1735:1738 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R1732:1734 Corelib.Init.Datatypes <> nat ind
+R1742:1745 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R1739:1741 Corelib.Init.Datatypes <> nat ind
+R1746:1748 Corelib.Init.Datatypes <> nat ind
+binder 1724:1728 <> binom:11
+R1770:1777 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R1764:1767 Corelib.Init.Logic <> ::type_scope:x_'<>'_x not
+R1756:1763 RandomTableUniform <> universe:10 var
+R1768:1769 Stdlib.Lists.List ListNotations ::list_scope:'['_']' not
+binder 1785:1785 <> n:12
+R2009:2018 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R1794:1794 Stdlib.Reals.Rdefinitions <> ::R_scope:x_'<='_x not
+R1953:1963 Stdlib.Reals.Rdefinitions <> ::R_scope:x_'<='_x not
+R1922:1931 Stdlib.Reals.Rdefinitions <> ::R_scope:x_'/'_x not
+R1795:1797 Stdlib.Reals.Raxioms <> INR def
+R1800:1828 FiniteProbability <> count_event def
+R1882:1894 RandomTableUniform <> failure_event def
+R1896:1896 RandomTableUniform <> n:12 var
+R1913:1920 RandomTableUniform <> universe:10 var
+R1844:1865 RandomTableModel <> table def
+R1932:1934 Stdlib.Reals.Raxioms <> INR def
+R1937:1942 Corelib.Init.Datatypes <> length def
+R1944:1951 RandomTableUniform <> universe:10 var
+R1964:1992 Proposition1 <> hall_union_bound def
+R2000:2000 RandomTableUniform <> n:12 var
+R2004:2006 Stdlib.Reals.Rdefinitions <> ::R_scope:x_'/'_x not
+R1994:1998 RandomTableUniform <> binom:11 var
+R2068:2077 Stdlib.Reals.Rdefinitions <> ::R_scope:x_'<='_x not
+R2020:2022 Stdlib.Reals.Rdefinitions <> ::R_scope:x_'-'_x not
+R2023:2051 Proposition1 <> hall_union_bound def
+R2059:2059 RandomTableUniform <> n:12 var
+R2063:2065 Stdlib.Reals.Rdefinitions <> ::R_scope:x_'/'_x not
+R2053:2057 RandomTableUniform <> binom:11 var
+R2078:2097 FiniteProbability <> Pr def
+R2143:2162 Proposition1 <> E_event def
+R2217:2217 RandomTableUniform <> n:12 var
+R2187:2215 RandomTableModel <> phi_of_table def
+R2164:2185 RandomTableModel <> table def
+R2122:2129 RandomTableUniform <> universe:10 var
+R2099:2120 RandomTableModel <> table def
+R2276:2312 RandomTableUniform <> proposition1_table_from_failure_ratio thm
+R2276:2312 RandomTableUniform <> proposition1_table_from_failure_ratio thm
+R2365:2377 RandomTableUniform <> failure_ratio def
+R2408:2425 RandomTableUniform RandomTableUniform <> sec

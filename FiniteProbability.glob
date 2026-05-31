@@ -1,0 +1,210 @@
+DIGEST 92020304d3319fab66e08050c669d492
+FFiniteProbability
+R27:30 Stdlib.Lists.List <> <> lib
+R32:34 Stdlib.micromega.Lia <> <> lib
+R36:40 Stdlib.Reals.Reals <> <> lib
+R42:44 Stdlib.micromega.Lra <> <> lib
+R46:65 Stdlib.Logic.ClassicalDescription <> <> lib
+R75:87 Stdlib.Lists.List ListNotations <> mod
+sec 99:115 <> FiniteProbability
+var 128:132 FiniteProbability Omega
+var 151:158 FiniteProbability universe
+R162:165 Corelib.Init.Datatypes <> list ind
+R167:171 FiniteProbability <> FiniteProbability.Omega var
+var 185:201 FiniteProbability universe_nonempty
+R213:216 Corelib.Init.Logic <> ::type_scope:x_'<>'_x not
+R205:212 FiniteProbability <> FiniteProbability.universe var
+R217:218 Stdlib.Lists.List ListNotations ::list_scope:'['_']' not
+def 233:241 <> indicator
+binder 244:244 <> P:7
+R256:258 Corelib.Init.Datatypes <> nat ind
+R268:294 Stdlib.Logic.ClassicalDescription <> excluded_middle_informative thm
+R296:296 FiniteProbability <> P:7 var
+def 323:333 <> count_event
+R345:348 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R340:344 FiniteProbability <> FiniteProbability.Omega var
+binder 336:336 <> A:8
+R361:364 Corelib.Init.Datatypes <> list ind
+R366:370 FiniteProbability <> FiniteProbability.Omega var
+binder 356:357 <> xs:9
+R375:377 Corelib.Init.Datatypes <> nat ind
+R390:391 FiniteProbability <> xs:9 var
+R402:403 Stdlib.Lists.List ListNotations ::list_scope:'['_']' not
+R415:418 Corelib.Init.Datatypes <> ::list_scope:x_'::'_x not
+R441:443 Corelib.Init.Peano <> ::nat_scope:x_'+'_x not
+R426:434 FiniteProbability <> indicator def
+R437:437 FiniteProbability <> A:8 var
+R444:454 FiniteProbability <> count_event:10 def
+R456:456 FiniteProbability <> A:8 var
+def 481:482 <> Pr
+R494:497 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R489:493 FiniteProbability <> FiniteProbability.Omega var
+binder 485:485 <> A:12
+R506:506 Stdlib.Reals.Rdefinitions RbaseSymbolsImpl R defax
+R541:543 Stdlib.Reals.Rdefinitions <> ::R_scope:x_'/'_x not
+R513:515 Stdlib.Reals.Raxioms <> INR def
+R518:528 FiniteProbability <> count_event def
+R530:530 FiniteProbability <> A:12 var
+R532:539 FiniteProbability <> FiniteProbability.universe var
+R544:546 Stdlib.Reals.Raxioms <> INR def
+R549:554 Corelib.Init.Datatypes <> length def
+R556:563 FiniteProbability <> FiniteProbability.universe var
+prf 574:593 <> indicator_complement
+binder 606:606 <> P:13
+R642:644 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R624:626 Corelib.Init.Peano <> ::nat_scope:x_'+'_x not
+R613:621 FiniteProbability <> indicator def
+R623:623 FiniteProbability <> P:13 var
+R627:635 FiniteProbability <> indicator def
+R638:639 Corelib.Init.Logic <> ::type_scope:'~'_x not
+R640:640 FiniteProbability <> P:13 var
+R675:683 FiniteProbability <> indicator def
+R698:724 Stdlib.Logic.ClassicalDescription <> excluded_middle_informative thm
+R698:724 Stdlib.Logic.ClassicalDescription <> excluded_middle_informative thm
+R756:782 Stdlib.Logic.ClassicalDescription <> excluded_middle_informative thm
+R785:786 Corelib.Init.Logic <> ::type_scope:'~'_x not
+R756:782 Stdlib.Logic.ClassicalDescription <> excluded_middle_informative thm
+R785:786 Corelib.Init.Logic <> ::type_scope:'~'_x not
+R887:913 Stdlib.Logic.ClassicalDescription <> excluded_middle_informative thm
+R916:917 Corelib.Init.Logic <> ::type_scope:'~'_x not
+R887:913 Stdlib.Logic.ClassicalDescription <> excluded_middle_informative thm
+R916:917 Corelib.Init.Logic <> ::type_scope:'~'_x not
+prf 1018:1039 <> count_event_complement
+binder 1052:1052 <> A:14
+binder 1054:1055 <> xs:15
+R1112:1114 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R1078:1080 Corelib.Init.Peano <> ::nat_scope:x_'+'_x not
+R1062:1072 FiniteProbability <> count_event def
+R1074:1074 FiniteProbability <> A:14 var
+R1076:1077 FiniteProbability <> xs:15 var
+R1081:1091 FiniteProbability <> count_event def
+binder 1098:1098 <> w:16
+R1103:1104 Corelib.Init.Logic <> ::type_scope:'~'_x not
+R1105:1105 FiniteProbability <> A:14 var
+R1107:1107 FiniteProbability <> w:16 var
+R1110:1111 FiniteProbability <> xs:15 var
+R1115:1120 Corelib.Init.Datatypes <> length def
+R1122:1123 FiniteProbability <> xs:15 var
+R1225:1244 FiniteProbability <> indicator_complement thm
+R1225:1244 FiniteProbability <> indicator_complement thm
+prf 1282:1301 <> count_event_monotone
+binder 1314:1314 <> A:17
+binder 1316:1316 <> B:18
+binder 1318:1319 <> xs:19
+R1326:1326 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R1347:1355 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+binder 1334:1334 <> w:20
+R1340:1343 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R1337:1337 FiniteProbability <> A:17 var
+R1339:1339 FiniteProbability <> w:20 var
+R1344:1344 FiniteProbability <> B:18 var
+R1346:1346 FiniteProbability <> w:20 var
+R1372:1375 Corelib.Init.Peano <> ::nat_scope:x_'<='_x not
+R1356:1366 FiniteProbability <> count_event def
+R1368:1368 FiniteProbability <> A:17 var
+R1370:1371 FiniteProbability <> xs:19 var
+R1376:1386 FiniteProbability <> count_event def
+R1388:1388 FiniteProbability <> B:18 var
+R1390:1391 FiniteProbability <> xs:19 var
+R1519:1522 Corelib.Init.Peano <> ::nat_scope:x_'<='_x not
+R1504:1512 FiniteProbability <> indicator def
+R1523:1531 FiniteProbability <> indicator def
+R1519:1522 Corelib.Init.Peano <> ::nat_scope:x_'<='_x not
+R1504:1512 FiniteProbability <> indicator def
+R1523:1531 FiniteProbability <> indicator def
+R1560:1568 FiniteProbability <> indicator def
+R1587:1613 Stdlib.Logic.ClassicalDescription <> excluded_middle_informative thm
+R1587:1613 Stdlib.Logic.ClassicalDescription <> excluded_middle_informative thm
+R1655:1681 Stdlib.Logic.ClassicalDescription <> excluded_middle_informative thm
+R1655:1681 Stdlib.Logic.ClassicalDescription <> excluded_middle_informative thm
+R1822:1848 Stdlib.Logic.ClassicalDescription <> excluded_middle_informative thm
+R1822:1848 Stdlib.Logic.ClassicalDescription <> excluded_middle_informative thm
+prf 1929:1947 <> length_universe_pos
+R1969:1971 Corelib.Init.Peano <> ::nat_scope:x_'>'_x not
+R1954:1959 Corelib.Init.Datatypes <> length def
+R1961:1968 FiniteProbability <> FiniteProbability.universe var
+R1998:2005 FiniteProbability <> FiniteProbability.universe var
+R2042:2058 FiniteProbability <> FiniteProbability.universe_nonempty var
+R2042:2058 FiniteProbability <> FiniteProbability.universe_nonempty var
+prf 2110:2127 <> Pr_complement_rule
+binder 2140:2140 <> A:21
+R2174:2176 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R2152:2154 Stdlib.Reals.Rdefinitions <> ::R_scope:x_'+'_x not
+R2148:2149 FiniteProbability <> Pr def
+R2151:2151 FiniteProbability <> A:21 var
+R2155:2156 FiniteProbability <> Pr def
+binder 2163:2163 <> w:22
+R2168:2169 Corelib.Init.Logic <> ::type_scope:'~'_x not
+R2170:2170 FiniteProbability <> A:21 var
+R2172:2172 FiniteProbability <> w:22 var
+R2210:2211 FiniteProbability <> Pr def
+R2226:2228 Stdlib.Reals.Raxioms <> INR def
+R2231:2236 Corelib.Init.Datatypes <> length def
+R2238:2245 FiniteProbability <> FiniteProbability.universe var
+R2226:2228 Stdlib.Reals.Raxioms <> INR def
+R2231:2236 Corelib.Init.Datatypes <> length def
+R2238:2245 FiniteProbability <> FiniteProbability.universe var
+R2267:2270 Corelib.Init.Logic <> ::type_scope:x_'<>'_x not
+R2267:2270 Corelib.Init.Logic <> ::type_scope:x_'<>'_x not
+R2291:2299 Stdlib.Reals.RIneq <> not_0_INR thm
+R2291:2299 Stdlib.Reals.RIneq <> not_0_INR thm
+R2329:2345 FiniteProbability <> FiniteProbability.universe_nonempty var
+R2329:2345 FiniteProbability <> FiniteProbability.universe_nonempty var
+R2361:2368 FiniteProbability <> FiniteProbability.universe var
+R2459:2462 Stdlib.Reals.Rdefinitions <> Rdiv def
+R2478:2495 Stdlib.Reals.RIneq <> Rmult_plus_distr_r thm
+R2478:2495 Stdlib.Reals.RIneq <> Rmult_plus_distr_r thm
+R2478:2495 Stdlib.Reals.RIneq <> Rmult_plus_distr_r thm
+R2511:2518 Stdlib.Reals.RIneq <> plus_INR thm
+R2511:2518 Stdlib.Reals.RIneq <> plus_INR thm
+R2511:2518 Stdlib.Reals.RIneq <> plus_INR thm
+R2531:2552 FiniteProbability <> count_event_complement thm
+R2531:2552 FiniteProbability <> count_event_complement thm
+R2531:2552 FiniteProbability <> count_event_complement thm
+prf 2589:2599 <> Pr_monotone
+binder 2612:2612 <> A:23
+binder 2614:2614 <> B:24
+R2621:2621 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R2642:2650 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+binder 2629:2629 <> w:25
+R2635:2638 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R2632:2632 FiniteProbability <> A:23 var
+R2634:2634 FiniteProbability <> w:25 var
+R2639:2639 FiniteProbability <> B:24 var
+R2641:2641 FiniteProbability <> w:25 var
+R2656:2659 Stdlib.Reals.Rdefinitions <> ::R_scope:x_'<='_x not
+R2652:2653 FiniteProbability <> Pr def
+R2655:2655 FiniteProbability <> A:23 var
+R2660:2661 FiniteProbability <> Pr def
+R2663:2663 FiniteProbability <> B:24 var
+R2704:2705 FiniteProbability <> Pr def
+R2746:2749 Corelib.Init.Logic <> ::type_scope:x_'<>'_x not
+R2725:2727 Stdlib.Reals.Raxioms <> INR def
+R2730:2735 Corelib.Init.Datatypes <> length def
+R2737:2744 FiniteProbability <> FiniteProbability.universe var
+R2746:2749 Corelib.Init.Logic <> ::type_scope:x_'<>'_x not
+R2725:2727 Stdlib.Reals.Raxioms <> INR def
+R2730:2735 Corelib.Init.Datatypes <> length def
+R2737:2744 FiniteProbability <> FiniteProbability.universe var
+R2770:2778 Stdlib.Reals.RIneq <> not_0_INR thm
+R2770:2778 Stdlib.Reals.RIneq <> not_0_INR thm
+R2796:2814 FiniteProbability <> length_universe_pos thm
+R2796:2814 FiniteProbability <> length_universe_pos thm
+R2872:2874 Stdlib.Reals.Raxioms <> INR def
+R2877:2882 Corelib.Init.Datatypes <> length def
+R2884:2891 FiniteProbability <> FiniteProbability.universe var
+R2846:2859 Stdlib.Reals.RIneq <> Rmult_le_reg_r thm
+R2872:2874 Stdlib.Reals.Raxioms <> INR def
+R2877:2882 Corelib.Init.Datatypes <> length def
+R2884:2891 FiniteProbability <> FiniteProbability.universe var
+R2846:2859 Stdlib.Reals.RIneq <> Rmult_le_reg_r thm
+R2906:2913 Stdlib.Reals.RIneq <> lt_0_INR thm
+R2906:2913 Stdlib.Reals.RIneq <> lt_0_INR thm
+R2926:2944 FiniteProbability <> length_universe_pos thm
+R2926:2944 FiniteProbability <> length_universe_pos thm
+R2958:2961 Stdlib.Reals.Rdefinitions <> Rdiv def
+R2996:3001 Stdlib.Reals.RIneq <> le_INR thm
+R2996:3001 Stdlib.Reals.RIneq <> le_INR thm
+R3016:3035 FiniteProbability <> count_event_monotone thm
+R3016:3035 FiniteProbability <> count_event_monotone thm
+R3102:3118 FiniteProbability FiniteProbability <> sec

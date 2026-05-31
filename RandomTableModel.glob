@@ -1,0 +1,113 @@
+DIGEST 4a9fe41e580d6cecbb707cf8c643cdc2
+FRandomTableModel
+R27:30 Stdlib.Lists.List <> <> lib
+R32:36 Stdlib.Arith.Arith <> <> lib
+R38:42 Stdlib.Reals.Reals <> <> lib
+R44:47 Stdlib.Bool.Bool <> <> lib
+R65:70 Lemma1 <> <> lib
+R72:83 Proposition1 <> <> lib
+R85:102 Proposition1Finite <> <> lib
+R104:120 FiniteProbability <> <> lib
+R130:142 Stdlib.Lists.List ListNotations <> mod
+sec 175:190 <> RandomTableModel
+def 205:208 <> cell
+R217:219 Corelib.Init.Datatypes <> ::type_scope:x_'*'_x not
+R214:216 Corelib.Init.Datatypes <> nat ind
+R220:222 Corelib.Init.Datatypes <> nat ind
+def 242:246 <> table
+R251:254 Corelib.Init.Datatypes <> list ind
+R261:263 Corelib.Init.Datatypes <> ::type_scope:x_'*'_x not
+R257:260 RandomTableModel <> cell def
+R264:277 Lemma1 <> outcome ind
+def 291:302 <> lookup_table
+R309:313 RandomTableModel <> table def
+binder 305:305 <> w:1
+R323:325 Corelib.Init.Datatypes <> nat ind
+binder 317:317 <> i:2
+binder 319:319 <> j:3
+R330:335 Corelib.Init.Datatypes <> option ind
+R337:350 Lemma1 <> outcome ind
+R363:363 RandomTableModel <> w:1 var
+R374:375 Stdlib.Lists.List ListNotations ::list_scope:'['_']' not
+R380:383 Corelib.Init.Datatypes <> None constr
+R402:405 Corelib.Init.Datatypes <> ::list_scope:x_'::'_x not
+R389:389 Corelib.Init.Datatypes <> ::core_scope:'('_x_','_x_','_'..'_','_x_')' not
+R398:399 Corelib.Init.Datatypes <> ::core_scope:'('_x_','_x_','_'..'_','_x_')' not
+R401:401 Corelib.Init.Datatypes <> ::core_scope:'('_x_','_x_','_'..'_','_x_')' not
+R390:390 Corelib.Init.Datatypes <> ::core_scope:'('_x_','_x_','_'..'_','_x_')' not
+R393:394 Corelib.Init.Datatypes <> ::core_scope:'('_x_','_x_','_'..'_','_x_')' not
+R397:397 Corelib.Init.Datatypes <> ::core_scope:'('_x_','_x_','_'..'_','_x_')' not
+R433:436 Corelib.Init.Datatypes <> ::bool_scope:x_'&&'_x not
+R421:427 Stdlib.Arith.PeanoNat Nat eqb def
+R429:429 RandomTableModel <> i:2 var
+R437:443 Stdlib.Arith.PeanoNat Nat eqb def
+R445:445 RandomTableModel <> j:3 var
+R467:478 RandomTableModel <> lookup_table:4 def
+R485:485 RandomTableModel <> j:3 var
+R483:483 RandomTableModel <> i:2 var
+R455:458 Corelib.Init.Datatypes <> Some constr
+def 506:517 <> phi_of_table
+R524:528 RandomTableModel <> table def
+binder 520:520 <> w:6
+R538:540 Corelib.Init.Datatypes <> nat ind
+binder 532:532 <> i:7
+binder 534:534 <> j:8
+R545:558 Lemma1 <> outcome ind
+R571:582 RandomTableModel <> lookup_table def
+R584:584 RandomTableModel <> w:6 var
+R586:586 RandomTableModel <> i:7 var
+R588:588 RandomTableModel <> j:8 var
+R599:602 Corelib.Init.Datatypes <> Some constr
+R615:618 Corelib.Init.Datatypes <> None constr
+R623:631 Lemma1 <> WA constr
+prf 649:685 <> proposition1_table_from_failure_bound
+R710:713 Corelib.Init.Datatypes <> list ind
+R715:719 RandomTableModel <> table def
+binder 699:706 <> universe:9
+R734:737 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R731:733 Corelib.Init.Datatypes <> nat ind
+R741:744 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R738:740 Corelib.Init.Datatypes <> nat ind
+R745:747 Corelib.Init.Datatypes <> nat ind
+binder 723:727 <> binom:10
+R769:776 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R763:766 Corelib.Init.Logic <> ::type_scope:x_'<>'_x not
+R755:762 RandomTableModel <> universe:9 var
+R767:768 Stdlib.Lists.List ListNotations ::list_scope:'['_']' not
+binder 784:784 <> n:11
+R948:957 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R893:902 Stdlib.Reals.Rdefinitions <> ::R_scope:x_'<='_x not
+R793:812 FiniteProbability <> Pr def
+binder 842:842 <> w:12
+R847:848 Corelib.Init.Logic <> ::type_scope:'~'_x not
+R849:868 Proposition1 <> E_event def
+R889:889 RandomTableModel <> n:11 var
+R891:891 RandomTableModel <> w:12 var
+R876:887 RandomTableModel <> phi_of_table def
+R870:874 RandomTableModel <> table def
+R820:827 RandomTableModel <> universe:9 var
+R814:818 RandomTableModel <> table def
+R903:931 Proposition1 <> hall_union_bound def
+R939:939 RandomTableModel <> n:11 var
+R943:945 Stdlib.Reals.Rdefinitions <> ::R_scope:x_'/'_x not
+R933:937 RandomTableModel <> binom:10 var
+R1007:1016 Stdlib.Reals.Rdefinitions <> ::R_scope:x_'<='_x not
+R959:961 Stdlib.Reals.Rdefinitions <> ::R_scope:x_'-'_x not
+R962:990 Proposition1 <> hall_union_bound def
+R998:998 RandomTableModel <> n:11 var
+R1002:1004 Stdlib.Reals.Rdefinitions <> ::R_scope:x_'/'_x not
+R992:996 RandomTableModel <> binom:10 var
+R1017:1036 FiniteProbability <> Pr def
+R1065:1084 Proposition1 <> E_event def
+R1105:1105 RandomTableModel <> n:11 var
+R1092:1103 RandomTableModel <> phi_of_table def
+R1086:1090 RandomTableModel <> table def
+R1044:1051 RandomTableModel <> universe:9 var
+R1038:1042 RandomTableModel <> table def
+R1247:1251 RandomTableModel <> table def
+R1300:1311 RandomTableModel <> phi_of_table def
+R1164:1220 Proposition1Finite <> proposition1_from_failure_bound_finite thm
+R1247:1251 RandomTableModel <> table def
+R1300:1311 RandomTableModel <> phi_of_table def
+R1164:1220 Proposition1Finite <> proposition1_from_failure_bound_finite thm
+R1382:1397 RandomTableModel RandomTableModel <> sec

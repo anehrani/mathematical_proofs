@@ -3547,6 +3547,100 @@ Proof.
   apply LowerBound.T_closed_form.
 Qed.
 
+Definition constructive_phi_global (n : nat) : nat -> nat -> LowerBound.outcome :=
+  phi_direct n.
+
+Definition constructive_start (n : nat) : LowerBound.config :=
+  {| LowerBound.deck_A := seq 0 n;
+     LowerBound.deck_B := seq 0 n |}.
+
+Lemma constructive_start_lengths :
+  forall n,
+    length (LowerBound.deck_A (constructive_start n)) = n /\
+    length (LowerBound.deck_B (constructive_start n)) = n.
+Proof.
+  intro n.
+  unfold constructive_start.
+  simpl.
+  rewrite !length_seq.
+  split; reflexivity.
+Qed.
+
+Lemma constructive_phi_global_restricts_to_local :
+  forall n m u v,
+    m <= n ->
+    m >= 2 ->
+    u < m ->
+    v < m ->
+    constructive_phi_global n u (v + (n - m)) = phi_local m u v.
+Proof.
+  intros n m u v Hmn Hm Hu Hv.
+  unfold constructive_phi_global.
+  apply phi_direct_restricts_to_local; assumption.
+Qed.
+
+Lemma in_constructive_start_deck_A_iff :
+  forall n x,
+    In x (LowerBound.deck_A (constructive_start n)) <-> x < n.
+Proof.
+  intros n x.
+  unfold constructive_start.
+  simpl.
+  rewrite in_seq.
+  lia.
+Qed.
+
+Lemma in_constructive_start_deck_B_iff :
+  forall n x,
+    In x (LowerBound.deck_B (constructive_start n)) <-> x < n.
+Proof.
+  intros n x.
+  unfold constructive_start.
+  simpl.
+  rewrite in_seq.
+  lia.
+Qed.
+
+Theorem local_phase_invariant_package :
+  forall m,
+    m > 2 ->
+    (forall u,
+      (u = 0 ->
+        (forall v,
+          0 <= v <= m - 3 ->
+          local_step m (u, v) = Some (u, v + 1)) /\
+        local_step m (u, m - 2) = Some (1, m - 1)) /\
+      (1 <= u <= m - 2 ->
+        (forall v,
+          m - u <= v <= m - 1 ->
+          local_step m (u, v) = Some (u, (v + 1) mod m)) /\
+        (1 <= u <= m - 3 ->
+          forall v,
+            0 <= v <= m - 3 - u ->
+            local_step m (u, v) = Some (u, v + 1)) /\
+        local_step m (u, m - 2 - u) = Some (u + 1, m - 1 - u))) /\
+    ((forall v,
+       1 <= v <= m - 1 ->
+       local_step m (m - 1, v) = Some (m - 1, (v + 1) mod m)) /\
+      local_step m (m - 1, 0) = None) /\
+    (LowerBound.phase_term m = (m - 1) * (m - 1) + m) /\
+    ((m - 1) * (m - 1) + (m - 1) = m * m - m).
+Proof.
+  intros m Hm.
+  split.
+  - intro u.
+    apply local_step_row_phase_interface.
+    exact Hm.
+  - split.
+    + apply local_step_last_row_dynamics_summary.
+      exact Hm.
+    + destruct (local_row_model_phase_budget_exact m Hm) as [Hnon_tie [_ Hphase]].
+      split.
+      * symmetry.
+        exact Hphase.
+      * exact Hnon_tie.
+Qed.
+
 (*
   Forward-proof roadmap (axiom-free):
   1) Define one global value-keyed phi and explicit initial decks as functions of n.

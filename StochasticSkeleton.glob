@@ -1,0 +1,304 @@
+DIGEST 0a92b31e336f2571963aa28bbe3e03e4
+FStochasticSkeleton
+R27:30 Stdlib.Lists.List <> <> lib
+R32:36 Stdlib.Arith.Arith <> <> lib
+R38:40 Stdlib.micromega.Lia <> <> lib
+R42:52 Stdlib.Sorting.Permutation <> <> lib
+R70:79 LowerBound <> <> lib
+R89:101 Stdlib.Lists.List ListNotations <> mod
+sec 113:130 <> StochasticSkeleton
+def 145:159 <> canonical_start
+R166:168 Corelib.Init.Datatypes <> nat ind
+binder 162:162 <> n:1
+R173:189 LowerBound <> config rec
+R199:215 LowerBound <> deck_A proj
+R199:215 LowerBound <> deck_A proj
+R199:215 LowerBound <> deck_A proj
+R234:250 LowerBound <> deck_B proj
+R234:250 LowerBound <> deck_B proj
+R220:222 Corelib.Lists.ListDef <> seq def
+R226:226 StochasticSkeleton <> n:1 var
+R255:257 Corelib.Lists.ListDef <> seq def
+R261:261 StochasticSkeleton <> n:1 var
+def 279:288 <> term_event
+R295:297 Corelib.Init.Datatypes <> nat ind
+binder 291:291 <> n:2
+R310:313 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R307:309 Corelib.Init.Datatypes <> nat ind
+R317:320 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R314:316 Corelib.Init.Datatypes <> nat ind
+R321:338 LowerBound <> outcome ind
+binder 301:303 <> phi:3
+R353:359 Corelib.Init.Logic <> ::type_scope:'exists'_x_'..'_x_','_x not
+R362:367 Corelib.Init.Logic <> ::type_scope:'exists'_x_'..'_x_','_x not
+binder 360:361 <> os:4
+R368:382 LowerBound <> game def
+R384:386 StochasticSkeleton <> phi:3 var
+R389:403 StochasticSkeleton <> canonical_start def
+R405:405 StochasticSkeleton <> n:2 var
+R408:409 StochasticSkeleton <> os:4 var
+def 424:440 <> feasibility_event
+R447:449 Corelib.Init.Datatypes <> nat ind
+binder 443:443 <> n:5
+R462:465 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R459:461 Corelib.Init.Datatypes <> nat ind
+R469:472 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R466:468 Corelib.Init.Datatypes <> nat ind
+R473:490 LowerBound <> outcome ind
+binder 453:455 <> phi:6
+R505:511 Corelib.Init.Logic <> ::type_scope:'exists'_x_'..'_x_','_x not
+R520:525 Corelib.Init.Logic <> ::type_scope:'exists'_x_'..'_x_','_x not
+binder 512:513 <> da:7
+binder 515:516 <> db:8
+binder 518:519 <> os:9
+R550:557 Corelib.Init.Logic <> ::type_scope:x_'/\'_x not
+R526:536 Stdlib.Sorting.Permutation <> Permutation ind
+R548:549 StochasticSkeleton <> da:7 var
+R539:541 Corelib.Lists.ListDef <> seq def
+R545:545 StochasticSkeleton <> n:5 var
+R582:589 Corelib.Init.Logic <> ::type_scope:x_'/\'_x not
+R558:568 Stdlib.Sorting.Permutation <> Permutation ind
+R580:581 StochasticSkeleton <> db:8 var
+R571:573 Corelib.Lists.ListDef <> seq def
+R577:577 StochasticSkeleton <> n:5 var
+R590:604 LowerBound <> game def
+R606:608 StochasticSkeleton <> phi:6 var
+R613:629 LowerBound <> deck_A proj
+R613:629 LowerBound <> deck_A proj
+R613:629 LowerBound <> deck_A proj
+R638:654 LowerBound <> deck_B proj
+R638:654 LowerBound <> deck_B proj
+R634:635 StochasticSkeleton <> da:7 var
+R659:660 StochasticSkeleton <> db:8 var
+R665:666 StochasticSkeleton <> os:9 var
+def 681:695 <> all_diagonal_tt
+R702:704 Corelib.Init.Datatypes <> nat ind
+binder 698:698 <> n:10
+R717:720 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R714:716 Corelib.Init.Datatypes <> nat ind
+R724:727 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R721:723 Corelib.Init.Datatypes <> nat ind
+R728:745 LowerBound <> outcome ind
+binder 708:710 <> phi:11
+binder 767:767 <> i:12
+R779:786 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R775:777 Corelib.Init.Peano <> ::nat_scope:x_'<'_x not
+R774:774 StochasticSkeleton <> i:12 var
+R778:778 StochasticSkeleton <> n:10 var
+R794:796 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R787:789 StochasticSkeleton <> phi:11 var
+R793:793 StochasticSkeleton <> i:12 var
+R791:791 StochasticSkeleton <> i:12 var
+R797:809 LowerBound <> TT constr
+prf 819:850 <> runs_all_diagonal_tt_from_offset
+binder 863:863 <> n:13
+binder 865:865 <> k:14
+binder 867:869 <> phi:15
+R876:876 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R931:939 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+binder 884:884 <> i:16
+R892:895 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R888:890 Corelib.Init.Peano <> ::nat_scope:x_'<'_x not
+R887:887 StochasticSkeleton <> i:16 var
+R891:891 StochasticSkeleton <> n:13 var
+R915:917 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R896:898 StochasticSkeleton <> phi:15 var
+R902:904 Corelib.Init.Peano <> ::nat_scope:x_'+'_x not
+R901:901 StochasticSkeleton <> k:14 var
+R905:905 StochasticSkeleton <> i:16 var
+R910:912 Corelib.Init.Peano <> ::nat_scope:x_'+'_x not
+R909:909 StochasticSkeleton <> k:14 var
+R913:913 StochasticSkeleton <> i:16 var
+R918:930 LowerBound <> TT constr
+R940:954 LowerBound <> runs ind
+R956:958 StochasticSkeleton <> phi:15 var
+R969:985 LowerBound <> deck_A proj
+R969:985 LowerBound <> deck_A proj
+R969:985 LowerBound <> deck_A proj
+R1008:1024 LowerBound <> deck_B proj
+R1008:1024 LowerBound <> deck_B proj
+R990:992 Corelib.Lists.ListDef <> seq def
+R996:996 StochasticSkeleton <> n:13 var
+R994:994 StochasticSkeleton <> k:14 var
+R1029:1031 Corelib.Lists.ListDef <> seq def
+R1035:1035 StochasticSkeleton <> n:13 var
+R1033:1033 StochasticSkeleton <> k:14 var
+R1047:1052 Corelib.Lists.ListDef <> repeat def
+R1068:1068 StochasticSkeleton <> n:13 var
+R1054:1066 LowerBound <> TT constr
+R1080:1096 LowerBound <> deck_A proj
+R1080:1096 LowerBound <> deck_A proj
+R1080:1096 LowerBound <> deck_A proj
+R1105:1121 LowerBound <> deck_B proj
+R1105:1121 LowerBound <> deck_B proj
+R1101:1102 Stdlib.Lists.List ListNotations ::list_scope:'['_']' not
+R1126:1127 Stdlib.Lists.List ListNotations ::list_scope:'['_']' not
+R1207:1224 LowerBound <> RunsNil constr
+R1207:1224 LowerBound <> RunsNil constr
+R1249:1267 LowerBound <> RunsCons constr
+R1249:1267 LowerBound <> RunsCons constr
+R1296:1298 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R1299:1311 LowerBound <> TT constr
+R1296:1298 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R1299:1311 LowerBound <> TT constr
+R1364:1366 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R1351:1353 Corelib.Init.Peano <> ::nat_scope:x_'+'_x not
+R1359:1361 Corelib.Init.Peano <> ::nat_scope:x_'+'_x not
+R1367:1379 LowerBound <> TT constr
+R1364:1366 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R1351:1353 Corelib.Init.Peano <> ::nat_scope:x_'+'_x not
+R1359:1361 Corelib.Init.Peano <> ::nat_scope:x_'+'_x not
+R1367:1379 LowerBound <> TT constr
+R1459:1461 Corelib.Init.Peano <> ::nat_scope:x_'+'_x not
+R1459:1461 Corelib.Init.Peano <> ::nat_scope:x_'+'_x not
+R1505:1507 Corelib.Init.Peano <> ::nat_scope:x_'+'_x not
+R1505:1507 Corelib.Init.Peano <> ::nat_scope:x_'+'_x not
+R1573:1589 LowerBound <> StepTT constr
+R1598:1600 Corelib.Lists.ListDef <> seq def
+R1603:1603 Corelib.Init.Datatypes <> S constr
+R1614:1616 Corelib.Lists.ListDef <> seq def
+R1619:1619 Corelib.Init.Datatypes <> S constr
+R1573:1589 LowerBound <> StepTT constr
+R1598:1600 Corelib.Lists.ListDef <> seq def
+R1603:1603 Corelib.Init.Datatypes <> S constr
+R1614:1616 Corelib.Lists.ListDef <> seq def
+R1619:1619 Corelib.Init.Datatypes <> S constr
+binder 1679:1679 <> i:17
+R1687:1690 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R1683:1685 Corelib.Init.Peano <> ::nat_scope:x_'<'_x not
+R1682:1682 StochasticSkeleton <> i:17 var
+R1714:1716 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R1699:1701 Corelib.Init.Peano <> ::nat_scope:x_'+'_x not
+R1696:1696 Corelib.Init.Datatypes <> S constr
+R1702:1702 StochasticSkeleton <> i:17 var
+R1709:1711 Corelib.Init.Peano <> ::nat_scope:x_'+'_x not
+R1706:1706 Corelib.Init.Datatypes <> S constr
+R1712:1712 StochasticSkeleton <> i:17 var
+R1717:1729 LowerBound <> TT constr
+binder 1679:1679 <> i:18
+R1687:1690 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R1683:1685 Corelib.Init.Peano <> ::nat_scope:x_'<'_x not
+R1682:1682 StochasticSkeleton <> i:18 var
+R1714:1716 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R1699:1701 Corelib.Init.Peano <> ::nat_scope:x_'+'_x not
+R1696:1696 Corelib.Init.Datatypes <> S constr
+R1702:1702 StochasticSkeleton <> i:18 var
+R1709:1711 Corelib.Init.Peano <> ::nat_scope:x_'+'_x not
+R1706:1706 Corelib.Init.Datatypes <> S constr
+R1712:1712 StochasticSkeleton <> i:18 var
+R1717:1729 LowerBound <> TT constr
+R1782:1784 Corelib.Init.Peano <> ::nat_scope:x_'+'_x not
+R1779:1779 Corelib.Init.Datatypes <> S constr
+R1795:1797 Corelib.Init.Peano <> ::nat_scope:x_'+'_x not
+R1798:1798 Corelib.Init.Datatypes <> S constr
+R1782:1784 Corelib.Init.Peano <> ::nat_scope:x_'+'_x not
+R1779:1779 Corelib.Init.Datatypes <> S constr
+R1795:1797 Corelib.Init.Peano <> ::nat_scope:x_'+'_x not
+R1798:1798 Corelib.Init.Datatypes <> S constr
+R1831:1833 Corelib.Init.Peano <> ::nat_scope:x_'+'_x not
+R1828:1828 Corelib.Init.Datatypes <> S constr
+R1844:1846 Corelib.Init.Peano <> ::nat_scope:x_'+'_x not
+R1847:1847 Corelib.Init.Datatypes <> S constr
+R1831:1833 Corelib.Init.Peano <> ::nat_scope:x_'+'_x not
+R1828:1828 Corelib.Init.Datatypes <> S constr
+R1844:1846 Corelib.Init.Peano <> ::nat_scope:x_'+'_x not
+R1847:1847 Corelib.Init.Datatypes <> S constr
+R1924:1924 Corelib.Init.Datatypes <> S constr
+R1924:1924 Corelib.Init.Datatypes <> S constr
+prf 1976:2013 <> all_diagonal_tt_implies_game_canonical
+binder 2026:2026 <> n:19
+binder 2028:2030 <> phi:20
+R2058:2065 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R2037:2051 StochasticSkeleton <> all_diagonal_tt def
+R2053:2053 StochasticSkeleton <> n:19 var
+R2055:2057 StochasticSkeleton <> phi:20 var
+R2066:2080 LowerBound <> game def
+R2082:2084 StochasticSkeleton <> phi:20 var
+R2087:2101 StochasticSkeleton <> canonical_start def
+R2103:2103 StochasticSkeleton <> n:19 var
+R2107:2112 Corelib.Lists.ListDef <> repeat def
+R2128:2128 StochasticSkeleton <> n:19 var
+R2114:2126 LowerBound <> TT constr
+R2170:2184 LowerBound <> game def
+R2187:2201 StochasticSkeleton <> canonical_start def
+R2212:2243 StochasticSkeleton <> runs_all_diagonal_tt_from_offset thm
+R2212:2243 StochasticSkeleton <> runs_all_diagonal_tt_from_offset thm
+prf 2304:2337 <> all_diagonal_tt_implies_term_event
+binder 2350:2350 <> n:21
+binder 2352:2354 <> phi:22
+R2382:2389 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R2361:2375 StochasticSkeleton <> all_diagonal_tt def
+R2377:2377 StochasticSkeleton <> n:21 var
+R2379:2381 StochasticSkeleton <> phi:22 var
+R2390:2399 StochasticSkeleton <> term_event def
+R2401:2401 StochasticSkeleton <> n:21 var
+R2403:2405 StochasticSkeleton <> phi:22 var
+R2447:2452 Corelib.Lists.ListDef <> repeat def
+R2454:2466 LowerBound <> TT constr
+R2447:2452 Corelib.Lists.ListDef <> repeat def
+R2454:2466 LowerBound <> TT constr
+R2480:2517 StochasticSkeleton <> all_diagonal_tt_implies_game_canonical thm
+R2480:2517 StochasticSkeleton <> all_diagonal_tt_implies_game_canonical thm
+prf 2549:2584 <> term_event_implies_feasibility_event
+binder 2597:2597 <> n:23
+binder 2599:2601 <> phi:24
+R2624:2631 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R2608:2617 StochasticSkeleton <> term_event def
+R2619:2619 StochasticSkeleton <> n:23 var
+R2621:2623 StochasticSkeleton <> phi:24 var
+R2632:2648 StochasticSkeleton <> feasibility_event def
+R2650:2650 StochasticSkeleton <> n:23 var
+R2652:2654 StochasticSkeleton <> phi:24 var
+R2701:2703 Corelib.Lists.ListDef <> seq def
+R2712:2714 Corelib.Lists.ListDef <> seq def
+R2701:2703 Corelib.Lists.ListDef <> seq def
+R2712:2714 Corelib.Lists.ListDef <> seq def
+R2752:2767 Stdlib.Sorting.Permutation <> Permutation_refl thm
+R2752:2767 Stdlib.Sorting.Permutation <> Permutation_refl thm
+R2780:2795 Stdlib.Sorting.Permutation <> Permutation_refl thm
+R2780:2795 Stdlib.Sorting.Permutation <> Permutation_refl thm
+prf 2831:2871 <> all_diagonal_tt_implies_feasibility_event
+binder 2884:2884 <> n:25
+binder 2886:2888 <> phi:26
+R2916:2923 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R2895:2909 StochasticSkeleton <> all_diagonal_tt def
+R2911:2911 StochasticSkeleton <> n:25 var
+R2913:2915 StochasticSkeleton <> phi:26 var
+R2924:2940 StochasticSkeleton <> feasibility_event def
+R2942:2942 StochasticSkeleton <> n:25 var
+R2944:2946 StochasticSkeleton <> phi:26 var
+R2986:3021 StochasticSkeleton <> term_event_implies_feasibility_event thm
+R2986:3021 StochasticSkeleton <> term_event_implies_feasibility_event thm
+R3032:3065 StochasticSkeleton <> all_diagonal_tt_implies_term_event thm
+R3032:3065 StochasticSkeleton <> all_diagonal_tt_implies_term_event thm
+prf 3099:3132 <> all_diagonal_tt_implies_duration_n
+binder 3145:3145 <> n:27
+binder 3147:3149 <> phi:28
+R3177:3184 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R3156:3170 StochasticSkeleton <> all_diagonal_tt def
+R3172:3172 StochasticSkeleton <> n:27 var
+R3174:3176 StochasticSkeleton <> phi:28 var
+R3185:3191 Corelib.Init.Logic <> ::type_scope:'exists'_x_'..'_x_','_x not
+R3194:3201 Corelib.Init.Logic <> ::type_scope:'exists'_x_'..'_x_','_x not
+binder 3192:3193 <> os:29
+R3244:3253 Corelib.Init.Logic <> ::type_scope:x_'/\'_x not
+R3202:3216 LowerBound <> game def
+R3218:3220 StochasticSkeleton <> phi:28 var
+R3223:3237 StochasticSkeleton <> canonical_start def
+R3239:3239 StochasticSkeleton <> n:27 var
+R3242:3243 StochasticSkeleton <> os:29 var
+R3276:3278 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R3254:3272 LowerBound <> duration def
+R3274:3275 StochasticSkeleton <> os:29 var
+R3279:3279 StochasticSkeleton <> n:27 var
+R3321:3326 Corelib.Lists.ListDef <> repeat def
+R3328:3340 LowerBound <> TT constr
+R3321:3326 Corelib.Lists.ListDef <> repeat def
+R3328:3340 LowerBound <> TT constr
+R3365:3402 StochasticSkeleton <> all_diagonal_tt_implies_game_canonical thm
+R3365:3402 StochasticSkeleton <> all_diagonal_tt_implies_game_canonical thm
+R3433:3451 LowerBound <> duration def
+R3466:3478 Stdlib.Lists.List <> repeat_length thm
+R3466:3478 Stdlib.Lists.List <> repeat_length thm
+R3466:3478 Stdlib.Lists.List <> repeat_length thm
+R3508:3525 StochasticSkeleton StochasticSkeleton <> sec

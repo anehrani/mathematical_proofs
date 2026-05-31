@@ -1,0 +1,251 @@
+DIGEST 4df67c287dd76cae6602c922bae5b09d
+FLemma15
+R27:30 Stdlib.Lists.List <> <> lib
+R32:34 Stdlib.micromega.Lia <> <> lib
+R36:46 Stdlib.Sorting.Permutation <> <> lib
+R64:69 Lemma1 <> <> lib
+R87:92 Lemma2 <> <> lib
+R102:114 Stdlib.Lists.List ListNotations <> mod
+sec 126:145 <> AlignmentSufficiency
+var  158:158 AlignmentSufficiency A
+var  160:160 AlignmentSufficiency B
+def 183:190 <> tt_trace
+R198:201 Corelib.Init.Datatypes <> list ind
+R205:207 Corelib.Init.Datatypes <> ::type_scope:x_'*'_x not
+R204:204 Lemma15 <> AlignmentSufficiency.A var
+R208:208 Lemma15 <> AlignmentSufficiency.B var
+binder 193:194 <> ps:3
+R214:217 Corelib.Init.Datatypes <> list ind
+R225:227 Corelib.Init.Datatypes <> ::type_scope:x_'*'_x not
+R221:223 Corelib.Init.Datatypes <> ::type_scope:x_'*'_x not
+R220:220 Lemma15 <> AlignmentSufficiency.A var
+R224:224 Lemma15 <> AlignmentSufficiency.B var
+R228:234 Lemma1 <> outcome ind
+R242:244 Corelib.Lists.ListDef <> map def
+R276:277 Lemma15 <> ps:3 var
+binder 251:251 <> p:4
+R256:256 Corelib.Init.Datatypes <> ::core_scope:'('_x_','_x_','_'..'_','_x_')' not
+R262:263 Corelib.Init.Datatypes <> ::core_scope:'('_x_','_x_','_'..'_','_x_')' not
+R269:270 Corelib.Init.Datatypes <> ::core_scope:'('_x_','_x_','_'..'_','_x_')' not
+R273:273 Corelib.Init.Datatypes <> ::core_scope:'('_x_','_x_','_'..'_','_x_')' not
+R257:259 Corelib.Init.Datatypes <> fst def
+R261:261 Lemma15 <> p:4 var
+R264:266 Corelib.Init.Datatypes <> snd def
+R268:268 Lemma15 <> p:4 var
+R271:272 Lemma1 <> TT constr
+prf 287:310 <> play_all_ties_from_pairs
+R331:334 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R330:330 Lemma15 <> AlignmentSufficiency.A var
+R336:339 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R335:335 Lemma15 <> AlignmentSufficiency.B var
+R340:346 Lemma1 <> outcome ind
+binder 324:326 <> phi:5
+binder 349:350 <> ps:6
+R402:409 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R357:362 Corelib.Lists.ListDef <> Forall ind
+R400:401 Lemma15 <> ps:6 var
+binder 369:369 <> p:7
+R393:395 Corelib.Init.Logic <> ::type_scope:x_'='_x not
+R374:376 Lemma15 <> phi:5 var
+R387:389 Corelib.Init.Datatypes <> snd def
+R391:391 Lemma15 <> p:7 var
+R379:381 Corelib.Init.Datatypes <> fst def
+R383:383 Lemma15 <> p:7 var
+R396:397 Lemma1 <> TT constr
+R410:413 Lemma2 <> play ind
+R415:417 Lemma15 <> phi:5 var
+R428:433 Lemma1 <> deck_A proj
+R428:433 Lemma1 <> deck_A proj
+R428:433 Lemma1 <> deck_A proj
+R450:455 Lemma1 <> deck_B proj
+R450:455 Lemma1 <> deck_B proj
+R438:440 Corelib.Lists.ListDef <> map def
+R446:447 Lemma15 <> ps:6 var
+R442:444 Corelib.Init.Datatypes <> fst def
+R460:462 Corelib.Lists.ListDef <> map def
+R468:469 Lemma15 <> ps:6 var
+R464:466 Corelib.Init.Datatypes <> snd def
+R481:488 Lemma15 <> tt_trace def
+R490:491 Lemma15 <> ps:6 var
+R503:508 Lemma1 <> deck_A proj
+R503:508 Lemma1 <> deck_A proj
+R503:508 Lemma1 <> deck_A proj
+R517:522 Lemma1 <> deck_B proj
+R517:522 Lemma1 <> deck_B proj
+R513:514 Stdlib.Lists.List ListNotations ::list_scope:'['_']' not
+R527:528 Stdlib.Lists.List ListNotations ::list_scope:'['_']' not
+R619:625 Lemma2 <> PlayNil constr
+R619:625 Lemma2 <> PlayNil constr
+R725:730 Lemma2 <> PlayTT constr
+R725:730 Lemma2 <> PlayTT constr
+def 790:816 <> admits_terminating_ordering
+R828:831 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R827:827 Lemma15 <> AlignmentSufficiency.A var
+R833:836 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R832:832 Lemma15 <> AlignmentSufficiency.B var
+R837:843 Lemma1 <> outcome ind
+binder 821:823 <> phi:8
+R853:856 Corelib.Init.Datatypes <> list ind
+R858:858 Lemma15 <> AlignmentSufficiency.A var
+binder 847:849 <> as_:9
+R867:870 Corelib.Init.Datatypes <> list ind
+R872:872 Lemma15 <> AlignmentSufficiency.B var
+binder 862:863 <> bs:10
+R887:893 Corelib.Init.Logic <> ::type_scope:'exists'_x_'..'_x_','_x not
+R902:907 Corelib.Init.Logic <> ::type_scope:'exists'_x_'..'_x_','_x not
+binder 894:895 <> da:11
+binder 897:898 <> db:12
+binder 900:901 <> tr:13
+R926:933 Corelib.Init.Logic <> ::type_scope:x_'/\'_x not
+R908:918 Stdlib.Sorting.Permutation <> Permutation ind
+R924:925 Lemma15 <> da:11 var
+R920:922 Lemma15 <> as_:9 var
+R951:958 Corelib.Init.Logic <> ::type_scope:x_'/\'_x not
+R934:944 Stdlib.Sorting.Permutation <> Permutation ind
+R949:950 Lemma15 <> db:12 var
+R946:947 Lemma15 <> bs:10 var
+R959:968 Lemma2 <> game_trace def
+R970:972 Lemma15 <> phi:8 var
+R977:982 Lemma1 <> deck_A proj
+R977:982 Lemma1 <> deck_A proj
+R977:982 Lemma1 <> deck_A proj
+R991:996 Lemma1 <> deck_B proj
+R991:996 Lemma1 <> deck_B proj
+R987:988 Lemma15 <> da:11 var
+R1001:1002 Lemma15 <> db:12 var
+R1007:1008 Lemma15 <> tr:13 var
+prf 1020:1056 <> lemma15_alignment_sufficiency_general
+R1077:1080 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R1076:1076 Lemma15 <> AlignmentSufficiency.A var
+R1082:1085 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R1081:1081 Lemma15 <> AlignmentSufficiency.B var
+R1086:1092 Lemma1 <> outcome ind
+binder 1070:1072 <> phi:14
+R1102:1105 Corelib.Init.Datatypes <> list ind
+R1107:1107 Lemma15 <> AlignmentSufficiency.A var
+binder 1096:1098 <> as_:15
+R1116:1119 Corelib.Init.Datatypes <> list ind
+R1121:1121 Lemma15 <> AlignmentSufficiency.B var
+binder 1111:1112 <> bs:16
+R1138:1145 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R1129:1133 Stdlib.Lists.List <> NoDup ind
+R1135:1137 Lemma15 <> as_:15 var
+R1154:1161 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R1146:1150 Stdlib.Lists.List <> NoDup ind
+R1152:1153 Lemma15 <> bs:16 var
+R1200:1208 Corelib.Init.Logic <> ::type_scope:x_'<->'_x not
+R1162:1188 Lemma15 <> admits_terminating_ordering def
+R1190:1192 Lemma15 <> phi:14 var
+R1194:1196 Lemma15 <> as_:15 var
+R1198:1199 Lemma15 <> bs:16 var
+R1209:1215 Corelib.Init.Logic <> ::type_scope:'exists'_x_'..'_x_','_x not
+R1218:1219 Corelib.Init.Logic <> ::type_scope:'exists'_x_'..'_x_','_x not
+binder 1216:1217 <> ps:17
+R1220:1238 Lemma2 <> perfect_matching_on def
+R1240:1242 Lemma15 <> phi:14 var
+R1244:1246 Lemma15 <> as_:15 var
+R1248:1249 Lemma15 <> bs:16 var
+R1251:1252 Lemma15 <> ps:17 var
+R1384:1388 Stdlib.Lists.List <> NoDup ind
+R1384:1388 Stdlib.Lists.List <> NoDup ind
+R1414:1430 Stdlib.Sorting.Permutation <> Permutation_NoDup thm
+R1414:1430 Stdlib.Sorting.Permutation <> Permutation_NoDup thm
+R1508:1512 Stdlib.Lists.List <> NoDup ind
+R1508:1512 Stdlib.Lists.List <> NoDup ind
+R1538:1554 Stdlib.Sorting.Permutation <> Permutation_NoDup thm
+R1538:1554 Stdlib.Sorting.Permutation <> Permutation_NoDup thm
+R1623:1641 Lemma2 <> lemma2_tie_matching thm
+R1650:1655 Lemma1 <> deck_A proj
+R1650:1655 Lemma1 <> deck_A proj
+R1650:1655 Lemma1 <> deck_A proj
+R1664:1669 Lemma1 <> deck_B proj
+R1664:1669 Lemma1 <> deck_B proj
+R1623:1641 Lemma2 <> lemma2_tie_matching thm
+R1650:1655 Lemma1 <> deck_A proj
+R1650:1655 Lemma1 <> deck_A proj
+R1650:1655 Lemma1 <> deck_A proj
+R1664:1669 Lemma1 <> deck_B proj
+R1664:1669 Lemma1 <> deck_B proj
+R1770:1778 Lemma2 <> tie_pairs def
+R1770:1778 Lemma2 <> tie_pairs def
+R1796:1814 Lemma2 <> perfect_matching_on def
+R1869:1885 Stdlib.Sorting.Permutation <> Permutation_trans thm
+R1869:1885 Stdlib.Sorting.Permutation <> Permutation_trans thm
+R1946:1962 Stdlib.Sorting.Permutation <> Permutation_trans thm
+R1946:1962 Stdlib.Sorting.Permutation <> Permutation_trans thm
+R2079:2081 Corelib.Lists.ListDef <> map def
+R2083:2085 Corelib.Init.Datatypes <> fst def
+R2093:2095 Corelib.Lists.ListDef <> map def
+R2097:2099 Corelib.Init.Datatypes <> snd def
+R2107:2114 Lemma15 <> tt_trace def
+R2079:2081 Corelib.Lists.ListDef <> map def
+R2083:2085 Corelib.Init.Datatypes <> fst def
+R2093:2095 Corelib.Lists.ListDef <> map def
+R2097:2099 Corelib.Init.Datatypes <> snd def
+R2107:2114 Lemma15 <> tt_trace def
+R2132:2150 Lemma2 <> perfect_matching_on def
+R2296:2305 Lemma2 <> game_trace def
+R2322:2345 Lemma15 <> play_all_ties_from_pairs thm
+R2322:2345 Lemma15 <> play_all_ties_from_pairs thm
+R2381:2400 Lemma15 AlignmentSufficiency <> sec
+def 2415:2429 <> canonical_cards
+R2436:2438 Corelib.Init.Datatypes <> nat ind
+binder 2432:2432 <> n:18
+R2443:2446 Corelib.Init.Datatypes <> list ind
+R2448:2450 Corelib.Init.Datatypes <> nat ind
+R2455:2457 Corelib.Lists.ListDef <> seq def
+R2461:2461 Lemma15 <> n:18 var
+def 2476:2478 <> E_n
+R2485:2487 Corelib.Init.Datatypes <> nat ind
+binder 2481:2481 <> n:19
+R2500:2503 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R2497:2499 Corelib.Init.Datatypes <> nat ind
+R2507:2510 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R2504:2506 Corelib.Init.Datatypes <> nat ind
+R2511:2517 Lemma1 <> outcome ind
+binder 2491:2493 <> phi:20
+R2532:2558 Lemma15 <> admits_terminating_ordering def
+R2560:2562 Lemma15 <> phi:20 var
+R2565:2579 Lemma15 <> canonical_cards def
+R2581:2581 Lemma15 <> n:19 var
+R2585:2599 Lemma15 <> canonical_cards def
+R2601:2601 Lemma15 <> n:19 var
+def 2617:2649 <> tie_set_contains_perfect_matching
+R2658:2660 Corelib.Init.Datatypes <> nat ind
+binder 2654:2654 <> n:21
+R2673:2676 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R2670:2672 Corelib.Init.Datatypes <> nat ind
+R2680:2683 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R2677:2679 Corelib.Init.Datatypes <> nat ind
+R2684:2690 Lemma1 <> outcome ind
+binder 2664:2666 <> phi:22
+R2705:2711 Corelib.Init.Logic <> ::type_scope:'exists'_x_'..'_x_','_x not
+R2714:2715 Corelib.Init.Logic <> ::type_scope:'exists'_x_'..'_x_','_x not
+binder 2712:2713 <> ps:23
+R2716:2734 Lemma2 <> perfect_matching_on def
+R2736:2738 Lemma15 <> phi:22 var
+R2741:2755 Lemma15 <> canonical_cards def
+R2757:2757 Lemma15 <> n:21 var
+R2761:2775 Lemma15 <> canonical_cards def
+R2777:2777 Lemma15 <> n:21 var
+R2780:2781 Lemma15 <> ps:23 var
+prf 2793:2833 <> lemma15_alignment_sufficiency_definition7
+binder 2846:2846 <> n:24
+binder 2848:2850 <> phi:25
+R2866:2870 Corelib.Init.Logic <> ::type_scope:x_'<->'_x not
+R2857:2859 Lemma15 <> E_n def
+R2861:2861 Lemma15 <> n:24 var
+R2863:2865 Lemma15 <> phi:25 var
+R2871:2903 Lemma15 <> tie_set_contains_perfect_matching def
+R2905:2905 Lemma15 <> n:24 var
+R2907:2909 Lemma15 <> phi:25 var
+R2944:2946 Lemma15 <> E_n def
+R2949:2981 Lemma15 <> tie_set_contains_perfect_matching def
+R2992:3028 Lemma15 <> lemma15_alignment_sufficiency_general thm
+R2992:3028 Lemma15 <> lemma15_alignment_sufficiency_general thm
+R3042:3056 Lemma15 <> canonical_cards def
+R3069:3077 Stdlib.Lists.List <> seq_NoDup thm
+R3069:3077 Stdlib.Lists.List <> seq_NoDup thm
+R3091:3105 Lemma15 <> canonical_cards def
+R3118:3126 Stdlib.Lists.List <> seq_NoDup thm
+R3118:3126 Stdlib.Lists.List <> seq_NoDup thm

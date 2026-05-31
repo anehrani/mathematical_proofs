@@ -1,0 +1,265 @@
+DIGEST 355f5db00e897e402d98bb8165e18d9b
+FProposition1Finite
+R27:30 Stdlib.Lists.List <> <> lib
+R32:36 Stdlib.Reals.Reals <> <> lib
+R38:40 Stdlib.micromega.Lra <> <> lib
+R58:63 Lemma1 <> <> lib
+R65:76 Proposition1 <> <> lib
+R78:94 FiniteProbability <> <> lib
+R104:116 Stdlib.Lists.List ListNotations <> mod
+sec 149:166 <> Proposition1Finite
+var 179:183 Proposition1Finite Omega
+var 202:209 Proposition1Finite universe
+R213:216 Corelib.Init.Datatypes <> list ind
+R218:222 Proposition1Finite <> Proposition1Finite.Omega var
+var 236:252 Proposition1Finite universe_nonempty
+R264:267 Corelib.Init.Logic <> ::type_scope:x_'<>'_x not
+R256:263 Proposition1Finite <> Proposition1Finite.universe var
+R268:269 Stdlib.Lists.List ListNotations ::list_scope:'['_']' not
+var 282:287 Proposition1Finite phi_of
+R296:299 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R291:295 Proposition1Finite <> Proposition1Finite.Omega var
+R303:306 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R300:302 Corelib.Init.Datatypes <> nat ind
+R310:313 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R307:309 Corelib.Init.Datatypes <> nat ind
+R314:327 Lemma1 <> outcome ind
+var 339:343 Proposition1Finite binom
+R350:353 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R347:349 Corelib.Init.Datatypes <> nat ind
+R357:360 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R354:356 Corelib.Init.Datatypes <> nat ind
+R361:363 Corelib.Init.Datatypes <> nat ind
+var 375:396 Proposition1Finite hall_obstruction_event
+R403:406 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R400:402 Corelib.Init.Datatypes <> nat ind
+R412:415 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R407:411 Proposition1Finite <> Proposition1Finite.Omega var
+var 434:459 Proposition1Finite hall_obstruction_reduction
+binder 472:472 <> n:13
+binder 474:474 <> w:14
+R520:523 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R481:482 Corelib.Init.Logic <> ::type_scope:'~'_x not
+R483:502 Proposition1 <> E_event def
+R517:517 Proposition1Finite <> n:13 var
+R519:519 Proposition1Finite <> w:14 var
+R510:515 Proposition1Finite <> Proposition1Finite.phi_of var
+R504:508 Proposition1Finite <> Proposition1Finite.Omega var
+R524:545 Proposition1Finite <> Proposition1Finite.hall_obstruction_event var
+R547:547 Proposition1Finite <> n:13 var
+R549:549 Proposition1Finite <> w:14 var
+var 564:585 Proposition1Finite hall_obstruction_bound
+binder 598:598 <> n:17
+R667:674 Stdlib.Reals.Rdefinitions <> ::R_scope:x_'<='_x not
+R605:624 FiniteProbability <> Pr def
+R642:663 Proposition1Finite <> Proposition1Finite.hall_obstruction_event var
+R665:665 Proposition1Finite <> n:17 var
+R632:639 Proposition1Finite <> Proposition1Finite.universe var
+R626:630 Proposition1Finite <> Proposition1Finite.Omega var
+R675:703 Proposition1 <> hall_union_bound def
+R711:711 Proposition1Finite <> n:17 var
+R715:717 Stdlib.Reals.Rdefinitions <> ::R_scope:x_'/'_x not
+R705:709 Proposition1Finite <> Proposition1Finite.binom var
+prf 731:770 <> proposition1_via_hall_obstruction_finite
+binder 783:783 <> n:20
+R839:846 Stdlib.Reals.Rdefinitions <> ::R_scope:x_'<='_x not
+R791:793 Stdlib.Reals.Rdefinitions <> ::R_scope:x_'-'_x not
+R794:822 Proposition1 <> hall_union_bound def
+R830:830 Proposition1Finite <> n:20 var
+R834:836 Stdlib.Reals.Rdefinitions <> ::R_scope:x_'/'_x not
+R824:828 Proposition1Finite <> Proposition1Finite.binom var
+R847:866 FiniteProbability <> Pr def
+R884:903 Proposition1 <> E_event def
+R918:918 Proposition1Finite <> n:20 var
+R911:916 Proposition1Finite <> Proposition1Finite.phi_of var
+R905:909 Proposition1Finite <> Proposition1Finite.Omega var
+R874:881 Proposition1Finite <> Proposition1Finite.universe var
+R868:872 Proposition1Finite <> Proposition1Finite.Omega var
+R1038:1059 Proposition1Finite <> Proposition1Finite.hall_obstruction_event var
+R1075:1094 FiniteProbability <> Pr def
+R1102:1109 Proposition1Finite <> Proposition1Finite.universe var
+R1096:1100 Proposition1Finite <> Proposition1Finite.Omega var
+R1129:1134 Proposition1Finite <> Proposition1Finite.phi_of var
+R1153:1157 Proposition1Finite <> Proposition1Finite.binom var
+R949:994 Proposition1 <> proposition1_via_hall_obstruction thm
+R1038:1059 Proposition1Finite <> Proposition1Finite.hall_obstruction_event var
+R1075:1094 FiniteProbability <> Pr def
+R1102:1109 Proposition1Finite <> Proposition1Finite.universe var
+R1096:1100 Proposition1Finite <> Proposition1Finite.Omega var
+R1129:1134 Proposition1Finite <> Proposition1Finite.phi_of var
+R1153:1157 Proposition1Finite <> Proposition1Finite.binom var
+R949:994 Proposition1 <> proposition1_via_hall_obstruction thm
+R1172:1207 FiniteProbability <> Pr_complement_rule thm
+R1224:1240 Proposition1Finite <> Proposition1Finite.universe_nonempty var
+R1215:1222 Proposition1Finite <> Proposition1Finite.universe var
+R1209:1213 Proposition1Finite <> Proposition1Finite.Omega var
+R1172:1207 FiniteProbability <> Pr_complement_rule thm
+R1224:1240 Proposition1Finite <> Proposition1Finite.universe_nonempty var
+R1215:1222 Proposition1Finite <> Proposition1Finite.universe var
+R1209:1213 Proposition1Finite <> Proposition1Finite.Omega var
+R1255:1283 FiniteProbability <> Pr_monotone thm
+R1300:1316 Proposition1Finite <> Proposition1Finite.universe_nonempty var
+R1291:1298 Proposition1Finite <> Proposition1Finite.universe var
+R1285:1289 Proposition1Finite <> Proposition1Finite.Omega var
+R1255:1283 FiniteProbability <> Pr_monotone thm
+R1300:1316 Proposition1Finite <> Proposition1Finite.universe_nonempty var
+R1291:1298 Proposition1Finite <> Proposition1Finite.universe var
+R1285:1289 Proposition1Finite <> Proposition1Finite.Omega var
+R1331:1356 Proposition1Finite <> Proposition1Finite.hall_obstruction_reduction var
+R1331:1356 Proposition1Finite <> Proposition1Finite.hall_obstruction_reduction var
+R1373:1394 Proposition1Finite <> Proposition1Finite.hall_obstruction_bound var
+R1373:1394 Proposition1Finite <> Proposition1Finite.hall_obstruction_bound var
+prf 1414:1454 <> feasibility_probability_paper_form_finite
+binder 1467:1467 <> n:21
+R1613:1620 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R1560:1567 Stdlib.Reals.Rdefinitions <> ::R_scope:x_'<='_x not
+R1474:1493 FiniteProbability <> Pr def
+binder 1515:1515 <> w:22
+R1520:1521 Corelib.Init.Logic <> ::type_scope:'~'_x not
+R1522:1541 Proposition1 <> E_event def
+R1556:1556 Proposition1Finite <> n:21 var
+R1558:1558 Proposition1Finite <> w:22 var
+R1549:1554 Proposition1Finite <> Proposition1Finite.phi_of var
+R1543:1547 Proposition1Finite <> Proposition1Finite.Omega var
+R1501:1508 Proposition1Finite <> Proposition1Finite.universe var
+R1495:1499 Proposition1Finite <> Proposition1Finite.Omega var
+R1568:1596 Proposition1 <> hall_union_bound def
+R1604:1604 Proposition1Finite <> n:21 var
+R1608:1610 Stdlib.Reals.Rdefinitions <> ::R_scope:x_'/'_x not
+R1598:1602 Proposition1Finite <> Proposition1Finite.binom var
+R1670:1677 Stdlib.Reals.Rdefinitions <> ::R_scope:x_'<='_x not
+R1622:1624 Stdlib.Reals.Rdefinitions <> ::R_scope:x_'-'_x not
+R1625:1653 Proposition1 <> hall_union_bound def
+R1661:1661 Proposition1Finite <> n:21 var
+R1665:1667 Stdlib.Reals.Rdefinitions <> ::R_scope:x_'/'_x not
+R1655:1659 Proposition1Finite <> Proposition1Finite.binom var
+R1678:1697 FiniteProbability <> Pr def
+R1715:1734 Proposition1 <> E_event def
+R1749:1749 Proposition1Finite <> n:21 var
+R1742:1747 Proposition1Finite <> Proposition1Finite.phi_of var
+R1736:1740 Proposition1Finite <> Proposition1Finite.Omega var
+R1705:1712 Proposition1Finite <> Proposition1Finite.universe var
+R1699:1703 Proposition1Finite <> Proposition1Finite.Omega var
+R1868:1887 FiniteProbability <> Pr def
+R1895:1902 Proposition1Finite <> Proposition1Finite.universe var
+R1889:1893 Proposition1Finite <> Proposition1Finite.Omega var
+R1922:1927 Proposition1Finite <> Proposition1Finite.phi_of var
+R1946:1950 Proposition1Finite <> Proposition1Finite.binom var
+R1787:1844 Proposition1 <> proposition1_feasibility_probability_explicit thm
+R1868:1887 FiniteProbability <> Pr def
+R1895:1902 Proposition1Finite <> Proposition1Finite.universe var
+R1889:1893 Proposition1Finite <> Proposition1Finite.Omega var
+R1922:1927 Proposition1Finite <> Proposition1Finite.phi_of var
+R1946:1950 Proposition1Finite <> Proposition1Finite.binom var
+R1787:1844 Proposition1 <> proposition1_feasibility_probability_explicit thm
+R1980:2015 FiniteProbability <> Pr_complement_rule thm
+R2032:2048 Proposition1Finite <> Proposition1Finite.universe_nonempty var
+R2023:2030 Proposition1Finite <> Proposition1Finite.universe var
+R2017:2021 Proposition1Finite <> Proposition1Finite.Omega var
+R1980:2015 FiniteProbability <> Pr_complement_rule thm
+R2032:2048 Proposition1Finite <> Proposition1Finite.universe_nonempty var
+R2023:2030 Proposition1Finite <> Proposition1Finite.universe var
+R2017:2021 Proposition1Finite <> Proposition1Finite.Omega var
+R2079:2096 Proposition1Finite Proposition1Finite <> sec
+sec 2108:2131 <> Proposition1FiniteDirect
+var 2144:2148 Proposition1FiniteDirect Omega
+var 2167:2174 Proposition1FiniteDirect universe
+R2178:2181 Corelib.Init.Datatypes <> list ind
+R2183:2187 Proposition1Finite <> Proposition1FiniteDirect.Omega var
+var 2201:2217 Proposition1FiniteDirect universe_nonempty
+R2229:2232 Corelib.Init.Logic <> ::type_scope:x_'<>'_x not
+R2221:2228 Proposition1Finite <> Proposition1FiniteDirect.universe var
+R2233:2234 Stdlib.Lists.List ListNotations ::list_scope:'['_']' not
+var 2247:2252 Proposition1FiniteDirect phi_of
+R2261:2264 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R2256:2260 Proposition1Finite <> Proposition1FiniteDirect.Omega var
+R2268:2271 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R2265:2267 Corelib.Init.Datatypes <> nat ind
+R2275:2278 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R2272:2274 Corelib.Init.Datatypes <> nat ind
+R2279:2292 Lemma1 <> outcome ind
+var 2304:2308 Proposition1FiniteDirect binom
+R2315:2318 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R2312:2314 Corelib.Init.Datatypes <> nat ind
+R2322:2325 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R2319:2321 Corelib.Init.Datatypes <> nat ind
+R2326:2328 Corelib.Init.Datatypes <> nat ind
+prf 2340:2377 <> proposition1_from_failure_bound_finite
+binder 2390:2390 <> n:33
+R2544:2551 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R2489:2498 Stdlib.Reals.Rdefinitions <> ::R_scope:x_'<='_x not
+R2397:2416 FiniteProbability <> Pr def
+binder 2444:2444 <> w:34
+R2449:2450 Corelib.Init.Logic <> ::type_scope:'~'_x not
+R2451:2470 Proposition1 <> E_event def
+R2485:2485 Proposition1Finite <> n:33 var
+R2487:2487 Proposition1Finite <> w:34 var
+R2478:2483 Proposition1Finite <> Proposition1FiniteDirect.phi_of var
+R2472:2476 Proposition1Finite <> Proposition1FiniteDirect.Omega var
+R2424:2431 Proposition1Finite <> Proposition1FiniteDirect.universe var
+R2418:2422 Proposition1Finite <> Proposition1FiniteDirect.Omega var
+R2499:2527 Proposition1 <> hall_union_bound def
+R2535:2535 Proposition1Finite <> n:33 var
+R2539:2541 Stdlib.Reals.Rdefinitions <> ::R_scope:x_'/'_x not
+R2529:2533 Proposition1Finite <> Proposition1FiniteDirect.binom var
+R2601:2608 Stdlib.Reals.Rdefinitions <> ::R_scope:x_'<='_x not
+R2553:2555 Stdlib.Reals.Rdefinitions <> ::R_scope:x_'-'_x not
+R2556:2584 Proposition1 <> hall_union_bound def
+R2592:2592 Proposition1Finite <> n:33 var
+R2596:2598 Stdlib.Reals.Rdefinitions <> ::R_scope:x_'/'_x not
+R2586:2590 Proposition1Finite <> Proposition1FiniteDirect.binom var
+R2609:2628 FiniteProbability <> Pr def
+R2646:2665 Proposition1 <> E_event def
+R2680:2680 Proposition1Finite <> n:33 var
+R2673:2678 Proposition1Finite <> Proposition1FiniteDirect.phi_of var
+R2667:2671 Proposition1Finite <> Proposition1FiniteDirect.Omega var
+R2636:2643 Proposition1Finite <> Proposition1FiniteDirect.universe var
+R2630:2634 Proposition1Finite <> Proposition1FiniteDirect.Omega var
+R2727:2762 FiniteProbability <> Pr_complement_rule thm
+R2810:2829 Proposition1 <> E_event def
+R2837:2842 Proposition1Finite <> Proposition1FiniteDirect.phi_of var
+R2831:2835 Proposition1Finite <> Proposition1FiniteDirect.Omega var
+R2785:2801 Proposition1Finite <> Proposition1FiniteDirect.universe_nonempty var
+R2776:2783 Proposition1Finite <> Proposition1FiniteDirect.universe var
+R2770:2774 Proposition1Finite <> Proposition1FiniteDirect.Omega var
+R2727:2762 FiniteProbability <> Pr_complement_rule thm
+R2810:2829 Proposition1 <> E_event def
+R2837:2842 Proposition1Finite <> Proposition1FiniteDirect.phi_of var
+R2831:2835 Proposition1Finite <> Proposition1FiniteDirect.Omega var
+R2785:2801 Proposition1Finite <> Proposition1FiniteDirect.universe_nonempty var
+R2776:2783 Proposition1Finite <> Proposition1FiniteDirect.universe var
+R2770:2774 Proposition1Finite <> Proposition1FiniteDirect.Omega var
+prf 2879:2938 <> feasibility_probability_paper_form_from_failure_bound_finite
+binder 2951:2951 <> n:35
+R3105:3112 Corelib.Init.Logic <> ::type_scope:x_'->'_x not
+R3050:3059 Stdlib.Reals.Rdefinitions <> ::R_scope:x_'<='_x not
+R2958:2977 FiniteProbability <> Pr def
+binder 3005:3005 <> w:36
+R3010:3011 Corelib.Init.Logic <> ::type_scope:'~'_x not
+R3012:3031 Proposition1 <> E_event def
+R3046:3046 Proposition1Finite <> n:35 var
+R3048:3048 Proposition1Finite <> w:36 var
+R3039:3044 Proposition1Finite <> Proposition1FiniteDirect.phi_of var
+R3033:3037 Proposition1Finite <> Proposition1FiniteDirect.Omega var
+R2985:2992 Proposition1Finite <> Proposition1FiniteDirect.universe var
+R2979:2983 Proposition1Finite <> Proposition1FiniteDirect.Omega var
+R3060:3088 Proposition1 <> hall_union_bound def
+R3096:3096 Proposition1Finite <> n:35 var
+R3100:3102 Stdlib.Reals.Rdefinitions <> ::R_scope:x_'/'_x not
+R3090:3094 Proposition1Finite <> Proposition1FiniteDirect.binom var
+R3162:3169 Stdlib.Reals.Rdefinitions <> ::R_scope:x_'<='_x not
+R3114:3116 Stdlib.Reals.Rdefinitions <> ::R_scope:x_'-'_x not
+R3117:3145 Proposition1 <> hall_union_bound def
+R3153:3153 Proposition1Finite <> n:35 var
+R3157:3159 Stdlib.Reals.Rdefinitions <> ::R_scope:x_'/'_x not
+R3147:3151 Proposition1Finite <> Proposition1FiniteDirect.binom var
+R3170:3189 FiniteProbability <> Pr def
+R3207:3226 Proposition1 <> E_event def
+R3241:3241 Proposition1Finite <> n:35 var
+R3234:3239 Proposition1Finite <> Proposition1FiniteDirect.phi_of var
+R3228:3232 Proposition1Finite <> Proposition1FiniteDirect.Omega var
+R3197:3204 Proposition1Finite <> Proposition1FiniteDirect.universe var
+R3191:3195 Proposition1Finite <> Proposition1FiniteDirect.Omega var
+R3278:3315 Proposition1Finite <> proposition1_from_failure_bound_finite thm
+R3278:3315 Proposition1Finite <> proposition1_from_failure_bound_finite thm
+R3343:3366 Proposition1Finite Proposition1FiniteDirect <> sec
